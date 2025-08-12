@@ -1,3 +1,5 @@
+import Login from "../pages/login/login";
+import loginAction from "../pages/login/login.action";
 import ROUTES_PATH from "./path";
 
 const routes = [
@@ -7,7 +9,8 @@ const routes = [
   },
   {
     path: ROUTES_PATH.login,
-    element: <>This is log in page</>,
+    element: <Login />,
+    action: loginAction,
   },
 ];
 

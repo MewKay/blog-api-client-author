@@ -1,6 +1,6 @@
 import validator from "validator";
-import ranges from "./validationRanges";
-import validateSchema, { invalidLengthMessage } from "@/lib/validateSchema";
+import validateSchema, { invalidLengthMessage } from "@/lib/validate-schema";
+import ranges from "../ranges";
 
 const loginSchema = validateSchema({
   username: [

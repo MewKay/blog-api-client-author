@@ -1,5 +1,5 @@
 const ROUTES_PATH = {
-  login: "/log-in",
+  login: "log-in",
 };
 
 export default ROUTES_PATH;
