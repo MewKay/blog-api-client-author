@@ -2,13 +2,14 @@ import Input from "@/components/input/input";
 import ranges from "@/lib/validation/ranges";
 import signUpSchema from "@/lib/validation/schema/signup-schema";
 import { useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, useNavigation } from "react-router-dom";
 
 const SignUpForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [authorPassword, setAuthorPassword] = useState("");
+  const navigation = useNavigation();
 
   const { errors, isFormValid } = signUpSchema.validateInputs({
     username,
@@ -69,7 +70,9 @@ const SignUpForm = () => {
         Authorization Pass
       </Input>
 
-      <button disabled={!isFormValid}>Sign Up</button>
+      <button disabled={!isFormValid || navigation.state === "submitting"}>
+        Sign Up
+      </button>
     </Form>
   );
 };

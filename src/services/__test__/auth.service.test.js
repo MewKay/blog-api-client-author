@@ -51,16 +51,16 @@ describe("Auth service", () => {
 
     await authService.login(mockCredentials);
 
-    const userResult = JSON.parse(localStorage.getItem("user"));
-    const tokenResult = localStorage.getItem("token");
+    const userResult = JSON.parse(localStorage.getItem("thyblog_user"));
+    const tokenResult = localStorage.getItem("thyblog_token");
 
     expect(userResult).toEqual(mockAuthor);
     expect(tokenResult).toBe(mockToken);
   });
 
   it("removes user and token from localStorage on logout", () => {
-    localStorage.setItem("user", JSON.stringify(mockAuthor));
-    localStorage.setItem("token", mockToken);
+    localStorage.setItem("thyblog_user", JSON.stringify(mockAuthor));
+    localStorage.setItem("thyblog_token", mockToken);
 
     authService.logout();
 
@@ -72,7 +72,7 @@ describe("Auth service", () => {
   });
 
   it("returns user data from localstorage on getUser", () => {
-    localStorage.setItem("user", JSON.stringify(mockAuthor));
+    localStorage.setItem("thyblog_user", JSON.stringify(mockAuthor));
 
     const result = authService.getUser();
 
