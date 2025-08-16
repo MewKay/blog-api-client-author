@@ -7,10 +7,15 @@ import authService from "@/services/auth.service";
 import setupPageRender from "@/testing/utils/setupPageRender";
 import testInputTyping from "@/testing/utils/testInputTyping";
 import BadRequestError from "@/lib/errors/bad-request.error";
+import mockAuthor from "@/testing/mocks/author";
+
 vi.mock("@/services/auth.service", () => ({
   default: {
     getUser: vi.fn(),
-    login: vi.fn(),
+    login: vi.fn(() => ({
+      user: mockAuthor,
+      token: "sometoken",
+    })),
   },
 }));
 

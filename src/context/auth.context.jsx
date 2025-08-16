@@ -16,7 +16,15 @@ const AuthProvider = ({ children }) => {
   const [author, setAuthor] = useState(null);
 
   useEffect(() => {
-    const updateAuthor = () => setAuthor(authService.getUser());
+    const updateAuthor = () => {
+      const author = authService.getUser();
+
+      if (author && !author.is_author) {
+        return;
+      }
+
+      setAuthor(author);
+    };
 
     updateAuthor();
 

@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UserRedirect component > renders correctly 1`] = `
+<div>
+  <main>
+    <h2>
+      Account Access Limitations
+    </h2>
+    <p>
+      Your account doesn't have sufficient permissions to access this platform. However you may access blog by signing in your basic user account.
+    </p>
+    <div>
+      <a
+        href="/log-in"
+      >
+        Go back to log in
+      </a>
+      <a>
+        Go to ThyBlog to log in as User
+      </a>
+    </div>
+  </main>
+</div>
+`;

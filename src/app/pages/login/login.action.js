@@ -17,7 +17,12 @@ const loginAction = async ({ request }) => {
   }
 
   try {
-    await authService.login(credentials);
+    const response = await authService.login(credentials);
+
+    if (!response.user.is_author) {
+      return redirect("/user-redirect");
+    }
+
     return redirect("/");
   } catch (error) {
     if (error instanceof BadRequestError || error instanceof AuthError) {
