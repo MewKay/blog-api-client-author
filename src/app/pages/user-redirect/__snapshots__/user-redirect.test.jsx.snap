@@ -15,7 +15,9 @@ exports[`UserRedirect component > renders correctly 1`] = `
       >
         Go back to log in
       </a>
-      <a>
+      <a
+        href="http://localhost:5174/log-in"
+      >
         Go to ThyBlog to log in as User
       </a>
     </div>

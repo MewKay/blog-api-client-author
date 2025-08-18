@@ -24,7 +24,7 @@ const signUpAction = async ({ request }) => {
 
   try {
     await authService.signup(signUpData);
-    return redirect(`/${ROUTES_PATH.login}`);
+    return redirect(ROUTES_PATH.login);
   } catch (error) {
     if (
       error instanceof BadRequestError ||

@@ -29,7 +29,7 @@ const SignUp = () => {
         <div>
           <p>
             Already have an account?{" "}
-            <Link to={`/${ROUTES_PATH.login}`}>Log in here.</Link>
+            <Link to={ROUTES_PATH.login}>Log in here.</Link>
           </p>
         </div>
       </main>

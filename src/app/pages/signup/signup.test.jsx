@@ -24,7 +24,7 @@ const mockInputValue = {
   confirm_password: "wordpass",
   author_password: "thisisapass",
 };
-const routeEntries = ["/" + ROUTES_PATH.signup];
+const routeEntries = [ROUTES_PATH.signup];
 
 const setup = () => {
   const user = userEvent.setup();

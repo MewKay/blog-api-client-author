@@ -23,7 +23,7 @@ const mockInputValue = {
   username: "JohnSlam",
   password: "wordpass",
 };
-const routesEntries = ["/" + ROUTES_PATH.login];
+const routesEntries = [ROUTES_PATH.login];
 
 const setup = () => {
   const user = userEvent.setup();

@@ -8,7 +8,7 @@ import ROUTES_PATH from "./path";
 
 const routes = [
   {
-    path: "/",
+    path: ROUTES_PATH.home,
     element: <Layout />,
     children: [{ index: true, element: <>Hello World!</> }],
   },

@@ -3,6 +3,7 @@ import authService from "@/services/auth.service";
 import BadRequestError from "@/lib/errors/bad-request.error";
 import { redirect } from "react-router-dom";
 import AuthError from "@/lib/errors/auth.error";
+import ROUTES_PATH from "@/app/routes/path";
 
 const loginAction = async ({ request }) => {
   const formData = await request.formData();
@@ -20,10 +21,10 @@ const loginAction = async ({ request }) => {
     const response = await authService.login(credentials);
 
     if (!response.user.is_author) {
-      return redirect("/user-redirect");
+      return redirect(ROUTES_PATH.userRedirect);
     }
 
-    return redirect("/");
+    return redirect(ROUTES_PATH.home);
   } catch (error) {
     if (error instanceof BadRequestError || error instanceof AuthError) {
       return error.response;
