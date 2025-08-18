@@ -1,4 +1,5 @@
 const ROUTES_PATH = {
+  home: "/",
   login: "log-in",
   signup: "sign-up",
   userRedirect: "user-redirect",

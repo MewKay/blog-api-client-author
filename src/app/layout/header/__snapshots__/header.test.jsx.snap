@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Header component > renders correctly 1`] = `
+<div>
+  <header>
+    <button>
+      Log out
+    </button>
+  </header>
+</div>
+`;
