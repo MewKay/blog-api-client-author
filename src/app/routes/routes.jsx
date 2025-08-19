@@ -1,4 +1,5 @@
 import Layout from "../layout/layout";
+import Home from "../pages/home/home";
 import Login from "../pages/login/login";
 import loginAction from "../pages/login/login.action";
 import SignUp from "../pages/signup/signup";
@@ -10,7 +11,7 @@ const routes = [
   {
     path: ROUTES_PATH.home,
     element: <Layout />,
-    children: [{ index: true, element: <>Hello World!</> }],
+    children: [{ index: true, element: <Home /> }],
   },
   {
     path: ROUTES_PATH.login,

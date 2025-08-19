@@ -8,7 +8,9 @@ import setupPageRender from "@/testing/utils/setupPageRender";
 import testInputTyping from "@/testing/utils/testInputTyping";
 import BadRequestError from "@/lib/errors/bad-request.error";
 import mockAuthor from "@/testing/mocks/author";
+import useAuth from "@/hooks/useAuth";
 
+vi.mock("../home/home.jsx");
 vi.mock("@/services/auth.service", () => ({
   default: {
     getUser: vi.fn(),
@@ -17,6 +19,11 @@ vi.mock("@/services/auth.service", () => ({
       token: "sometoken",
     })),
   },
+}));
+vi.mock("@/hooks/useAuth.js", () => ({
+  default: vi.fn(() => ({
+    isAuthenticated: false,
+  })),
 }));
 
 const mockInputValue = {
@@ -65,7 +72,13 @@ describe("Log in page", () => {
       routesEntries,
     );
 
-    it("should call auth service login", async () => {
+    it("should call auth service login and redirect to Home page on submit", async () => {
+      // In this order, will first let app display the form, second and third ensure the app to redirect to home
+      useAuth
+        .mockReturnValueOnce({ isAuthenticated: false })
+        .mockReturnValueOnce({ isAuthenticated: true })
+        .mockReturnValueOnce({ isAuthenticated: true });
+
       const { user, usernameInput, passwordInput, submitButton } = setup();
 
       await user.type(usernameInput, mockInputValue.username);
@@ -73,6 +86,10 @@ describe("Log in page", () => {
       await user.click(submitButton);
 
       expect(authService.login).toHaveBeenCalledWith(mockInputValue);
+
+      const homeText = await screen.findByText(/This is home/);
+
+      expect(homeText).toBeInTheDocument();
     });
 
     it("should display one or many error message for any problem occuring during api call", async () => {
@@ -102,6 +119,10 @@ describe("Log in page", () => {
       await user.click(submitButton);
 
       expect(authService.login).not.toHaveBeenCalled();
+
+      const homeText = screen.queryByText(/This is home/);
+
+      expect(homeText).not.toBeInTheDocument();
     });
   });
 });
