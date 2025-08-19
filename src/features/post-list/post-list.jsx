@@ -1,16 +1,11 @@
 import PropTypes from "prop-types";
+import PostItem from "./post-item/post-item";
 
 const PostList = ({ posts }) => {
   return (
     <ul>
       {posts.map((post) => (
-        <li key={post.id}>
-          <h3>{post.title}</h3>
-          <p>
-            Created : {post.created_at} &middot; Last Update : {post.updated_at}
-          </p>
-          <p>{post.preview}</p>
-        </li>
+        <PostItem key={post.id} post={post} />
       ))}
     </ul>
   );

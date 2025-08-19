@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Post Item component > renders correctly 1`] = `
+<div>
+  <li>
+    <a
+      href="/posts/4Myr93Ad/art-of-testing"
+    >
+      <h3>
+        Art of testing
+      </h3>
+      <div>
+        <p>
+          Created : 
+          on September 21, 2023
+        </p>
+        <p>
+          · Last Update : 
+          on January 10, 2024
+        </p>
+      </div>
+      <p>
+        Concise is nice
+      </p>
+      <p>
+        ✅️ Published
+      </p>
+    </a>
+  </li>
+</div>
+`;
