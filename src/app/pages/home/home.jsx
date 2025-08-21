@@ -1,5 +1,17 @@
+import ProtectedRedirect from "@/components/protected-redirect/protected-redirect";
+import PostList from "@/features/post-list/post-list";
+import { useLoaderData } from "react-router-dom";
+
 const Home = () => {
-  return <main>This is home</main>;
+  const { posts } = useLoaderData();
+
+  return (
+    <ProtectedRedirect>
+      <main>
+        <PostList posts={posts} />
+      </main>
+    </ProtectedRedirect>
+  );
 };
 
 export default Home;

@@ -1,5 +1,6 @@
 import Layout from "../layout/layout";
 import Home from "../pages/home/home";
+import homeLoader from "../pages/home/home.loader";
 import Login from "../pages/login/login";
 import loginAction from "../pages/login/login.action";
 import SignUp from "../pages/signup/signup";
@@ -11,7 +12,7 @@ const routes = [
   {
     path: ROUTES_PATH.home,
     element: <Layout />,
-    children: [{ index: true, element: <Home /> }],
+    children: [{ index: true, element: <Home />, loader: homeLoader }],
   },
   {
     path: ROUTES_PATH.login,
