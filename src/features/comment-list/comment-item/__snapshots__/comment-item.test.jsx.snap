@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CommentItem component > renders correctly 1`] = `
+<div>
+  <div>
+    <h6>
+      John Toe
+    </h6>
+    <span>
+      <p>
+        · 
+        8 years ago
+      </p>
+    </span>
+  </div>
+  <p>
+    I'm commentin and criticizin
+  </p>
+</div>
+`;
