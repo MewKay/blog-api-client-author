@@ -29,8 +29,9 @@ const blogPostLoader = async ({ params }) => {
   }
 
   const comments = await commentService.getAllByPostId(postId);
+  const editPostLink = `/posts/edit/${encodedId}/${post.slug}`;
 
-  return { post, comments };
+  return { post, comments, editPostLink };
 };
 
 export default blogPostLoader;

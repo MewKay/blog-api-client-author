@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import { formatPostDate } from "./post.util";
 import { isSameDay } from "date-fns";
+import { Link } from "react-router-dom";
 
-const Post = ({ post }) => {
+const Post = ({ post, editPostLink }) => {
   const { title, text, created_at, edited_at, is_published } = post;
 
   const formattedCreateDate = formatPostDate(created_at);
@@ -20,6 +21,7 @@ const Post = ({ post }) => {
         {is_published ? <p>✅️ Published</p> : <p>❎️ Unpublished</p>}
       </div>
       <div>{text}</div>
+      <Link to={editPostLink}>Edit this post</Link>
     </div>
   );
 };
@@ -32,6 +34,7 @@ Post.propTypes = {
     edited_at: PropTypes.string.isRequired,
     is_published: PropTypes.bool.isRequired,
   }),
+  editPostLink: PropTypes.string.isRequired,
 };
 
 export default Post;
