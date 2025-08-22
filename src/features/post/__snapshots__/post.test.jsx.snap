@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Post component > renders correctly 1`] = `
+<div>
+  <div>
+    <h2>
+      This is my first post
+    </h2>
+    <div>
+      <p>
+        MAY 16, 2025
+      </p>
+      <p>
+        ❎️ Unpublished
+      </p>
+    </div>
+    <div>
+      This is the body of my post
+    </div>
+  </div>
+</div>
+`;
