@@ -16,5 +16,8 @@ exports[`CommentItem component > renders correctly 1`] = `
   <p>
     I'm commentin and criticizin
   </p>
+  <button>
+    Delete comment
+  </button>
 </div>
 `;

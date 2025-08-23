@@ -1,8 +1,9 @@
+import DeleteCommentButton from "@/components/delete-comment-button/delete-comment-button";
 import { formatDistanceToNowStrict } from "date-fns";
 import PropTypes from "prop-types";
 
 const CommentItem = ({ comment }) => {
-  const { user, text, edited_at, created_at } = comment;
+  const { id, user, text, edited_at, created_at } = comment;
 
   const isCommentEdited = edited_at !== created_at;
 
@@ -20,12 +21,14 @@ const CommentItem = ({ comment }) => {
         </span>
       </div>
       <p>{text}</p>
+      <DeleteCommentButton commentId={id} />
     </>
   );
 };
 
 CommentItem.propTypes = {
   comment: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     user: PropTypes.shape({
       username: PropTypes.string.isRequired,
     }),
