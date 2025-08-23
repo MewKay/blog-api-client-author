@@ -33,6 +33,7 @@ vi.mock("@/services/post.service", () => ({
 vi.mock("@/services/comment.service", () => ({
   default: {
     getAllByPostId: vi.fn(),
+    deleteOne: vi.fn(),
   },
 }));
 
@@ -48,8 +49,12 @@ const setup = async (encodedId = "mockedId", slug = mockPost.slug) => {
   const postText = await screen.findByText(mockPost.text);
 
   const commentsText = [];
+  const commentDeleteButtons = {};
   for (let comment of mockComments) {
-    commentsText.push(await screen.findByText(comment.text));
+    const commentText = await screen.findByText(comment.text);
+    commentsText.push(commentText);
+    const commentButton = commentText.closest("li").querySelector("button");
+    commentDeleteButtons[comment.text] = commentButton;
   }
 
   return {
@@ -58,6 +63,7 @@ const setup = async (encodedId = "mockedId", slug = mockPost.slug) => {
     postTitle,
     postText,
     commentsText,
+    commentDeleteButtons,
   };
 };
 
@@ -86,5 +92,31 @@ describe("Blog Post page", () => {
     await user.click(homeLink);
 
     expect(await screen.findByText("This is home")).toBeInTheDocument();
+  });
+
+  it("delete one comment on delete comment button click then confirm", async () => {
+    const confirmMock = vi
+      .spyOn(window, "confirm")
+      .mockReturnValueOnce(false)
+      .mockReturnValueOnce(true);
+    const { user, commentDeleteButtons } = await setup();
+
+    const commentToDelete = mockComments[0].text;
+    const commentNotToDelete = mockComments[1].text;
+
+    await user.click(commentDeleteButtons[commentNotToDelete]);
+
+    expect(confirmMock).toHaveBeenCalled();
+    expect(commentService.deleteOne).not.toHaveBeenCalled();
+
+    await user.click(commentDeleteButtons[commentToDelete]);
+
+    expect(confirmMock).toHaveBeenCalled();
+    expect(commentService.deleteOne).toHaveBeenCalledWith(
+      expect.objectContaining({
+        commentId: `${mockComments[0].id}`,
+      }),
+      "someToken",
+    );
   });
 });

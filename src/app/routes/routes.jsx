@@ -1,6 +1,7 @@
 import Layout from "../layout/layout";
 import BlogPost from "../pages/blog-post/blog-post";
 import blogPostLoader from "../pages/blog-post/blog-post.loader";
+import deleteCommentAction from "../pages/delete-comment/delete-comment.action";
 import Home from "../pages/home/home";
 import homeLoader from "../pages/home/home.loader";
 import Login from "../pages/login/login";
@@ -20,6 +21,10 @@ const routes = [
         path: paths.blogPost.path,
         element: <BlogPost />,
         loader: blogPostLoader,
+      },
+      {
+        path: paths.deleteComment.path,
+        action: deleteCommentAction,
       },
     ],
   },

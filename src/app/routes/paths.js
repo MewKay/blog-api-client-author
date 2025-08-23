@@ -16,6 +16,11 @@ const paths = {
     path: "/posts/edit/:encodedId/:slug",
     getHref: (encodedId, slug) => `/posts/edit/${encodedId}/${slug}`,
   },
+  deleteComment: {
+    path: "/posts/:encodedId/:slug/:commentId/delete",
+    getHref: (encodedId, slug, commentId) =>
+      `/posts/${encodedId}/${slug}/${commentId}/delete`,
+  },
   userRedirect: {
     path: "/user-redirect",
   },
