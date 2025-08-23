@@ -1,4 +1,4 @@
-import ROUTES_PATH from "@/app/routes/path";
+import paths from "@/app/routes/paths";
 import AuthRedirect from "@/components/auth-redirect/auth-redirect";
 import SignUpForm from "@/features/signup-form/signup-form";
 import { Link, useActionData } from "react-router-dom";
@@ -29,7 +29,7 @@ const SignUp = () => {
         <div>
           <p>
             Already have an account?{" "}
-            <Link to={ROUTES_PATH.login}>Log in here.</Link>
+            <Link to={paths.login.path}>Log in here.</Link>
           </p>
         </div>
       </main>

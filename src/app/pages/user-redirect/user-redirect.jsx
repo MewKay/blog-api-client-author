@@ -1,4 +1,4 @@
-import ROUTES_PATH from "@/app/routes/path";
+import paths from "@/app/routes/paths";
 import authService from "@/services/auth.service";
 
 const BASIC_LOGIN_SITE_URL = import.meta.env.VITE_BASIC_LOGIN_SITE_URL;
@@ -17,7 +17,7 @@ const UserRedirect = () => {
         account.
       </p>
       <div>
-        <a href={ROUTES_PATH.login} onClick={handleBackToLogin}>
+        <a href={paths.login.path} onClick={handleBackToLogin}>
           Go back to log in
         </a>
         <a href={BASIC_LOGIN_SITE_URL}>Go to ThyBlog to log in as User</a>

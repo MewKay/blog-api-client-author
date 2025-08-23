@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { screen } from "@testing-library/react";
 import ProtectedRedirect from "./protected-redirect";
-import ROUTES_PATH from "@/app/routes/path";
+import paths from "@/app/routes/paths";
 import useAuth from "@/hooks/useAuth";
 import setupPageRender from "@/testing/utils/setupPageRender";
 
@@ -15,7 +15,7 @@ const mockRoutes = [
     element: <ProtectedRedirect>Protected page</ProtectedRedirect>,
   },
   {
-    path: ROUTES_PATH.login,
+    path: paths.login.path,
     element: <>This is login page</>,
   },
 ];

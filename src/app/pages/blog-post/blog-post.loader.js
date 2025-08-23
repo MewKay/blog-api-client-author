@@ -1,4 +1,4 @@
-import ROUTES_PATH from "@/app/routes/path";
+import paths from "@/app/routes/paths";
 import sqids from "@/lib/sqids";
 import authService from "@/services/auth.service";
 import commentService from "@/services/comment.service";
@@ -10,7 +10,7 @@ const blogPostLoader = async ({ params }) => {
   const token = authService.getToken();
 
   if (!user || !token) {
-    return redirect(ROUTES_PATH.login);
+    return redirect(paths.login.path);
   }
 
   const { encodedId, slug } = params;
@@ -21,17 +21,12 @@ const blogPostLoader = async ({ params }) => {
   );
 
   if (post.slug !== slug) {
-    return redirect(
-      ROUTES_PATH.blogPost
-        .replace(":encodedId", encodedId)
-        .replace(":slug", post.slug),
-    );
+    return redirect(paths.blogPost.getHref(encodedId, post.slug));
   }
 
   const comments = await commentService.getAllByPostId(postId);
-  const editPostLink = `/posts/edit/${encodedId}/${post.slug}`;
 
-  return { post, comments, editPostLink };
+  return { post, comments };
 };
 
 export default blogPostLoader;

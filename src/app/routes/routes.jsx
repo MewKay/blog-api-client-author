@@ -8,33 +8,33 @@ import loginAction from "../pages/login/login.action";
 import SignUp from "../pages/signup/signup";
 import signUpAction from "../pages/signup/signup.action";
 import UserRedirect from "../pages/user-redirect/user-redirect";
-import ROUTES_PATH from "./path";
+import paths from "./paths";
 
 const routes = [
   {
-    path: ROUTES_PATH.home,
+    path: paths.home.path,
     element: <Layout />,
     children: [
       { index: true, element: <Home />, loader: homeLoader },
       {
-        path: ROUTES_PATH.blogPost,
+        path: paths.blogPost.path,
         element: <BlogPost />,
         loader: blogPostLoader,
       },
     ],
   },
   {
-    path: ROUTES_PATH.login,
+    path: paths.login.path,
     element: <Login />,
     action: loginAction,
   },
   {
-    path: ROUTES_PATH.signup,
+    path: paths.signup.path,
     element: <SignUp />,
     action: signUpAction,
   },
   {
-    path: ROUTES_PATH.userRedirect,
+    path: paths.userRedirect.path,
     element: <UserRedirect />,
   },
 ];

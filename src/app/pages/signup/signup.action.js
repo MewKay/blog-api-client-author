@@ -3,7 +3,7 @@ import signUpSchema from "@/lib/validation/schema/signup-schema";
 import AuthError from "@/lib/errors/auth.error";
 import BadRequestError from "@/lib/errors/bad-request.error";
 import { redirect } from "react-router-dom";
-import ROUTES_PATH from "@/app/routes/path";
+import paths from "@/app/routes/paths";
 import ForbiddenError from "@/lib/errors/forbidden.error";
 
 const signUpAction = async ({ request }) => {
@@ -24,7 +24,7 @@ const signUpAction = async ({ request }) => {
 
   try {
     await authService.signup(signUpData);
-    return redirect(ROUTES_PATH.login);
+    return redirect(paths.login.path);
   } catch (error) {
     if (
       error instanceof BadRequestError ||

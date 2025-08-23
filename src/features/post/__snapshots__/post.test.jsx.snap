@@ -17,6 +17,11 @@ exports[`Post component > renders correctly 1`] = `
     <div>
       This is the body of my post
     </div>
+    <a
+      href="/posts/edit/mockedId/this-is-blog-post"
+    >
+      Edit this post
+    </a>
   </div>
 </div>
 `;

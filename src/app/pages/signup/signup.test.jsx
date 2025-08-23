@@ -3,7 +3,7 @@ import setupPageRender from "@/testing/utils/setupPageRender";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import testInputTyping from "@/testing/utils/testInputTyping";
-import ROUTES_PATH from "@/app/routes/path";
+import paths from "@/app/routes/paths";
 import routes from "@/app/routes/routes";
 import authService from "@/services/auth.service";
 import AuthError from "@/lib/errors/auth.error";
@@ -24,7 +24,7 @@ const mockInputValue = {
   confirm_password: "wordpass",
   author_password: "thisisapass",
 };
-const routeEntries = [ROUTES_PATH.signup];
+const routeEntries = [paths.signup.path];
 
 const setup = () => {
   const user = userEvent.setup();

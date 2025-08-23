@@ -3,7 +3,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import routes from "@/app/routes/routes";
 import setupPageRender from "@/testing/utils/setupPageRender";
-import ROUTES_PATH from "@/app/routes/path";
+import paths from "@/app/routes/paths";
 
 import postService from "@/services/post.service";
 import commentService from "@/services/comment.service";
@@ -40,11 +40,7 @@ const mockPost = mockPosts[1];
 
 const setup = async (encodedId = "mockedId", slug = mockPost.slug) => {
   const user = userEvent.setup();
-  setupPageRender(routes, [
-    ROUTES_PATH.blogPost
-      .replace(":encodedId", encodedId)
-      .replace(":slug", slug),
-  ]);
+  setupPageRender(routes, [paths.blogPost.getHref(encodedId, slug)]);
 
   const homeLink = await screen.findByRole("link", { name: /to blog list/i });
 
