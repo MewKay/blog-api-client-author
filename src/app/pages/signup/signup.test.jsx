@@ -11,6 +11,7 @@ import AuthError from "@/lib/errors/auth.error";
 vi.mock("../login/login.jsx");
 vi.mock("@/services/auth.service", () => ({
   default: {
+    getAuthData: vi.fn(() => null),
     signup: vi.fn(),
   },
 }));
@@ -23,16 +24,18 @@ const mockInputValue = {
 };
 const routeEntries = [paths.signup.path];
 
-const setup = () => {
+const setup = async () => {
   const user = userEvent.setup();
   setupPageRender(routes, routeEntries);
 
-  const usernameInput = screen.getByLabelText(/username/i);
-  const passwordInput = screen.getByLabelText(/^password$/i);
-  const confirmPasswordInput = screen.getByLabelText(/confirm password/i);
-  const authorPasswordInput = screen.getByLabelText(/authorization pass/i);
-  const submitButton = screen.getByRole("button", { name: /sign up/i });
-  const loginLink = screen.getByRole("link", { name: /log in/i });
+  const usernameInput = await screen.findByLabelText(/username/i);
+  const passwordInput = await screen.findByLabelText(/^password$/i);
+  const confirmPasswordInput =
+    await screen.findByLabelText(/confirm password/i);
+  const authorPasswordInput =
+    await screen.findByLabelText(/authorization pass/i);
+  const submitButton = await screen.findByRole("button", { name: /sign up/i });
+  const loginLink = await screen.findByRole("link", { name: /log in/i });
 
   return {
     user,
@@ -83,7 +86,7 @@ describe("Sign up page", () => {
         confirmPasswordInput,
         authorPasswordInput,
         submitButton,
-      } = setup();
+      } = await setup();
 
       await user.type(usernameInput, mockInputValue.username);
       await user.type(passwordInput, mockInputValue.password);
@@ -116,7 +119,7 @@ describe("Sign up page", () => {
         confirmPasswordInput,
         authorPasswordInput,
         submitButton,
-      } = setup();
+      } = await setup();
 
       await user.type(usernameInput, mockInputValue.username);
       await user.type(passwordInput, mockInputValue.password);
@@ -140,7 +143,7 @@ describe("Sign up page", () => {
         confirmPasswordInput,
         authorPasswordInput,
         submitButton,
-      } = setup();
+      } = await setup();
 
       await user.type(usernameInput, mockInputValue.username);
       await user.type(passwordInput, mockInputValue.password);
@@ -158,7 +161,7 @@ describe("Sign up page", () => {
   });
 
   it("display link to log in", async () => {
-    const { user, loginLink } = setup();
+    const { user, loginLink } = await setup();
 
     await user.click(loginLink);
     const loginText = await screen.findByText("This is login page");

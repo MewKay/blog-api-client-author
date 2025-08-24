@@ -11,7 +11,7 @@ const testInputTyping = (cases, routeEntries) => {
       const user = userEvent.setup();
       setupPageRender(routes, routeEntries);
 
-      const inputElement = screen.getByLabelText(inputLabel);
+      const inputElement = await screen.findByLabelText(inputLabel);
       await user.type(inputElement, inputValue);
 
       expect(inputElement).toHaveValue(inputValue);

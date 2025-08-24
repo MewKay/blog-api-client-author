@@ -5,17 +5,14 @@ import paths from "@/app/routes/paths";
 import routes from "@/app/routes/routes";
 import authService from "@/services/auth.service";
 import setupPageRender from "@/testing/utils/setupPageRender";
-import testInputTyping from "@/testing/utils/testInputTyping";
 import BadRequestError from "@/lib/errors/bad-request.error";
 import mockAuthor from "@/testing/mocks/author";
+import testInputTyping from "@/testing/utils/testInputTyping";
 
 vi.mock("../home/home.jsx");
 vi.mock("@/services/auth.service", () => ({
   default: {
-    getAuthData: vi.fn(() => ({
-      user: mockAuthor,
-      token: "sometoken",
-    })),
+    getAuthData: vi.fn(() => null),
     login: vi.fn(() => ({
       user: mockAuthor,
       token: "sometoken",
@@ -34,14 +31,14 @@ const mockInputValue = {
 };
 const routesEntries = [paths.login.path];
 
-const setup = () => {
+const setup = async () => {
   const user = userEvent.setup();
   setupPageRender(routes, routesEntries);
 
-  const usernameInput = screen.getByLabelText(/username/i);
-  const passwordInput = screen.getByLabelText(/password/i);
-  const submitButton = screen.getByRole("button", { name: /log in/i });
-  const signUpLink = screen.getByRole("link", { name: /sign up/i });
+  const usernameInput = await screen.findByLabelText(/username/i);
+  const passwordInput = await screen.findByLabelText(/password/i);
+  const submitButton = await screen.findByRole("button", { name: /log in/i });
+  const signUpLink = await screen.findByRole("link", { name: /sign up/i });
 
   return {
     user,
@@ -53,11 +50,11 @@ const setup = () => {
 };
 
 describe("Log in page", () => {
-  describe("Log in form", () => {
-    beforeEach(() => {
-      vi.clearAllMocks();
-    });
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
+  describe("Log in form", () => {
     testInputTyping(
       [
         {
@@ -71,11 +68,15 @@ describe("Log in page", () => {
           inputValue: mockInputValue.password,
         },
       ],
-      routesEntries,
+      [routesEntries],
     );
 
     it("should call auth service login and redirect to Home page on submit", async () => {
-      const { user, usernameInput, passwordInput, submitButton } = setup();
+      authService.getAuthData
+        .mockReturnValueOnce(false)
+        .mockReturnValueOnce({ user: mockAuthor });
+      const { user, usernameInput, passwordInput, submitButton } =
+        await setup();
 
       await user.type(usernameInput, mockInputValue.username);
       await user.type(passwordInput, mockInputValue.password);
@@ -94,7 +95,8 @@ describe("Log in page", () => {
       authService.login.mockImplementationOnce(() => {
         throw new BadRequestError("Validation error", { error: errorMessages });
       });
-      const { user, usernameInput, passwordInput, submitButton } = setup();
+      const { user, usernameInput, passwordInput, submitButton } =
+        await setup();
 
       await user.type(usernameInput, mockInputValue.username);
       await user.type(passwordInput, mockInputValue.password);
@@ -109,7 +111,7 @@ describe("Log in page", () => {
     });
 
     it("should not let user submit form if it is invalid", async () => {
-      const { user, usernameInput, submitButton } = setup();
+      const { user, usernameInput, submitButton } = await setup();
 
       await user.type(usernameInput, "Bot");
       await user.click(submitButton);

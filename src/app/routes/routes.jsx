@@ -6,6 +6,7 @@ import Home from "../pages/home/home";
 import homeLoader from "../pages/home/home.loader";
 import Login from "../pages/login/login";
 import loginAction from "../pages/login/login.action";
+import loginLoader from "../pages/login/login.loader";
 import SignUp from "../pages/signup/signup";
 import signUpAction from "../pages/signup/signup.action";
 import UserRedirect from "../pages/user-redirect/user-redirect";
@@ -35,11 +36,13 @@ const routes = [
   {
     path: paths.login.path,
     element: <Login />,
+    loader: loginLoader,
     action: loginAction,
   },
   {
     path: paths.signup.path,
     element: <SignUp />,
+    loader: loginLoader,
     action: signUpAction,
   },
   {
