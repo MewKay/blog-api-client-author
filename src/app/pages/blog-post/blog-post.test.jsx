@@ -20,8 +20,7 @@ vi.mock("@/lib/sqids.js", () => ({
 }));
 vi.mock("@/services/auth.service", () => ({
   default: {
-    getUser: vi.fn(),
-    getToken: vi.fn(),
+    getAuthData: vi.fn(),
   },
 }));
 vi.mock("@/services/post.service", () => ({
@@ -69,8 +68,10 @@ const setup = async (encodedId = "mockedId", slug = mockPost.slug) => {
 
 describe("Blog Post page", () => {
   beforeEach(() => {
-    authService.getToken.mockReturnValue("someToken");
-    authService.getUser.mockReturnValue(mockAuthor);
+    authService.getAuthData.mockReturnValue({
+      user: mockAuthor,
+      token: "someToken",
+    });
     postService.getAuthorPost.mockResolvedValue(mockPost);
     commentService.getAllByPostId.mockResolvedValue(mockComments);
   });
@@ -101,8 +102,8 @@ describe("Blog Post page", () => {
       .mockReturnValueOnce(true);
     const { user, commentDeleteButtons } = await setup();
 
-    const commentToDelete = mockComments[0].text;
     const commentNotToDelete = mockComments[1].text;
+    const commentToDelete = mockComments[0].text;
 
     await user.click(commentDeleteButtons[commentNotToDelete]);
 

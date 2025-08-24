@@ -17,13 +17,13 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const updateAuthor = () => {
-      const author = authService.getUser();
+      const authData = authService.getAuthData();
 
-      if (author && !author.is_author) {
+      if (authData && !authData.user.is_author) {
         return;
       }
 
-      setAuthor(author);
+      setAuthor(authData.user);
     };
 
     updateAuthor();
@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
     setAuthor(null);
   };
 
-  const isAuthenticated = author !== null;
+  const isAuthenticated = author ? true : false;
 
   return (
     <AuthContext.Provider value={{ author, logout, isAuthenticated }}>

@@ -6,13 +6,13 @@ import postService from "@/services/post.service";
 import { redirect } from "react-router-dom";
 
 const blogPostLoader = async ({ params }) => {
-  const user = authService.getUser();
-  const token = authService.getToken();
+  const authData = authService.getAuthData();
 
-  if (!user || !token) {
+  if (!authData) {
     return redirect(paths.login.path);
   }
 
+  const { user, token } = authData;
   const { encodedId, slug } = params;
   const postId = sqids.decode(encodedId);
   const post = await postService.getAuthorPost(

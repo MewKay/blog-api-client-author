@@ -7,15 +7,14 @@ import { redirect } from "react-router-dom";
 
 const deleteCommentAction = async ({ params }) => {
   const { encodedId, slug, commentId } = params;
-  const user = authService.getUser();
-  const token = authService.getToken();
+  const authData = authService.getAuthData();
 
-  if (!user || !token) {
+  if (!authData) {
     throw new AuthError({ error: "Request requires authentication." });
   }
 
   const postId = sqids.decode(encodedId);
-  await commentService.deleteOne({ postId, commentId }, token);
+  await commentService.deleteOne({ postId, commentId }, authData.token);
 
   return redirect(paths.blogPost.getHref(encodedId, slug));
 };

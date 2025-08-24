@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useContext } from "react";
@@ -8,7 +8,7 @@ import authService from "@/services/auth.service";
 
 vi.mock("@/services/auth.service", () => ({
   default: {
-    getUser: vi.fn(),
+    getAuthData: vi.fn(),
     logout: vi.fn(),
   },
 }));
@@ -26,9 +26,12 @@ const MockChildComponent = () => {
 };
 
 describe("Auth Context", () => {
-  it("provides user data to child components", () => {
-    authService.getUser.mockReturnValueOnce(mockAuthor);
+  beforeEach(() => {
+    vi.resetAllMocks();
+    authService.getAuthData.mockReturnValue({ user: mockAuthor });
+  });
 
+  it("provides user data to child components", () => {
     render(
       <AuthProvider>
         <MockChildComponent />
@@ -40,9 +43,23 @@ describe("Auth Context", () => {
     expect(usernameText).toBeInTheDocument();
   });
 
-  it("provides isAuthenticated boolean to child components", () => {
-    authService.getUser.mockReturnValueOnce(mockAuthor);
+  it("avoids providing user data if not an author", () => {
+    authService.getAuthData.mockReturnValueOnce({
+      user: { ...mockAuthor, is_author: false },
+    });
 
+    render(
+      <AuthProvider>
+        <MockChildComponent />
+      </AuthProvider>,
+    );
+
+    const usernameText = screen.queryByText(mockAuthor.username);
+
+    expect(usernameText).not.toBeInTheDocument();
+  });
+
+  it("provides isAuthenticated boolean to child components", () => {
     const { rerender } = render(
       <AuthProvider>
         <MockChildComponent />
@@ -52,7 +69,7 @@ describe("Auth Context", () => {
     const authText = screen.getByText(/logged in/i);
     expect(authText).toBeInTheDocument();
 
-    authService.getUser.mockReturnValueOnce(null);
+    authService.getAuthData.mockReturnValueOnce(null);
 
     rerender();
     expect(authText).not.toBeInTheDocument();

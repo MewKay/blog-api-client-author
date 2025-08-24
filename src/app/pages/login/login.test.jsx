@@ -8,22 +8,24 @@ import setupPageRender from "@/testing/utils/setupPageRender";
 import testInputTyping from "@/testing/utils/testInputTyping";
 import BadRequestError from "@/lib/errors/bad-request.error";
 import mockAuthor from "@/testing/mocks/author";
-import useAuth from "@/hooks/useAuth";
 
 vi.mock("../home/home.jsx");
 vi.mock("@/services/auth.service", () => ({
   default: {
-    getUser: vi.fn(),
+    getAuthData: vi.fn(() => ({
+      user: mockAuthor,
+      token: "sometoken",
+    })),
     login: vi.fn(() => ({
       user: mockAuthor,
       token: "sometoken",
     })),
   },
 }));
-vi.mock("@/hooks/useAuth.js", () => ({
-  default: vi.fn(() => ({
-    isAuthenticated: false,
-  })),
+vi.mock("@/services/post.service", () => ({
+  default: {
+    getAuthorPosts: vi.fn(),
+  },
 }));
 
 const mockInputValue = {
@@ -73,12 +75,6 @@ describe("Log in page", () => {
     );
 
     it("should call auth service login and redirect to Home page on submit", async () => {
-      // In this order, will first let app display the form, second and third ensure the app to redirect to home
-      useAuth
-        .mockReturnValueOnce({ isAuthenticated: false })
-        .mockReturnValueOnce({ isAuthenticated: true })
-        .mockReturnValueOnce({ isAuthenticated: true });
-
       const { user, usernameInput, passwordInput, submitButton } = setup();
 
       await user.type(usernameInput, mockInputValue.username);

@@ -16,7 +16,11 @@ const routes = [
     path: paths.home.path,
     element: <Layout />,
     children: [
-      { index: true, element: <Home />, loader: homeLoader },
+      {
+        index: true,
+        element: <Home />,
+        loader: homeLoader,
+      },
       {
         path: paths.blogPost.path,
         element: <BlogPost />,

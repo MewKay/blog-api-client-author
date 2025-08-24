@@ -4,14 +4,14 @@ import postService from "@/services/post.service";
 import { redirect } from "react-router-dom";
 
 const homeLoader = async () => {
-  const author = authService.getUser();
-  const token = authService.getToken();
+  const authData = authService.getAuthData();
 
-  if (!author || !token) {
+  if (!authData) {
     return redirect(paths.login.path);
   }
 
-  const posts = await postService.getAuthorPosts(author.id, token);
+  const { user, token } = authData;
+  const posts = await postService.getAuthorPosts(user.id, token);
   return { posts };
 };
 

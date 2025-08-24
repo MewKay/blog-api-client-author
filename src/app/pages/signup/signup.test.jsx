@@ -8,12 +8,9 @@ import routes from "@/app/routes/routes";
 import authService from "@/services/auth.service";
 import AuthError from "@/lib/errors/auth.error";
 
-vi.mock("../login/login.jsx", () => ({
-  default: () => <p>This is log in page</p>,
-}));
+vi.mock("../login/login.jsx");
 vi.mock("@/services/auth.service", () => ({
   default: {
-    getUser: vi.fn(),
     signup: vi.fn(),
   },
 }));
@@ -97,7 +94,7 @@ describe("Sign up page", () => {
 
       expect(authService.signup).toHaveBeenCalledWith(mockInputValue);
 
-      const loginText = await screen.findByText(/This is log in page/);
+      const loginText = await screen.findByText(/This is login page/);
 
       expect(loginText).toBeInTheDocument();
     });
@@ -164,7 +161,7 @@ describe("Sign up page", () => {
     const { user, loginLink } = setup();
 
     await user.click(loginLink);
-    const loginText = await screen.findByText("This is log in page");
+    const loginText = await screen.findByText("This is login page");
 
     expect(loginText).toBeInTheDocument();
   });

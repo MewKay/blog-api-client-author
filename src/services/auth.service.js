@@ -1,23 +1,36 @@
 import api from "./api-client";
+import decodeTokenToUser from "@/lib/decodeTokenToUser";
+
+const removeAuth = () => {
+  localStorage.removeItem("token");
+  window.dispatchEvent(new Event("storage"));
+};
 
 const authService = {
   login: async (credentials) => {
     const response = await api.post("/login", credentials);
 
-    localStorage.setItem("thyblog_user", JSON.stringify(response.user));
-    localStorage.setItem("thyblog_token", response.token);
+    localStorage.setItem("token", response.token);
     window.dispatchEvent(new Event("storage"));
 
     return response;
   },
-  logout: () => {
-    localStorage.removeItem("thyblog_user");
-    localStorage.removeItem("thyblog_token");
-    window.dispatchEvent(new Event("storage"));
-  },
+  logout: removeAuth,
   signup: (body) => api.post("/signup-author", body),
-  getUser: () => JSON.parse(localStorage.getItem("thyblog_user")),
-  getToken: () => localStorage.getItem("thyblog_token"),
+  getAuthData: () => {
+    const token = localStorage.getItem("token");
+    const user = decodeTokenToUser(token);
+
+    if (!user) {
+      if (token) {
+        removeAuth();
+      }
+
+      return false;
+    }
+
+    return { user, token };
+  },
 };
 
 export default authService;

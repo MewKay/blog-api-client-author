@@ -2,12 +2,18 @@ import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import authService from "../auth.service";
 import api from "../api-client";
 import mockAuthor from "@/testing/mocks/author";
+import decodeTokenToUser from "@/lib/decodeTokenToUser";
+
+vi.mock("@/lib/decodeTokenToUser.js", () => ({
+  default: vi.fn(),
+}));
 
 const mockToken = "ThisIsSomeToken";
 const mockCredentials = {
   username: mockAuthor.username,
   password: "wordpass",
 };
+
 const mockLocalStorage = (() => {
   let storage = {};
 
@@ -44,53 +50,57 @@ describe("Auth service", () => {
     window.localStorage = originalLocalStorage;
   });
 
-  it("stores user and token to localStorage on login", async () => {
+  it("stores token to localStorage on login", async () => {
     api.post = vi
       .fn()
       .mockResolvedValue({ user: mockAuthor, token: mockToken });
 
     await authService.login(mockCredentials);
-
-    const userResult = JSON.parse(localStorage.getItem("thyblog_user"));
-    const tokenResult = localStorage.getItem("thyblog_token");
-
-    expect(userResult).toEqual(mockAuthor);
+    const tokenResult = localStorage.getItem("token");
     expect(tokenResult).toBe(mockToken);
   });
 
-  it("removes user and token from localStorage on logout", () => {
-    localStorage.setItem("thyblog_user", JSON.stringify(mockAuthor));
-    localStorage.setItem("thyblog_token", mockToken);
+  it("removes token from localStorage on logout", () => {
+    localStorage.setItem("token", mockToken);
 
     authService.logout();
 
-    const userResult = localStorage.getItem("user");
     const tokenResult = localStorage.getItem("token");
 
-    expect(userResult).toBeNull();
     expect(tokenResult).toBeNull();
   });
 
-  it("returns user data from localstorage on getUser", () => {
-    localStorage.setItem("thyblog_user", JSON.stringify(mockAuthor));
+  it("returns user data and token from localstorage on getAuthData", () => {
+    decodeTokenToUser.mockReturnValue(mockAuthor);
+    localStorage.setItem("token", mockToken);
 
-    const result = authService.getUser();
+    const result = authService.getAuthData();
 
-    expect(result).toEqual(mockAuthor);
+    expect(result).toEqual({ user: mockAuthor, token: mockToken });
+  });
+
+  it("returns falsy and remove token from localStorage on invalid token on getAuthData", () => {
+    decodeTokenToUser.mockReturnValue(null);
+
+    const result = authService.getAuthData();
+
+    const tokenResult = localStorage.getItem("token");
+
+    expect(result).toBeFalsy();
+    expect(tokenResult).toBeNull();
   });
 
   it("triggers a storage event on login and logout", async () => {
-    let updateCount = 0;
-    const eventListener = () => updateCount++;
+    const eventListener = vi.fn();
     window.addEventListener("storage", eventListener);
 
     await authService.login(mockCredentials);
 
-    expect(updateCount).toBe(1);
+    expect(eventListener).toHaveBeenCalledOnce();
 
     authService.logout();
 
-    expect(updateCount).toBe(2);
+    expect(eventListener).toHaveBeenCalledTimes(2);
 
     window.removeEventListener("storage", eventListener);
   });
