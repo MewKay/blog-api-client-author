@@ -38,7 +38,13 @@ const PostForm = ({ postToEdit = null }) => {
         onChange={(event) => setPostTextValue(event.target.value)}
       ></textarea>
 
-      <Input ref={checkBoxRef} type="checkbox" name="is_published" value="true">
+      <Input
+        ref={checkBoxRef}
+        type="checkbox"
+        name="is_published"
+        value="true"
+        setValue={() => {}}
+      >
         Publish the post ?
       </Input>
 

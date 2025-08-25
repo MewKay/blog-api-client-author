@@ -7,6 +7,8 @@ import homeLoader from "../pages/home/home.loader";
 import Login from "../pages/login/login";
 import loginAction from "../pages/login/login.action";
 import loginLoader from "../pages/login/login.loader";
+import NewPost from "../pages/new-post/new-post";
+import newPostAction from "../pages/new-post/new-post.action";
 import SignUp from "../pages/signup/signup";
 import signUpAction from "../pages/signup/signup.action";
 import UserRedirect from "../pages/user-redirect/user-redirect";
@@ -26,6 +28,11 @@ const routes = [
         path: paths.blogPost.path,
         element: <BlogPost />,
         loader: blogPostLoader,
+      },
+      {
+        path: paths.newBlogPost.path,
+        element: <NewPost />,
+        action: newPostAction,
       },
       {
         path: paths.deleteComment.path,

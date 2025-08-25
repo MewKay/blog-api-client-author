@@ -16,6 +16,9 @@ const paths = {
     path: "/posts/edit/:encodedId/:slug",
     getHref: (encodedId, slug) => `/posts/edit/${encodedId}/${slug}`,
   },
+  newBlogPost: {
+    path: "/posts/new",
+  },
   deleteComment: {
     path: "/posts/:encodedId/:slug/:commentId/delete",
     getHref: (encodedId, slug, commentId) =>
