@@ -58,7 +58,7 @@ const setup = () => {
   const titleInput = screen.getByLabelText(/title/i);
   const postTextInput = screen.getByPlaceholderText(/write your post/i);
   const publicationCheckbox = screen.getByLabelText(/Publish/i);
-  const submitButton = screen.getByRole("button", { name: /submit/i });
+  const submitButton = screen.getByRole("button", { name: /create/i });
 
   return {
     user,

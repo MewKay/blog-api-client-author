@@ -2,6 +2,8 @@ import Layout from "../layout/layout";
 import BlogPost from "../pages/blog-post/blog-post";
 import blogPostLoader from "../pages/blog-post/blog-post.loader";
 import deleteCommentAction from "../pages/delete-comment/delete-comment.action";
+import EditPost from "../pages/edit-post/edit-post";
+import editPostLoader from "../pages/edit-post/edit-post.loader";
 import Home from "../pages/home/home";
 import homeLoader from "../pages/home/home.loader";
 import Login from "../pages/login/login";
@@ -33,6 +35,11 @@ const routes = [
         path: paths.newBlogPost.path,
         element: <NewPost />,
         action: newPostAction,
+      },
+      {
+        path: paths.editBlogPost.path,
+        element: <EditPost />,
+        loader: editPostLoader,
       },
       {
         path: paths.deleteComment.path,

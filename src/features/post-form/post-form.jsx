@@ -70,7 +70,18 @@ const PostForm = ({ postToEdit = null }) => {
       <button type="reset" onClick={handleCancelClick}>
         Cancel
       </button>
-      <button disabled={!isFormValid}>Submit Post</button>
+      {!postToEdit ? (
+        <button disabled={!isFormValid}>Create Post</button>
+      ) : (
+        <>
+          <button disabled={!isFormValid} name="intent" value="update">
+            Update Post
+          </button>
+          <button name="intent" value="delete">
+            Delete Post
+          </button>
+        </>
+      )}
     </Form>
   );
 };
