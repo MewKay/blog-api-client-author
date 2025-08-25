@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
+import { forwardRef } from "react";
 
-const Input = ({ children, value, setValue, errorMessage, ...inputProps }) => {
+const Input = forwardRef(function Input(
+  { children, value, setValue, errorMessage, ...inputProps },
+  ref,
+) {
   const isValueNotEmpty = value !== "";
 
   return (
@@ -11,17 +15,18 @@ const Input = ({ children, value, setValue, errorMessage, ...inputProps }) => {
           value={value}
           onChange={(event) => setValue(event.target.value)}
           {...inputProps}
+          ref={ref}
         />
       </label>
       <p>{isValueNotEmpty && errorMessage}</p>
     </div>
   );
-};
+});
 
 Input.propTypes = {
   children: PropTypes.node,
-  value: PropTypes.string.isRequired,
-  setValue: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  setValue: PropTypes.func,
   errorMessage: PropTypes.string,
 };
 
