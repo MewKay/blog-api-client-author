@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import setupPageRender from "@/testing/utils/setupPageRender";
@@ -6,10 +6,16 @@ import paths from "@/app/routes/paths";
 import routes from "@/app/routes/routes";
 import mockPosts from "@/testing/mocks/posts";
 import { createMemoryRouter, Link, RouterProvider } from "react-router-dom";
+import postService from "@/services/post.service";
+import authService from "@/services/auth.service";
+import mockAuthor from "@/testing/mocks/author";
+
+const mockPost = mockPosts[0];
 
 const mockInputValue = {
-  title: mockPosts[0].title,
-  text: mockPosts[0].text,
+  title: mockPost.title,
+  text: mockPost.text,
+  is_published: true,
 };
 
 const mockRoutes = [
@@ -84,5 +90,36 @@ describe("New Post page", () => {
 
     const lastRouteText = await screen.findByText("This is test");
     expect(lastRouteText).toBeInTheDocument();
+  });
+
+  it("calls createPost service with inputs then redirect to new blog post page on submit", async () => {
+    const mockToken = "someToken";
+    postService.createPost = vi.fn().mockReturnValue(mockPost);
+    postService.getAuthorPost = vi.fn().mockReturnValue(mockPost);
+    authService.getAuthData = vi
+      .fn()
+      .mockReturnValue({ user: mockAuthor, token: mockToken });
+
+    const {
+      user,
+      titleInput,
+      postTextInput,
+      publicationCheckbox,
+      submitButton,
+    } = setup();
+
+    await user.type(titleInput, mockInputValue.title);
+    await user.type(postTextInput, mockInputValue.text);
+    await user.click(publicationCheckbox);
+
+    await user.click(submitButton);
+
+    expect(postService.createPost).toHaveBeenCalledWith(
+      mockInputValue,
+      mockToken,
+    );
+
+    const postTitle = await screen.findByText(mockPost.title);
+    expect(postTitle).toBeInTheDocument();
   });
 });
