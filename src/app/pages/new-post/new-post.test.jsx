@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import setupPageRender from "@/testing/utils/setupPageRender";
@@ -9,9 +9,29 @@ import { createMemoryRouter, Link, RouterProvider } from "react-router-dom";
 import postService from "@/services/post.service";
 import authService from "@/services/auth.service";
 import mockAuthor from "@/testing/mocks/author";
+import BadRequestError from "@/lib/errors/bad-request.error";
+import commentService from "@/services/comment.service";
+import mockComments from "@/testing/mocks/comments";
+
+vi.mock("@/services/post.service", () => ({
+  default: {
+    createPost: vi.fn(),
+    getAuthorPost: vi.fn(),
+  },
+}));
+vi.mock("@/services/comment.service", () => ({
+  default: {
+    getAllByPostId: vi.fn(),
+  },
+}));
+vi.mock("@/services/auth.service", () => ({
+  default: {
+    getAuthData: vi.fn(),
+  },
+}));
 
 const mockPost = mockPosts[0];
-
+const mockToken = "someToken";
 const mockInputValue = {
   title: mockPost.title,
   text: mockPost.text,
@@ -50,6 +70,17 @@ const setup = () => {
 };
 
 describe("New Post page", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    postService.createPost.mockReturnValue(mockPost);
+    postService.getAuthorPost.mockReturnValue(mockPost);
+    commentService.getAllByPostId.mockReturnValue(mockComments);
+    authService.getAuthData.mockReturnValue({
+      user: mockAuthor,
+      token: mockToken,
+    });
+  });
+
   it("should be able to type on title input", async () => {
     const { user, titleInput } = setup();
     await user.type(titleInput, mockInputValue.title);
@@ -93,13 +124,6 @@ describe("New Post page", () => {
   });
 
   it("calls createPost service with inputs then redirect to new blog post page on submit", async () => {
-    const mockToken = "someToken";
-    postService.createPost = vi.fn().mockReturnValue(mockPost);
-    postService.getAuthorPost = vi.fn().mockReturnValue(mockPost);
-    authService.getAuthData = vi
-      .fn()
-      .mockReturnValue({ user: mockAuthor, token: mockToken });
-
     const {
       user,
       titleInput,
@@ -121,5 +145,44 @@ describe("New Post page", () => {
 
     const postTitle = await screen.findByText(mockPost.title);
     expect(postTitle).toBeInTheDocument();
+  });
+
+  it("should display one or many error message for any problem occuring during api call", async () => {
+    const errorMessages = ["Username is invalid", "Password is too weak"];
+
+    postService.createPost.mockImplementationOnce(() => {
+      throw new BadRequestError("Validation error", { error: errorMessages });
+    });
+
+    const {
+      user,
+      titleInput,
+      postTextInput,
+      publicationCheckbox,
+      submitButton,
+    } = setup();
+    await user.type(titleInput, mockInputValue.title);
+    await user.type(postTextInput, mockInputValue.text);
+    await user.click(publicationCheckbox);
+    await user.click(submitButton);
+
+    expect(postService.createPost).toHaveBeenCalledWith(
+      mockInputValue,
+      mockToken,
+    );
+
+    for (let message of errorMessages) {
+      const errorText = await screen.findByText(message);
+      expect(errorText).toBeInTheDocument();
+    }
+  });
+
+  it("should not let user submit form if it is invalid", async () => {
+    const { user, titleInput, submitButton } = setup();
+
+    await user.type(titleInput, "This is invalid post");
+    await user.click(submitButton);
+
+    expect(postService.createPost).not.toHaveBeenCalled();
   });
 });
