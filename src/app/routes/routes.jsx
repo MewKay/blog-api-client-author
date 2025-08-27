@@ -3,6 +3,7 @@ import BlogPost from "../pages/blog-post/blog-post";
 import blogPostLoader from "../pages/blog-post/blog-post.loader";
 import deleteCommentAction from "../pages/delete-comment/delete-comment.action";
 import EditPost from "../pages/edit-post/edit-post";
+import editPostAction from "../pages/edit-post/edit-post.action";
 import editPostLoader from "../pages/edit-post/edit-post.loader";
 import Home from "../pages/home/home";
 import homeLoader from "../pages/home/home.loader";
@@ -40,6 +41,7 @@ const routes = [
         path: paths.editBlogPost.path,
         element: <EditPost />,
         loader: editPostLoader,
+        action: editPostAction,
       },
       {
         path: paths.deleteComment.path,

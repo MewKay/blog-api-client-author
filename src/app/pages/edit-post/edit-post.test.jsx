@@ -8,9 +8,11 @@ import mockPosts from "@/testing/mocks/posts";
 import authService from "@/services/auth.service";
 import mockAuthor from "@/testing/mocks/author";
 import postService from "@/services/post.service";
+import sqids from "@/lib/sqids";
 
 vi.mock("@/lib/sqids.js", () => ({
   default: {
+    encode: vi.fn(),
     decode: vi.fn(),
   },
 }));
@@ -23,6 +25,8 @@ vi.mock("@/services/post.service", () => ({
   default: {
     getAuthorPost: vi.fn(),
     getAuthorPosts: vi.fn(),
+    updatePost: vi.fn(),
+    deletePost: vi.fn(),
   },
 }));
 
@@ -62,11 +66,15 @@ const setup = async ({ clearInputs }) => {
 
 describe("Edit Post page", () => {
   beforeEach(() => {
+    sqids.decode.mockReturnValue(mockPost.id);
     authService.getAuthData.mockReturnValue({
       user: mockAuthor,
       token: mockToken,
     });
     postService.getAuthorPost.mockResolvedValue(mockPost);
+    postService.getAuthorPosts.mockResolvedValue(mockPosts);
+    postService.updatePost.mockReturnValue(mockPost);
+    postService.deletePost.mockReturnValue();
   });
 
   it("should be able to type on title input", async () => {
@@ -83,6 +91,16 @@ describe("Edit Post page", () => {
     expect(postTextInput).toHaveValue(mockInputValue.text);
   });
 
+  it("should be able to check and uncheck publication checkbox", async () => {
+    const { user, publicationCheckbox } = await setup({ clearInputs: false });
+
+    await user.click(publicationCheckbox);
+    expect(publicationCheckbox.checked).toBe(!mockPost.is_published);
+
+    await user.click(publicationCheckbox);
+    expect(publicationCheckbox.checked).toBe(mockPost.is_published);
+  });
+
   it("fetches and insert post data in the inputs", async () => {
     const { titleInput, postTextInput, publicationCheckbox } = await setup({
       clearInputs: false,
@@ -91,5 +109,36 @@ describe("Edit Post page", () => {
     expect(titleInput).toHaveValue(mockPost.title);
     expect(postTextInput).toHaveValue(mockPost.text);
     expect(publicationCheckbox.checked).toBe(mockPost.is_published);
+  });
+
+  it("calls deletePost service on delete button click", async () => {
+    const { user, deleteButton } = await setup({ clearInputs: false });
+    await user.click(deleteButton);
+
+    expect(postService.deletePost).toHaveBeenCalledOnce();
+  });
+
+  it("calls updatePost service update button click", async () => {
+    const { user, titleInput, postTextInput, submitButton } = await setup({
+      clearInputs: false,
+    });
+    const additionalTitle = " plus extra";
+    const newContent = "foo bar";
+
+    await user.type(titleInput, additionalTitle);
+    await user.clear(postTextInput);
+    await user.type(postTextInput, newContent);
+
+    await user.click(submitButton);
+
+    expect(postService.updatePost).toHaveBeenCalledWith(
+      mockPost.id,
+      {
+        title: mockPost.title + additionalTitle,
+        text: newContent,
+        is_published: mockPost.is_published,
+      },
+      mockToken,
+    );
   });
 });
