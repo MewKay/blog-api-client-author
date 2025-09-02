@@ -1,4 +1,5 @@
 import PostForm from "@/features/post-form/post-form";
+import ActionErrorMessages from "@/components/action-error-messages/action-error-messages";
 import { useActionData } from "react-router-dom";
 
 const NewPost = () => {
@@ -6,18 +7,7 @@ const NewPost = () => {
 
   return (
     <main>
-      {actionData && (
-        <ul>
-          {Array.isArray(actionData.error) ? (
-            actionData.error.map((errorMessage, index) => (
-              <li key={index}>{errorMessage}</li>
-            ))
-          ) : (
-            <li>{actionData.error}</li>
-          )}
-        </ul>
-      )}
-
+      <ActionErrorMessages actionData={actionData} />
       <PostForm />
     </main>
   );

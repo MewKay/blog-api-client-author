@@ -1,4 +1,5 @@
 import paths from "@/app/routes/paths";
+import ActionErrorMessages from "@/components/action-error-messages/action-error-messages";
 import LoginForm from "@/features/login-form/login-form";
 import { Link, useActionData } from "react-router-dom";
 
@@ -10,18 +11,7 @@ const Login = () => {
       <div>
         <h3>Log in to your account</h3>
 
-        {actionData && (
-          <ul>
-            {Array.isArray(actionData.error) ? (
-              actionData.error.map((errorMessage, index) => (
-                <li key={index}>{errorMessage}</li>
-              ))
-            ) : (
-              <li>{actionData.error}</li>
-            )}
-          </ul>
-        )}
-
+        <ActionErrorMessages actionData={actionData} />
         <LoginForm />
       </div>
       <div>
