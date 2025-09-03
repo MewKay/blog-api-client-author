@@ -73,8 +73,9 @@ describe("Log in page", () => {
 
     it("should call auth service login and redirect to Home page on submit", async () => {
       authService.getAuthData
-        .mockReturnValueOnce(false)
-        .mockReturnValueOnce({ user: mockAuthor });
+        .mockReturnValueOnce(false) // Log in loader call
+        .mockReturnValueOnce({ user: mockAuthor }) // Layout loader call
+        .mockReturnValueOnce({ user: mockAuthor }); // Home loader call
       const { user, usernameInput, passwordInput, submitButton } =
         await setup();
 

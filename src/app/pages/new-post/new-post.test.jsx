@@ -51,14 +51,14 @@ const mockRoutes = [
   },
 ];
 
-const setup = () => {
+const setup = async () => {
   const user = userEvent.setup();
   setupPageRender(routes, [paths.newBlogPost.path]);
 
-  const titleInput = screen.getByLabelText(/title/i);
-  const postTextInput = screen.getByPlaceholderText(/write your post/i);
-  const publicationCheckbox = screen.getByLabelText(/Publish/i);
-  const submitButton = screen.getByRole("button", { name: /create/i });
+  const titleInput = await screen.findByLabelText(/title/i);
+  const postTextInput = await screen.findByPlaceholderText(/write your post/i);
+  const publicationCheckbox = await screen.findByLabelText(/Publish/i);
+  const submitButton = await screen.findByRole("button", { name: /create/i });
 
   return {
     user,
@@ -82,21 +82,21 @@ describe("New Post page", () => {
   });
 
   it("should be able to type on title input", async () => {
-    const { user, titleInput } = setup();
+    const { user, titleInput } = await setup();
     await user.type(titleInput, mockInputValue.title);
 
     expect(titleInput).toHaveValue(mockInputValue.title);
   });
 
   it("should be able to type on post text input", async () => {
-    const { user, postTextInput } = setup();
+    const { user, postTextInput } = await setup();
     await user.type(postTextInput, mockInputValue.text);
 
     expect(postTextInput).toHaveValue(mockInputValue.text);
   });
 
   it("should be able to check and uncheck publication checkbox", async () => {
-    const { user, publicationCheckbox } = setup();
+    const { user, publicationCheckbox } = await setup();
 
     await user.click(publicationCheckbox);
     expect(publicationCheckbox.checked).toBeTruthy();
@@ -130,7 +130,7 @@ describe("New Post page", () => {
       postTextInput,
       publicationCheckbox,
       submitButton,
-    } = setup();
+    } = await setup();
 
     await user.type(titleInput, mockInputValue.title);
     await user.type(postTextInput, mockInputValue.text);
@@ -160,7 +160,7 @@ describe("New Post page", () => {
       postTextInput,
       publicationCheckbox,
       submitButton,
-    } = setup();
+    } = await setup();
     await user.type(titleInput, mockInputValue.title);
     await user.type(postTextInput, mockInputValue.text);
     await user.click(publicationCheckbox);
@@ -178,7 +178,7 @@ describe("New Post page", () => {
   });
 
   it("should not let user submit form if it is invalid", async () => {
-    const { user, titleInput, submitButton } = setup();
+    const { user, titleInput, submitButton } = await setup();
 
     await user.type(titleInput, "This is invalid post");
     await user.click(submitButton);

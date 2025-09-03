@@ -1,4 +1,5 @@
 import Layout from "../layout/layout";
+import layoutLoader from "../layout/layout.loader";
 import BlogPost from "../pages/blog-post/blog-post";
 import blogPostLoader from "../pages/blog-post/blog-post.loader";
 import deleteCommentAction from "../pages/delete-comment/delete-comment.action";
@@ -21,6 +22,7 @@ const routes = [
   {
     path: paths.home.path,
     element: <Layout />,
+    loader: layoutLoader,
     children: [
       {
         index: true,
