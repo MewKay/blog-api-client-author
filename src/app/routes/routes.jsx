@@ -1,3 +1,4 @@
+import ErrorBoundary from "../layout/error-boundary/error-boundary";
 import Layout from "../layout/layout";
 import layoutLoader from "../layout/layout.loader";
 import BlogPost from "../pages/blog-post/blog-post";
@@ -22,6 +23,7 @@ const routes = [
   {
     path: paths.home.path,
     element: <Layout />,
+    errorElement: <ErrorBoundary />,
     loader: layoutLoader,
     children: [
       {
@@ -51,18 +53,21 @@ const routes = [
   {
     path: paths.login.path,
     element: <Login />,
+    errorElement: <ErrorBoundary />,
     loader: loginLoader,
     action: loginAction,
   },
   {
     path: paths.signup.path,
     element: <SignUp />,
+    errorElement: <ErrorBoundary />,
     loader: loginLoader,
     action: signUpAction,
   },
   {
     path: paths.userRedirect.path,
     element: <UserRedirect />,
+    errorElement: <ErrorBoundary />,
   },
 ];
 
