@@ -1,28 +1,51 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import Header from "./header";
-import useAuth from "@/hooks/useAuth";
 import userEvent from "@testing-library/user-event";
+import {
+  createMemoryRouter,
+  MemoryRouter,
+  RouterProvider,
+} from "react-router-dom";
+import authService from "@/services/auth.service";
+import Header from "./header";
+import paths from "@/app/routes/paths";
 
-vi.mock("@/hooks/useAuth", () => ({
-  default: vi.fn(() => ({ logout: vi.fn() })),
-}));
+const loginText = "This is log in page";
+
+const mockRouter = createMemoryRouter(
+  [
+    {
+      path: "/",
+      element: (
+        <>
+          <Header />
+          <main>Content</main>
+        </>
+      ),
+    },
+    {
+      path: paths.login.path,
+      element: <>{loginText}</>,
+    },
+  ],
+  { initialEntries: ["/"] },
+);
 
 describe("Header component", () => {
   it("renders correctly", () => {
-    const { container } = render(<Header />);
+    const { container } = render(<Header />, { wrapper: MemoryRouter });
 
     expect(container).toMatchSnapshot();
   });
 
-  it("calls log out on button click", async () => {
+  it("calls authService log out on button click and redirect to log in page", async () => {
+    authService.logout = vi.fn();
     const user = userEvent.setup();
-    const mockLogout = vi.fn();
-    useAuth.mockReturnValue({ logout: mockLogout });
 
-    render(<Header />);
+    render(<RouterProvider router={mockRouter} />);
     await user.click(screen.getByRole("button", { name: /log out/i }));
 
-    expect(mockLogout).toHaveBeenCalled();
+    expect(authService.logout).toHaveBeenCalledOnce();
+    expect(await screen.findByText(loginText)).toBeInTheDocument();
   });
 });

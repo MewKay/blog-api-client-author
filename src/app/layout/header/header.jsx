@@ -1,7 +1,14 @@
-import useAuth from "@/hooks/useAuth";
+import paths from "@/app/routes/paths";
+import authService from "@/services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const logout = () => {
+    authService.logout();
+    navigate(paths.login.path);
+  };
 
   return (
     <header>
