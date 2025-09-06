@@ -14,7 +14,14 @@ const DeleteCommentButton = ({ commentId }) => {
   return (
     <Form method="delete">
       <input type="hidden" name="commentId" value={commentId} />
-      <button onClick={handleConfirmClick}>Delete comment</button>
+      <button
+        type="submit"
+        name="intent"
+        value="delete_comment"
+        onClick={handleConfirmClick}
+      >
+        Delete comment
+      </button>
     </Form>
   );
 };

@@ -11,6 +11,7 @@ import authService from "@/services/auth.service";
 import mockAuthor from "@/testing/mocks/author";
 import mockPosts from "@/testing/mocks/posts";
 import mockComments from "@/testing/mocks/comments";
+import sqids from "@/lib/sqids";
 
 vi.mock("../home/home.jsx");
 vi.mock("@/lib/sqids.js", () => ({
@@ -74,6 +75,7 @@ const setup = async (encodedId = "mockedId", slug = mockPost.slug) => {
 
 describe("Blog Post page", () => {
   beforeEach(() => {
+    sqids.decode.mockReturnValue(mockPost.id);
     authService.getAuthData.mockReturnValue({
       user: mockAuthor,
       token: mockToken,
@@ -136,10 +138,11 @@ describe("Blog Post page", () => {
 
     expect(confirmMock).toHaveBeenCalled();
     expect(commentService.deleteOne).toHaveBeenCalledWith(
-      expect.objectContaining({
+      {
+        postId: mockPost.id,
         commentId: `${mockComments[0].id}`,
-      }),
-      "someToken",
+      },
+      mockToken,
     );
   });
 });

@@ -23,7 +23,11 @@ const Post = ({ post, editPostLink }) => {
       <div>{text}</div>
       <div>
         <Link to={editPostLink}>Edit this post</Link>
-        {is_published ? <p>✅️ Published</p> : <PublishButton />}
+        {is_published ? (
+          <p>✅️ Published</p>
+        ) : (
+          <PublishButton postData={{ title, text }} />
+        )}
       </div>
     </div>
   );
