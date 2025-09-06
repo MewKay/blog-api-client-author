@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { formatPostDate } from "./post.util";
 import { isSameDay } from "date-fns";
 import { Link } from "react-router-dom";
+import PublishButton from "@/components/publish-button/publish-button";
 
 const Post = ({ post, editPostLink }) => {
   const { title, text, created_at, edited_at, is_published } = post;
@@ -18,10 +19,12 @@ const Post = ({ post, editPostLink }) => {
           {formattedCreateDate}
           {isPostEdited && ` ( Last edited ${formattedEditDate} )`}
         </p>
-        {is_published ? <p>✅️ Published</p> : <p>❎️ Unpublished</p>}
       </div>
       <div>{text}</div>
-      <Link to={editPostLink}>Edit this post</Link>
+      <div>
+        <Link to={editPostLink}>Edit this post</Link>
+        {is_published ? <p>✅️ Published</p> : <PublishButton />}
+      </div>
     </div>
   );
 };

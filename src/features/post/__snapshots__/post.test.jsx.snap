@@ -10,18 +10,20 @@ exports[`Post component > renders correctly 1`] = `
       <p>
         MAY 16, 2025
       </p>
-      <p>
-        ❎️ Unpublished
-      </p>
     </div>
     <div>
       This is the body of my post
     </div>
-    <a
-      href="/posts/edit/mockedId/this-is-blog-post"
-    >
-      Edit this post
-    </a>
+    <div>
+      <a
+        href="/posts/edit/mockedId/this-is-blog-post"
+      >
+        Edit this post
+      </a>
+      <button>
+        Publish post
+      </button>
+    </div>
   </div>
 </div>
 `;

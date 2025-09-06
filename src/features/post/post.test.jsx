@@ -1,10 +1,14 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { addMonths } from "date-fns";
 import Post from "./post";
 import mockPosts from "@/testing/mocks/posts";
 import { MemoryRouter } from "react-router-dom";
 import paths from "@/app/routes/paths";
+
+vi.mock("@/components/publish-button/publish-button.jsx", () => ({
+  default: () => <button>Publish post</button>,
+}));
 
 const mockProps = {
   post: mockPosts[0],
@@ -35,7 +39,7 @@ describe("Post component", () => {
     expect(editedText).toBeInTheDocument();
   });
 
-  it("display whether post is published or not", () => {
+  it("display status text if published, button to change status otherwise", () => {
     const publishedPost = {
       ...mockProps.post,
       is_published: true,
@@ -52,7 +56,9 @@ describe("Post component", () => {
       },
     );
     expect(screen.getByText(/published/i)).toBeInTheDocument();
-    expect(screen.queryByText(/unpublished/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /publish post/i }),
+    ).not.toBeInTheDocument();
 
     rerender(
       <Post post={unpublishedPost} editPostLink={mockProps.editPostLink} />,
@@ -60,7 +66,9 @@ describe("Post component", () => {
         wrapper: MemoryRouter,
       },
     );
-    expect(screen.queryByText(/^published/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/unpublished/i)).toBeInTheDocument();
+    expect(screen.queryByText(/published/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /publish post/i }),
+    ).toBeInTheDocument();
   });
 });
