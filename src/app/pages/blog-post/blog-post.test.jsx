@@ -27,6 +27,7 @@ vi.mock("@/services/post.service", () => ({
   default: {
     getAuthorPost: vi.fn(),
     getAuthorPosts: vi.fn(),
+    updatePost: vi.fn(),
   },
 }));
 vi.mock("@/services/comment.service", () => ({
@@ -36,7 +37,8 @@ vi.mock("@/services/comment.service", () => ({
   },
 }));
 
-const mockPost = mockPosts[1];
+const mockPost = mockPosts[0];
+const mockToken = "sometoken";
 
 const setup = async (encodedId = "mockedId", slug = mockPost.slug) => {
   const user = userEvent.setup();
@@ -46,6 +48,9 @@ const setup = async (encodedId = "mockedId", slug = mockPost.slug) => {
 
   const postTitle = await screen.findByText(mockPost.title);
   const postText = await screen.findByText(mockPost.text);
+  const publishButton = await screen.findByRole("button", {
+    name: /Publish post/i,
+  });
 
   const commentsText = [];
   const commentDeleteButtons = {};
@@ -61,6 +66,7 @@ const setup = async (encodedId = "mockedId", slug = mockPost.slug) => {
     homeLink,
     postTitle,
     postText,
+    publishButton,
     commentsText,
     commentDeleteButtons,
   };
@@ -70,7 +76,7 @@ describe("Blog Post page", () => {
   beforeEach(() => {
     authService.getAuthData.mockReturnValue({
       user: mockAuthor,
-      token: "someToken",
+      token: mockToken,
     });
     postService.getAuthorPost.mockResolvedValue(mockPost);
     commentService.getAllByPostId.mockResolvedValue(mockComments);
@@ -93,6 +99,22 @@ describe("Blog Post page", () => {
     await user.click(homeLink);
 
     expect(await screen.findByText("This is home")).toBeInTheDocument();
+  });
+
+  it("calls post service with post with 'is_published' field as true if Publish button is clicked", async () => {
+    const { user, publishButton } = await setup();
+
+    await user.click(publishButton);
+
+    expect(postService.updatePost).toHaveBeenCalledWith(
+      mockPost.id,
+      {
+        title: mockPost.title,
+        text: mockPost.text,
+        is_published: true,
+      },
+      mockToken,
+    );
   });
 
   it("delete one comment on delete comment button click then confirm", async () => {
