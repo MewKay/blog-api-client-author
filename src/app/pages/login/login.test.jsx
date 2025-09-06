@@ -10,9 +10,13 @@ import mockAuthor from "@/testing/mocks/author";
 import testInputTyping from "@/testing/utils/testInputTyping";
 
 vi.mock("../home/home.jsx");
+vi.mock("../user-redirect/user-redirect.jsx", () => ({
+  default: () => <>This is user redirect</>,
+}));
 vi.mock("@/services/auth.service", () => ({
   default: {
     getAuthData: vi.fn(() => null),
+    logout: vi.fn(),
     login: vi.fn(() => ({
       user: mockAuthor,
       token: "sometoken",
@@ -109,6 +113,29 @@ describe("Log in page", () => {
         const errorText = await screen.findByText(message);
         expect(errorText).toBeInTheDocument();
       }
+    });
+
+    it("should redirect to user-redirect page if user is not an author and call logout auth service", async () => {
+      authService.login.mockReturnValueOnce({
+        user: {
+          ...mockAuthor,
+          is_author: false,
+        },
+        token: "usertoken",
+      });
+
+      const { user, usernameInput, passwordInput, submitButton } =
+        await setup();
+
+      await user.type(usernameInput, mockInputValue.username);
+      await user.type(passwordInput, mockInputValue.password);
+      await user.click(submitButton);
+
+      expect(authService.login).toHaveBeenCalledWith(mockInputValue);
+      expect(authService.logout).toHaveBeenCalled();
+
+      const userRedirectText = await screen.findByText("This is user redirect");
+      expect(userRedirectText).toBeInTheDocument();
     });
 
     it("should not let user submit form if it is invalid", async () => {
