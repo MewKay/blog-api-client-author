@@ -1,6 +1,6 @@
 .post-preview-list {
   display: grid;
   list-style: none;
-  grid-template-columns: repeat(auto-fit, minmax(var(--spacing-12), 1fr));
-  gap: var(--spacing-6) var(--spacing-6);
+  grid-template-columns: repeat(auto-fit, minmax(var(--spacing-13), 1fr));
+  gap: var(--spacing-5);
 }
