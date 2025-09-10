@@ -59,7 +59,6 @@
 }
 
 body {
-  height: 100vh;
   width: auto;
   background-color: var(--grey-200);
   color: var(--grey-900);

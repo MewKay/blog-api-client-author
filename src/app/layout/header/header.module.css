@@ -1,0 +1,15 @@
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: right;
+  padding: var(--spacing-3) var(--spacing-4);
+  box-shadow: var(--shadow-1);
+  background-color: var(--grey-100);
+}
+
+.log-out-button {
+  background-color: transparent;
+  border: none;
+}
