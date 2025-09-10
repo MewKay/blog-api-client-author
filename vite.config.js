@@ -7,6 +7,11 @@ const __dirname = import.meta.dirname;
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  css: {
+    modules: {
+      localsConvention: "camelCase",
+    },
+  },
   test: {
     globals: true,
     environment: "jsdom",
