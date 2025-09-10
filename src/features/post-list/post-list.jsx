@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import PostItem from "./post-item/post-item";
+import styles from "./post-list.module.css";
 
 const PostList = ({ posts }) => {
   return (
-    <ul>
+    <ul className={styles.postPreviewList}>
       {posts.map((post) => (
         <PostItem key={post.id} post={post} />
       ))}
