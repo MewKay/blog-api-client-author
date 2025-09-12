@@ -3,29 +3,45 @@
 exports[`Post Item component > renders correctly 1`] = `
 <div>
   <li>
-    <a
-      href="/posts/4Myr93Ad/art-of-testing"
+    <div
+      class="_postItem_ee3eb9"
     >
-      <h3>
-        Art of testing
-      </h3>
-      <div>
-        <p>
-          Created : 
-          on September 21, 2023
+      <a
+        class="_postLink_ee3eb9"
+        href="/posts/4Myr93Ad/art-of-testing"
+      >
+        <h3>
+          Art of testing
+        </h3>
+        <div
+          class="_dateContainer_ee3eb9"
+        >
+          <p>
+            Created : 
+            on September 21, 2023
+          </p>
+          <p>
+            ·
+          </p>
+          <p>
+            Last Update : 
+            on January 10, 2024
+          </p>
+        </div>
+        <p
+          class="_preview_ee3eb9"
+        >
+          Concise is nice
         </p>
-        <p>
-          · Last Update : 
-          on January 10, 2024
-        </p>
-      </div>
-      <p>
-        Concise is nice
-      </p>
-      <p>
-        ✅️ Published
-      </p>
-    </a>
+        <div
+          class="_publicationContainer_ee3eb9"
+        >
+          <p>
+            ✅️ Published
+          </p>
+        </div>
+      </a>
+    </div>
   </li>
 </div>
 `;

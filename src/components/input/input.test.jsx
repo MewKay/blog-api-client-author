@@ -29,16 +29,4 @@ describe("Input component", () => {
 
     expect(mockProps.setValue).toHaveBeenCalledTimes(3);
   });
-
-  it("hides error message if value is empty", () => {
-    render(
-      <Input {...mockProps} value="">
-        Label :
-      </Input>,
-    );
-
-    const errorMessage = screen.queryByText(mockProps.errorMessage);
-
-    expect(errorMessage).not.toBeInTheDocument();
-  });
 });

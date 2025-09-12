@@ -3,7 +3,9 @@
 exports[`Header component > renders correctly 1`] = `
 <div>
   <header>
-    <button>
+    <button
+      class="_logOutButton_6c492a"
+    >
       Log out
     </button>
   </header>

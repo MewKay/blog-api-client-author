@@ -2,14 +2,21 @@
 
 exports[`Input component > renders correctly 1`] = `
 <div>
-  <div>
-    <label>
+  <div
+    class="_inputContainer_7f6659"
+  >
+    <label
+      class="_inputLabelContainer_7f6659"
+    >
       Label :
       <input
+        class="_inputText_7f6659"
         value="Writings"
       />
     </label>
-    <p>
+    <p
+      class="_errorMessage_7f6659"
+    >
       Something is wrong
     </p>
   </div>
