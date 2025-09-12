@@ -3,6 +3,7 @@ import { Form } from "react-router-dom";
 import Input from "@/components/input/input";
 import loginSchema from "@/lib/validation/schema/login-schema";
 import ranges from "@/lib/validation/ranges";
+import Button from "@/components/button/button";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -39,7 +40,7 @@ const LoginForm = () => {
         Password
       </Input>
 
-      <button disabled={!isFormValid}>Log in</button>
+      <Button disabled={!isFormValid}>Log in</Button>
     </Form>
   );
 };

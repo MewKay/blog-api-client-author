@@ -1,3 +1,4 @@
+import Button from "@/components/button/button";
 import Input from "@/components/input/input";
 import ranges from "@/lib/validation/ranges";
 import signUpSchema from "@/lib/validation/schema/signup-schema";
@@ -70,9 +71,9 @@ const SignUpForm = () => {
         Authorization Pass
       </Input>
 
-      <button disabled={!isFormValid || navigation.state === "submitting"}>
+      <Button disabled={!isFormValid || navigation.state === "submitting"}>
         Sign Up
-      </button>
+      </Button>
     </Form>
   );
 };

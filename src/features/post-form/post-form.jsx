@@ -1,3 +1,4 @@
+import Button from "@/components/button/button";
 import Input from "@/components/input/input";
 import ranges from "@/lib/validation/ranges";
 import postSchema from "@/lib/validation/schema/post-schema";
@@ -67,19 +68,26 @@ const PostForm = ({ postToEdit = null }) => {
         Publish the post ?
       </Input>
 
-      <button type="reset" onClick={handleCancelClick}>
+      <Button type="reset" onClick={handleCancelClick}>
         Cancel
-      </button>
+      </Button>
       {!postToEdit ? (
-        <button disabled={!isFormValid}>Create Post</button>
+        <Button colorScheme={"dark"} disabled={!isFormValid}>
+          Create Post
+        </Button>
       ) : (
         <>
-          <button disabled={!isFormValid} name="intent" value="update">
+          <Button
+            colorScheme={"dark"}
+            disabled={!isFormValid}
+            name="intent"
+            value="update"
+          >
             Update Post
-          </button>
-          <button name="intent" value="delete">
+          </Button>
+          <Button colorScheme={"dark"} name="intent" value="delete">
             Delete Post
-          </button>
+          </Button>
         </>
       )}
     </Form>
