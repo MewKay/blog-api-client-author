@@ -1,13 +1,12 @@
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
 import styles from "./input.module.css";
+import InputErrorMessage from "../input-error-message/input-error-message";
 
 const Input = forwardRef(function Input(
   { children, value, setValue, errorMessage, ...inputProps },
   ref,
 ) {
-  const isErrorMessageVisible = value !== "" && errorMessage;
-
   return (
     <div className={styles.inputContainer}>
       <label className={styles.inputLabelContainer}>
@@ -20,11 +19,7 @@ const Input = forwardRef(function Input(
           ref={ref}
         />
       </label>
-      <p
-        className={`${styles.errorMessage}${!isErrorMessageVisible ? " " + styles.hidden : ""}`}
-      >
-        {errorMessage}
-      </p>
+      <InputErrorMessage value={value} errorMessage={errorMessage} />
     </div>
   );
 });

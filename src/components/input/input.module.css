@@ -19,19 +19,3 @@
   border-radius: var(--radius-small);
   padding: var(--spacing-2) var(--spacing-3);
 }
-
-.error-message {
-  display: block;
-  color: red;
-  font-size: var(--font-size-1);
-  transform: translateY(0%);
-  opacity: 1;
-  visibility: visible;
-}
-
-.hidden {
-  display: none;
-  transform: translateY(-50%);
-  visibility: hidden;
-  opacity: 0;
-}

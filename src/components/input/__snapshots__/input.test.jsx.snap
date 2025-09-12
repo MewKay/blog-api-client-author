@@ -15,7 +15,7 @@ exports[`Input component > renders correctly 1`] = `
       />
     </label>
     <p
-      class="_errorMessage_7f6659"
+      class="_errorMessage_ae96c2"
     >
       Something is wrong
     </p>
