@@ -111,10 +111,19 @@ describe("Edit Post page", () => {
     expect(publicationCheckbox.checked).toBe(mockPost.is_published);
   });
 
-  it("calls deletePost service on delete button click", async () => {
+  it("calls deletePost service on delete button click after confirm", async () => {
+    const confirmMock = vi
+      .spyOn(window, "confirm")
+      .mockReturnValueOnce(false)
+      .mockReturnValueOnce(true);
     const { user, deleteButton } = await setup({ clearInputs: false });
-    await user.click(deleteButton);
 
+    await user.click(deleteButton);
+    expect(confirmMock).toHaveBeenCalled();
+    expect(postService.deletePost).not.toHaveBeenCalled();
+
+    await user.click(deleteButton);
+    expect(confirmMock).toHaveBeenCalled();
     expect(postService.deletePost).toHaveBeenCalledOnce();
   });
 

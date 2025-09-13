@@ -4,11 +4,15 @@ import styles from "./input.module.css";
 import InputErrorMessage from "../input-error-message/input-error-message";
 
 const Input = forwardRef(function Input(
-  { children, value, setValue, errorMessage, ...inputProps },
+  { children, className, value, setValue, errorMessage, ...inputProps },
   ref,
 ) {
+  const containerClassName = className
+    ? `${styles.inputContainer} ${className}`
+    : styles.inputContainer;
+
   return (
-    <div className={styles.inputContainer}>
+    <div className={containerClassName}>
       <label className={styles.inputLabelContainer}>
         {children}
         <input
@@ -26,6 +30,7 @@ const Input = forwardRef(function Input(
 
 Input.propTypes = {
   children: PropTypes.node,
+  className: PropTypes.string,
   value: PropTypes.string,
   setValue: PropTypes.func,
   errorMessage: PropTypes.string,

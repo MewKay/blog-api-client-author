@@ -5,6 +5,7 @@ import postSchema from "@/lib/validation/schema/post-schema";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
+import styles from "./post-form.module.css";
 
 const PostForm = ({ postToEdit = null }) => {
   const checkBoxRef = useRef();
@@ -30,9 +31,18 @@ const PostForm = ({ postToEdit = null }) => {
 
   const isPostTextNotEmpty = postTextValue !== "";
 
+  const confirmMessage =
+    "Are you sure to delete this post and all of its comments ? This action is irreversible.";
+  const handleConfirmDelete = (event) => {
+    if (!window.confirm(confirmMessage)) {
+      event.preventDefault();
+    }
+  };
+
   return (
-    <Form method={postToEdit ? "PUT" : "POST"}>
+    <Form className={styles.form} method={postToEdit ? "PUT" : "POST"}>
       <Input
+        className={styles.titleInput}
         type="text"
         name="title"
         value={titleValue}
@@ -45,7 +55,7 @@ const PostForm = ({ postToEdit = null }) => {
         Title
       </Input>
 
-      <div>
+      <div className={styles.textInput}>
         <textarea
           name="text"
           placeholder="Write your post here..."
@@ -59,6 +69,7 @@ const PostForm = ({ postToEdit = null }) => {
       </div>
 
       <Input
+        className={styles.publishInput}
         ref={checkBoxRef}
         type="checkbox"
         name="is_published"
@@ -68,28 +79,35 @@ const PostForm = ({ postToEdit = null }) => {
         Publish the post ?
       </Input>
 
-      <Button type="reset" onClick={handleCancelClick}>
-        Cancel
-      </Button>
-      {!postToEdit ? (
-        <Button colorScheme={"dark"} disabled={!isFormValid}>
-          Create Post
+      <div className={styles.buttonContainer}>
+        <Button type="reset" onClick={handleCancelClick}>
+          Cancel
         </Button>
-      ) : (
-        <>
-          <Button
-            colorScheme={"dark"}
-            disabled={!isFormValid}
-            name="intent"
-            value="update"
-          >
-            Update Post
+        {!postToEdit ? (
+          <Button colorScheme={"dark"} disabled={!isFormValid}>
+            Create Post
           </Button>
-          <Button colorScheme={"dark"} name="intent" value="delete">
-            Delete Post
-          </Button>
-        </>
-      )}
+        ) : (
+          <>
+            <Button
+              colorScheme={"dark"}
+              disabled={!isFormValid}
+              name="intent"
+              value="update"
+            >
+              Update Post
+            </Button>
+            <Button
+              colorScheme={"dark"}
+              name="intent"
+              value="delete"
+              onClick={handleConfirmDelete}
+            >
+              Delete Post
+            </Button>
+          </>
+        )}
+      </div>
     </Form>
   );
 };
