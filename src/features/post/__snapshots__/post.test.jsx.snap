@@ -2,27 +2,36 @@
 
 exports[`Post component > renders correctly 1`] = `
 <div>
-  <div>
-    <h2>
+  <div
+    class="_postContainer_c511ce"
+  >
+    <h2
+      class="_title_c511ce"
+    >
       This is my first post
     </h2>
-    <div>
-      <p>
-        MAY 16, 2025
-      </p>
-    </div>
-    <div>
+    <p
+      class="_date_c511ce"
+    >
+      MAY 16, 2025
+    </p>
+    <p
+      class="_text_c511ce"
+    >
       This is the body of my post
-    </div>
-    <div>
+    </p>
+    <div
+      class="_buttonContainer_c511ce"
+    >
+      <button>
+        Publish post
+      </button>
       <a
+        class="_editLink_c511ce"
         href="/posts/edit/mockedId/this-is-blog-post"
       >
         Edit this post
       </a>
-      <button>
-        Publish post
-      </button>
     </div>
   </div>
 </div>

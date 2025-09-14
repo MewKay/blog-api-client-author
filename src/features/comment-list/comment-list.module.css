@@ -1,0 +1,4 @@
+.comment-list {
+  width: 100%;
+  max-width: var(--spacing-15);
+}

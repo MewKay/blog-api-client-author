@@ -1,0 +1,58 @@
+.comment-container {
+  list-style: none;
+  border-top: solid 2px var(--grey-300);
+  position: relative;
+  padding: var(--spacing-3) 0;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-3);
+  margin-bottom: var(--spacing-3);
+}
+
+.comment-details {
+  display: flex;
+  gap: var(--spacing-1);
+}
+
+.username {
+  font-weight: var(--font-weight-bold);
+}
+
+.delete-button {
+  background-color: var(--grey-100);
+  color: var(--grey-800);
+  padding: var(--spacing-1) var(--spacing-1);
+  border: none;
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-1);
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (pointer: fine) {
+  .comment-container:hover .delete-button {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (pointer: coarse) {
+  .comment-container.active .delete-button {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (pointer: none) {
+  .delete-button {
+    opacity: 1;
+    visibility: visible;
+  }
+}

@@ -2,22 +2,35 @@
 
 exports[`CommentItem component > renders correctly 1`] = `
 <div>
-  <div>
-    <h6>
-      John Toe
-    </h6>
-    <span>
-      <p>
-        · 
-        8 years ago
+  <li
+    class="_commentContainer_a882f3"
+  >
+    <div
+      class="_head_a882f3"
+    >
+      <p
+        class="_username_a882f3"
+      >
+        John Toe
       </p>
-    </span>
-  </div>
-  <p>
-    I'm commentin and criticizin
-  </p>
-  <button>
-    Delete comment
-  </button>
+      <p>
+        ·
+      </p>
+      <span
+        class="_commentDetails_a882f3"
+      >
+        <p>
+           
+          8 years ago
+        </p>
+      </span>
+    </div>
+    <p>
+      I'm commentin and criticizin
+    </p>
+    <button>
+      Delete comment
+    </button>
+  </li>
 </div>
 `;

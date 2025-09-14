@@ -75,7 +75,7 @@ body {
 }
 
 main {
-  padding: var(--spacing-4) var(--spacing-5);
+  padding: var(--spacing-4) var(--spacing-4);
 }
 
 button:hover {

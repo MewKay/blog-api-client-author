@@ -4,8 +4,6 @@
   align-items: center;
   margin-top: var(--spacing-5);
   padding-bottom: var(--spacing-5);
-  border-bottom: solid 2px var(--grey-600);
-  margin-bottom: var(--spacing-5);
 }
 
 .date {
@@ -22,7 +20,7 @@
 }
 
 .text {
-  font-size: var(--font-size-3);
+  font-size: var(--font-size-4);
   max-width: var(--line-length-medium);
   margin-bottom: var(--spacing-6);
 }

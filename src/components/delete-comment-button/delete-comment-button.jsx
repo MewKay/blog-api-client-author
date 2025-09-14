@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Form } from "react-router-dom";
 
-const DeleteCommentButton = ({ commentId }) => {
+const DeleteCommentButton = ({ className, commentId }) => {
   const confirmMessage = "Are you sure you want to delete this comment ?";
 
   const handleConfirmClick = (event) => {
@@ -15,6 +15,7 @@ const DeleteCommentButton = ({ commentId }) => {
     <Form method="delete">
       <input type="hidden" name="commentId" value={commentId} />
       <button
+        className={className}
         type="submit"
         name="intent"
         value="delete_comment"
@@ -27,6 +28,7 @@ const DeleteCommentButton = ({ commentId }) => {
 };
 
 DeleteCommentButton.propTypes = {
+  className: PropTypes.string,
   commentId: PropTypes.number.isRequired,
 };
 
