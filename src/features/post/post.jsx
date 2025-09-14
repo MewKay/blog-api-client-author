@@ -3,6 +3,7 @@ import { formatPostDate } from "./post.util";
 import { isSameDay } from "date-fns";
 import { Link } from "react-router-dom";
 import PublishButton from "@/components/publish-button/publish-button";
+import styles from "./post.module.css";
 
 const Post = ({ post, editPostLink }) => {
   const { title, text, created_at, edited_at, is_published } = post;
@@ -12,22 +13,25 @@ const Post = ({ post, editPostLink }) => {
   const isPostEdited = !isSameDay(formattedCreateDate, formattedEditDate);
 
   return (
-    <div>
-      <h2>{title}</h2>
-      <div>
-        <p>
-          {formattedCreateDate}
-          {isPostEdited && ` ( Last edited ${formattedEditDate} )`}
-        </p>
-      </div>
-      <div>{text}</div>
-      <div>
-        <Link to={editPostLink}>Edit this post</Link>
+    <div className={styles.postContainer}>
+      <h2 className={styles.title}>{title}</h2>
+      <p className={styles.date}>
+        {formattedCreateDate}
+        {isPostEdited && ` ( Last edited ${formattedEditDate} )`}
+      </p>
+      <p className={styles.text}>{text}</p>
+      <div className={styles.buttonContainer}>
         {is_published ? (
-          <p>✅️ Published</p>
+          <p className={styles.publishStatus}>✅️ Published</p>
         ) : (
-          <PublishButton postData={{ title, text }} />
+          <PublishButton
+            className={styles.publishButton}
+            postData={{ title, text }}
+          />
         )}
+        <Link className={styles.editLink} to={editPostLink}>
+          Edit this post
+        </Link>
       </div>
     </div>
   );

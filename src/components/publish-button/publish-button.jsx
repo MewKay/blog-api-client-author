@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 import { Form } from "react-router-dom";
 
-const PublishButton = ({ postData }) => {
+const PublishButton = ({ className, postData }) => {
   const { title, text } = postData;
 
   return (
     <Form method="put">
       <input type="hidden" name="title" value={title} />
       <input type="hidden" name="text" value={text} />
-      <button type="submit" name="intent" value="publish">
+      <button className={className} type="submit" name="intent" value="publish">
         Publish post
       </button>
     </Form>
@@ -16,6 +16,7 @@ const PublishButton = ({ postData }) => {
 };
 
 PublishButton.propTypes = {
+  className: PropTypes.string,
   postData: PropTypes.shape({
     title: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
