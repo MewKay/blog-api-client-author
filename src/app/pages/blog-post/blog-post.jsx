@@ -8,6 +8,7 @@ import {
   useLoaderData,
   useParams,
 } from "react-router-dom";
+import styles from "./blog-post.module.css";
 
 const BlogPost = () => {
   const { post, comments } = useLoaderData();
@@ -18,7 +19,10 @@ const BlogPost = () => {
   return (
     <main>
       <ActionErrorMessages actionData={actionData} />
-      <Link to={paths.home.path}>{"<--"} Back to blog list</Link>
+      <Link className={styles.goBackLink} to={paths.home.path}>
+        <span>{"<"}</span>
+        <p>Back to blog list</p>
+      </Link>
       <Post post={post} editPostLink={editPostLink} />
       <CommentList comments={comments} />
     </main>
