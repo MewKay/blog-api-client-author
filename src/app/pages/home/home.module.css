@@ -5,6 +5,9 @@ main {
 }
 
 .new-post-link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
   text-decoration: none;
   font-size: var(--font-size-4);
   font-weight: var(--font-weight-bold);
@@ -14,6 +17,11 @@ main {
   border-radius: var(--radius-medium);
   box-shadow: var(--shadow-2);
   margin-bottom: var(--spacing-5);
+}
+
+.new-post-link svg {
+  height: var(--font-size-4);
+  width: var(--font-size-4);
 }
 
 .new-post-link:active {
