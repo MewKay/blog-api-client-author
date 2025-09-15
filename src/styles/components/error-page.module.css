@@ -1,0 +1,21 @@
+.error-main {
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+}
+
+.error-title {
+  font-size: var(--font-size-7);
+  margin-bottom: var(--spacing-4);
+}
+
+.error-text {
+  font-size: var(--font-size-5);
+  max-width: var(--line-length-medium);
+  margin-bottom: var(--spacing-4);
+}
+
+.button-container {
+  display: flex;
+  gap: var(--spacing-4);
+}

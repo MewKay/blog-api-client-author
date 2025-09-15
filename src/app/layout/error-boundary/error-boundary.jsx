@@ -3,15 +3,16 @@ import NetworkError from "@/lib/errors/network.error";
 import ServerError from "@/lib/errors/server.error";
 import PropTypes from "prop-types";
 import { useNavigate, useRouteError } from "react-router-dom";
+import styles from "@/styles/components/error-page.module.css";
 
 const ErrorLayout = ({ title, children }) => {
   const navigate = useNavigate();
 
   return (
-    <main>
-      <h3>{title}</h3>
-      {children}
-      <div>
+    <main className={styles.errorMain}>
+      <h3 className={styles.errorTitle}>{title}</h3>
+      <p className={styles.errorText}>{children}</p>
+      <div className={styles.buttonContainer}>
         <Button onClick={() => navigate(-1)}>Go Back</Button>
         <Button onClick={() => navigate("/")}>Go Home</Button>
       </div>
