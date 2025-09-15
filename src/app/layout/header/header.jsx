@@ -1,6 +1,7 @@
 import paths from "@/app/routes/paths";
 import authService from "@/services/auth.service";
 import { useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
 import styles from "./header.module.css";
 
 const Header = () => {
@@ -13,8 +14,12 @@ const Header = () => {
 
   return (
     <header>
-      <button className={styles.logOutButton} onClick={logout}>
-        Log out
+      <button
+        className={styles.logOutButton}
+        onClick={logout}
+        aria-label="Log out"
+      >
+        <LogOut />
       </button>
     </header>
   );

@@ -4,7 +4,7 @@ header {
   z-index: 10;
   display: flex;
   justify-content: right;
-  padding: var(--spacing-3) var(--spacing-4);
+  padding: var(--spacing-3) var(--spacing-5);
   box-shadow: var(--shadow-1);
   background-color: var(--grey-100);
 }
