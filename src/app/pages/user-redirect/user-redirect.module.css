@@ -1,0 +1,6 @@
+.action-link {
+  composes: button from "@/styles/components/button.module.css";
+  background-color: var(--grey-100);
+  color: var(--grey-900);
+  text-decoration: none;
+}

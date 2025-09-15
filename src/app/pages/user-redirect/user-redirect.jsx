@@ -1,6 +1,7 @@
 import paths from "@/app/routes/paths";
 import authService from "@/services/auth.service";
 import errorStyle from "@/styles/components/error-page.module.css";
+import styles from "./user-redirect.module.css";
 
 const BASIC_LOGIN_SITE_URL = import.meta.env.VITE_BASIC_LOGIN_SITE_URL;
 
@@ -18,10 +19,16 @@ const UserRedirect = () => {
         account.
       </p>
       <div className={errorStyle.buttonContainer}>
-        <a href={paths.login.path} onClick={handleBackToLogin}>
+        <a
+          className={styles.actionLink}
+          href={paths.login.path}
+          onClick={handleBackToLogin}
+        >
           Go back to log in
         </a>
-        <a href={BASIC_LOGIN_SITE_URL}>Go to ThyBlog to log in as User</a>
+        <a className={styles.actionLink} href={BASIC_LOGIN_SITE_URL}>
+          Go to ThyBlog to log in as User
+        </a>
       </div>
     </main>
   );
