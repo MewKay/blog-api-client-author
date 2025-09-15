@@ -4,6 +4,11 @@
   height: 100vh;
 }
 
+.error-main svg {
+  height: var(--spacing-10);
+  width: var(--spacing-10);
+}
+
 .error-title {
   font-size: var(--font-size-7);
   margin-bottom: var(--spacing-4);

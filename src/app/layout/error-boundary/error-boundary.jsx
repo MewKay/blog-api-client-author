@@ -2,6 +2,7 @@ import Button from "@/components/button/button";
 import NetworkError from "@/lib/errors/network.error";
 import ServerError from "@/lib/errors/server.error";
 import PropTypes from "prop-types";
+import { AlertTriangle } from "lucide-react";
 import { useNavigate, useRouteError } from "react-router-dom";
 import styles from "@/styles/components/error-page.module.css";
 
@@ -10,6 +11,7 @@ const ErrorLayout = ({ title, children }) => {
 
   return (
     <main className={styles.errorMain}>
+      <AlertTriangle />
       <h3 className={styles.errorTitle}>{title}</h3>
       <p className={styles.errorText}>{children}</p>
       <div className={styles.buttonContainer}>
