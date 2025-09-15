@@ -27,6 +27,9 @@ const paths = {
   userRedirect: {
     path: "/user-redirect",
   },
+  notFound: {
+    path: "*",
+  },
 };
 
 export default paths;

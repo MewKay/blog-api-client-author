@@ -14,6 +14,7 @@ import loginAction from "../pages/login/login.action";
 import loginLoader from "../pages/login/login.loader";
 import NewPost from "../pages/new-post/new-post";
 import newPostAction from "../pages/new-post/new-post.action";
+import NotFound from "../pages/not-found/not-found";
 import SignUp from "../pages/signup/signup";
 import signUpAction from "../pages/signup/signup.action";
 import UserRedirect from "../pages/user-redirect/user-redirect";
@@ -68,6 +69,10 @@ const routes = [
     path: paths.userRedirect.path,
     element: <UserRedirect />,
     errorElement: <ErrorBoundary />,
+  },
+  {
+    path: paths.notFound.path,
+    element: <NotFound />,
   },
 ];
 
