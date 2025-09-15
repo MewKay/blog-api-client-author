@@ -1,0 +1,48 @@
+.form-main {
+  justify-content: center;
+  gap: var(--spacing-6);
+}
+
+.form-container,
+.prompt {
+  max-width: var(--spacing-14);
+  width: 100%;
+}
+
+.form-container {
+  background-color: var(--grey-100);
+  padding: var(--spacing-5) var(--spacing-6);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-3);
+}
+
+.form-title {
+  font-size: var(--font-size-6);
+  text-align: center;
+  margin-bottom: var(--spacing-3);
+}
+
+.form-container form button {
+  padding: var(--spacing-4) 0;
+  font-size: var(--font-size-6);
+  font-weight: var(--font-weight-bold);
+  box-shadow: none;
+  width: 100%;
+}
+
+.prompt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--grey-400);
+  width: 100%;
+  font-size: var(--font-size-5);
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-5) var(--spacing-3);
+}
+
+.prompt a {
+  text-decoration: none;
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+}

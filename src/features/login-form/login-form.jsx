@@ -40,7 +40,9 @@ const LoginForm = () => {
         Password
       </Input>
 
-      <Button disabled={!isFormValid}>Log in</Button>
+      <Button colorScheme={"dark"} disabled={!isFormValid}>
+        Log in
+      </Button>
     </Form>
   );
 };

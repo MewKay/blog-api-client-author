@@ -71,7 +71,10 @@ const SignUpForm = () => {
         Authorization Pass
       </Input>
 
-      <Button disabled={!isFormValid || navigation.state === "submitting"}>
+      <Button
+        colorScheme={"dark"}
+        disabled={!isFormValid || navigation.state === "submitting"}
+      >
         Sign Up
       </Button>
     </Form>
