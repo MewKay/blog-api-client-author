@@ -1,16 +1,19 @@
 import PropTypes from "prop-types";
 import styles from "./button.module.css";
 
-const Button = ({ children, colorScheme, ...buttonProps }) => {
-  const className =
-    colorScheme === "light"
-      ? styles.lightButton
-      : colorScheme === "dark"
-        ? styles.darkButton
-        : styles.lightButton;
+const Button = ({ children, colorScheme, className, ...buttonProps }) => {
+  const buttonClassName = `
+    ${
+      colorScheme === "light"
+        ? styles.lightButton
+        : colorScheme === "dark"
+          ? styles.darkButton
+          : styles.lightButton
+    } ${className}
+  `;
 
   return (
-    <button className={className} {...buttonProps}>
+    <button className={buttonClassName} {...buttonProps}>
       {children}
     </button>
   );
@@ -18,6 +21,7 @@ const Button = ({ children, colorScheme, ...buttonProps }) => {
 
 Button.propTypes = {
   children: PropTypes.node,
+  className: PropTypes.string,
   colorScheme: PropTypes.string,
 };
 

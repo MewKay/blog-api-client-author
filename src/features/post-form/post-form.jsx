@@ -5,6 +5,7 @@ import postSchema from "@/lib/validation/schema/post-schema";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
+import { NotebookPen, PencilLine, Trash } from "lucide-react";
 import styles from "./post-form.module.css";
 
 const PostForm = ({ postToEdit = null }) => {
@@ -56,15 +57,18 @@ const PostForm = ({ postToEdit = null }) => {
       </Input>
 
       <div className={styles.textInput}>
-        <textarea
-          name="text"
-          placeholder="Write your post here..."
-          value={postTextValue}
-          onChange={(event) => setPostTextValue(event.target.value)}
-          minLength={ranges.postText.min}
-          maxLength={ranges.postText.max}
-          required
-        ></textarea>
+        <label>
+          Content
+          <textarea
+            name="text"
+            placeholder="Write your post here..."
+            value={postTextValue}
+            onChange={(event) => setPostTextValue(event.target.value)}
+            minLength={ranges.postText.min}
+            maxLength={ranges.postText.max}
+            required
+          />
+        </label>
         <p>{isPostTextNotEmpty && errors.text}</p>
       </div>
 
@@ -84,25 +88,34 @@ const PostForm = ({ postToEdit = null }) => {
           Cancel
         </Button>
         {!postToEdit ? (
-          <Button colorScheme={"dark"} disabled={!isFormValid}>
+          <Button
+            className={styles.submitButton}
+            colorScheme={"dark"}
+            disabled={!isFormValid}
+          >
+            <PencilLine />
             Create Post
           </Button>
         ) : (
           <>
             <Button
+              className={styles.submitButton}
               colorScheme={"dark"}
               disabled={!isFormValid}
               name="intent"
               value="update"
             >
+              <NotebookPen />
               Update Post
             </Button>
             <Button
+              className={styles.submitButton}
               colorScheme={"dark"}
               name="intent"
               value="delete"
               onClick={handleConfirmDelete}
             >
+              <Trash />
               Delete Post
             </Button>
           </>

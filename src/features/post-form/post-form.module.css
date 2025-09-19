@@ -5,7 +5,7 @@
   max-width: var(--spacing-16);
 }
 
-.title-input label {
+.form label {
   font-size: var(--font-size-6);
 }
 
@@ -16,33 +16,49 @@
 
 .text-input textarea {
   background-color: var(--grey-100);
+  font-size: var(--font-size-3);
   border: none;
   border-radius: var(--radius-small);
   width: 100%;
   padding: var(--spacing-2) var(--spacing-3);
   resize: none;
   min-height: var(--spacing-12);
+  margin-bottom: var(--spacing-4);
 }
 
 .publish-input {
   display: flex;
   align-items: center;
-  margin-top: var(--spacing-4);
+  padding-top: var(--spacing-5);
+  background-color: var(--grey-500);
+  border-radius: var(--radius-medium);
 }
 
 .publish-input label {
   display: flex;
   align-items: center;
   font-size: var(--font-size-5);
+  font-weight: var(--font-weight-bold);
 }
 
 .publish-input input {
   margin-left: var(--spacing-4);
   height: var(--spacing-5);
   width: var(--spacing-5);
+  accent-color: var(--grey-800);
+}
+
+.publish-input input:hover {
+  cursor: pointer;
 }
 
 .button-container {
   display: flex;
   gap: var(--spacing-3);
+}
+
+.submit-button {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: center;
 }
