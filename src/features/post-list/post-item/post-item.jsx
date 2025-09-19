@@ -4,6 +4,7 @@ import { formatPostDate } from "./post-item.util";
 import sqids from "@/lib/sqids";
 import styles from "./post-item.module.css";
 import paths from "@/app/routes/paths";
+import { BookCheck, BookDashed } from "lucide-react";
 
 const PostItem = ({ post }) => {
   const { id, title, preview, created_at, edited_at, is_published, slug } =
@@ -33,7 +34,16 @@ const PostItem = ({ post }) => {
           </div>
           <p className={styles.preview}>{preview}</p>
           <div className={styles.publicationContainer}>
-            {is_published ? <p>✅️ Published</p> : <p>❎️ Unpublished</p>}
+            {is_published ? (
+              <p className={styles.publicationStatus}>
+                <BookCheck />
+                Published
+              </p>
+            ) : (
+              <p className={styles.publicationStatus}>
+                <BookDashed /> Unpublished
+              </p>
+            )}
           </div>
         </Link>
       </div>
