@@ -2,20 +2,30 @@
 
 exports[`UserRedirect component > renders correctly 1`] = `
 <div>
-  <main>
-    <h2>
+  <main
+    class="_errorMain_3c5600"
+  >
+    <h2
+      class="_errorTitle_3c5600"
+    >
       Account Access Limitations
     </h2>
-    <p>
+    <p
+      class="_errorText_3c5600"
+    >
       Your account doesn't have sufficient permissions to access this platform. However you may access blog by signing in your basic user account.
     </p>
-    <div>
+    <div
+      class="_buttonContainer_3c5600"
+    >
       <a
+        class="_actionLink_a3dbf2"
         href="/log-in"
       >
         Go back to log in
       </a>
       <a
+        class="_actionLink_a3dbf2"
         href="http://localhost:5174/log-in"
       >
         Go to ThyBlog to log in as User

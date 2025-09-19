@@ -61,6 +61,13 @@
   --radius-full: 50%;
 }
 
+html,
+body,
+#root,
+main {
+  height: 100%;
+}
+
 body {
   width: auto;
   background-color: var(--grey-200);
@@ -69,12 +76,14 @@ body {
 }
 
 #root {
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: var(--spacing-4) var(--spacing-4);
 }
 
