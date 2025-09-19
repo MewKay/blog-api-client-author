@@ -4,6 +4,7 @@ import { isSameDay } from "date-fns";
 import { Link } from "react-router-dom";
 import PublishButton from "@/components/publish-button/publish-button";
 import styles from "./post.module.css";
+import { BookCheck, NotebookPen } from "lucide-react";
 
 const Post = ({ post, editPostLink }) => {
   const { title, text, created_at, edited_at, is_published } = post;
@@ -22,7 +23,9 @@ const Post = ({ post, editPostLink }) => {
       <p className={styles.text}>{text}</p>
       <div className={styles.buttonContainer}>
         {is_published ? (
-          <p className={styles.publishStatus}>✅️ Published</p>
+          <p className={styles.publishStatus}>
+            <BookCheck /> Published
+          </p>
         ) : (
           <PublishButton
             className={styles.publishButton}
@@ -30,7 +33,7 @@ const Post = ({ post, editPostLink }) => {
           />
         )}
         <Link className={styles.editLink} to={editPostLink}>
-          Edit this post
+          <NotebookPen /> Edit this post
         </Link>
       </div>
     </div>

@@ -9,6 +9,7 @@ import {
   useParams,
 } from "react-router-dom";
 import styles from "./blog-post.module.css";
+import { ChevronLeft } from "lucide-react";
 
 const BlogPost = () => {
   const { post, comments } = useLoaderData();
@@ -20,7 +21,7 @@ const BlogPost = () => {
     <main>
       <ActionErrorMessages actionData={actionData} />
       <Link className={styles.goBackLink} to={paths.home.path}>
-        <span>{"<"}</span>
+        <ChevronLeft />
         <p>Back to blog list</p>
       </Link>
       <Post post={post} editPostLink={editPostLink} />

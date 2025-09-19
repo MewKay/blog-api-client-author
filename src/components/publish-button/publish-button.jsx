@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { BookDashed } from "lucide-react";
 import { Form } from "react-router-dom";
 
 const PublishButton = ({ className, postData }) => {
@@ -9,6 +10,7 @@ const PublishButton = ({ className, postData }) => {
       <input type="hidden" name="title" value={title} />
       <input type="hidden" name="text" value={text} />
       <button className={className} type="submit" name="intent" value="publish">
+        <BookDashed />
         Publish post
       </button>
     </Form>

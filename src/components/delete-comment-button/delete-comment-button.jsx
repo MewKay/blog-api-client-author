@@ -1,3 +1,4 @@
+import { Trash2 } from "lucide-react";
 import PropTypes from "prop-types";
 import { Form } from "react-router-dom";
 
@@ -20,8 +21,9 @@ const DeleteCommentButton = ({ className, commentId }) => {
         name="intent"
         value="delete_comment"
         onClick={handleConfirmClick}
+        aria-label="Delete this comment"
       >
-        Delete comment
+        <Trash2 />
       </button>
     </Form>
   );
