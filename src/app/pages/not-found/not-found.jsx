@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/button/button";
+import { FileQuestion } from "lucide-react";
 import paths from "@/app/routes/paths";
 import styles from "@/styles/components/error-page.module.css";
 
@@ -8,6 +9,7 @@ const NotFound = () => {
 
   return (
     <main className={styles.errorMain}>
+      <FileQuestion />
       <h3 className={styles.errorTitle}>Page not found</h3>
       <p className={styles.errorText}>
         The page you are looking for does not exist.
