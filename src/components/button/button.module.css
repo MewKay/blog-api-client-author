@@ -3,6 +3,12 @@
   composes: button from "@/styles/components/button.module.css";
 }
 
+.lightButton:disabled,
+.darkButton:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
 .lightButton {
   color: var(--grey-900);
   background-color: var(--grey-100);
