@@ -10,10 +10,13 @@ import {
 } from "react-router-dom";
 import styles from "./blog-post.module.css";
 import { ChevronLeft } from "lucide-react";
+import ScrollButton from "@/components/scroll-button/scroll-button";
+import useScrollButtonVisibility from "@/hooks/useScrollButtonVisibility";
 
 const BlogPost = () => {
   const { post, comments } = useLoaderData();
   const actionData = useActionData();
+  const scrollButtonVisibility = useScrollButtonVisibility();
   const { encodedId, slug } = useParams();
   const editPostLink = paths.editBlogPost.getHref(encodedId, slug);
 
@@ -26,6 +29,7 @@ const BlogPost = () => {
       </Link>
       <Post post={post} editPostLink={editPostLink} />
       <CommentList comments={comments} />
+      <ScrollButton isVisible={scrollButtonVisibility} />
     </main>
   );
 };

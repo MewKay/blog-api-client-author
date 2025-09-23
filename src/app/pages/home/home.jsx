@@ -3,9 +3,12 @@ import PostList from "@/features/post-list/post-list";
 import { Link, useLoaderData } from "react-router-dom";
 import { Pencil } from "lucide-react";
 import styles from "./home.module.css";
+import ScrollButton from "@/components/scroll-button/scroll-button";
+import useScrollButtonVisibility from "@/hooks/useScrollButtonVisibility";
 
 const Home = () => {
   const { posts } = useLoaderData();
+  const scrollButtonVisibility = useScrollButtonVisibility();
 
   return (
     <main>
@@ -14,6 +17,7 @@ const Home = () => {
         <p>CREATE NEW POST</p>
       </Link>
       <PostList posts={posts} />
+      <ScrollButton isVisible={scrollButtonVisibility} />
     </main>
   );
 };
