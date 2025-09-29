@@ -1,7 +1,8 @@
 .error-container {
   display: flex;
   gap: var(--spacing-2);
-  background-color: var(--grey-300);
+  background-color: var(--accent-2-100);
+  color: var(--accent-2-900);
   margin-bottom: var(--spacing-4);
   padding: var(--spacing-3) var(--spacing-4);
   border-radius: var(--radius-small);
