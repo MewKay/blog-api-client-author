@@ -109,7 +109,7 @@ const PostForm = ({ postToEdit = null }) => {
               Update Post
             </Button>
             <Button
-              className={styles.submitButton}
+              className={styles.deleteButton}
               colorScheme={"dark"}
               name="intent"
               value="delete"

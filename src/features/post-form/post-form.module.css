@@ -12,6 +12,7 @@
 .title-input input {
   font-size: var(--font-size-6);
   font-weight: var(--font-weight-bold);
+  color: var(--primary-600);
 }
 
 .text-input textarea {
@@ -30,7 +31,7 @@
   display: flex;
   align-items: center;
   padding-top: var(--spacing-5);
-  background-color: var(--grey-500);
+  background-color: var(--primary-200);
   border-radius: var(--radius-medium);
 }
 
@@ -39,13 +40,14 @@
   align-items: center;
   font-size: var(--font-size-5);
   font-weight: var(--font-weight-bold);
+  color: var(--primary-800);
 }
 
 .publish-input input {
   margin-left: var(--spacing-4);
   height: var(--spacing-5);
   width: var(--spacing-5);
-  accent-color: var(--grey-800);
+  accent-color: var(--primary-800);
 }
 
 .publish-input input:hover {
@@ -57,8 +59,19 @@
   gap: var(--spacing-3);
 }
 
-.submit-button {
+.submit-button,
+.delete-button {
   display: flex;
   gap: var(--spacing-2);
   align-items: center;
+}
+
+.submit-button {
+  background-color: var(--primary-500);
+  color: var(--grey-100);
+}
+
+.delete-button {
+  background-color: var(--accent-3-500);
+  color: var(--accent-3-100);
 }
