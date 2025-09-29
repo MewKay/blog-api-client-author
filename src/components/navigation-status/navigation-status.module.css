@@ -1,0 +1,39 @@
+.visible,
+.hidden {
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-1);
+  font-size: var(--font-size-4);
+  transition: all 0.3s;
+  background-color: var(--accent-1-600);
+  color: var(--grey-100);
+}
+
+.visible svg {
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-name: loader;
+}
+
+@keyframes loader {
+  0% {
+    rotate: 0deg;
+  }
+
+  100% {
+    rotate: 360deg;
+  }
+}
+
+.visible {
+  transform: translateY(0%);
+}
+
+.hidden {
+  transform: translateY(-100%);
+}

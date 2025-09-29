@@ -10,6 +10,10 @@ import authService from "@/services/auth.service";
 import Header from "./header";
 import paths from "@/app/routes/paths";
 
+vi.mock("@/components/navigation-status/navigation-status.jsx", () => ({
+  default: () => <>Status</>,
+}));
+
 const loginText = "This is log in page";
 
 const mockRouter = createMemoryRouter(
