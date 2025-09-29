@@ -5,8 +5,8 @@
   border: none;
   border-radius: var(--radius-full);
   padding: var(--spacing-3);
-  background-color: var(--grey-800);
-  color: var(--grey-100);
+  background-color: var(--primary-500);
+  color: var(--primary-100);
   box-shadow: var(--shadow-5);
   translate: 0 0;
   transition: all 0.5s ease-in-out;

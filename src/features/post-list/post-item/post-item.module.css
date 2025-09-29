@@ -19,6 +19,7 @@
 
 .post-item h3 {
   font-size: var(--font-size-4);
+  color: var(--primary-600);
   margin-bottom: var(--spacing-1);
 }
 
@@ -26,6 +27,7 @@
   display: flex;
   gap: var(--spacing-1);
   font-size: var(--font-size-1);
+  color: var(--grey-600);
   margin-bottom: var(--spacing-2);
 }
 
@@ -44,4 +46,5 @@
   display: flex;
   gap: var(--spacing-1);
   font-size: var(--font-size-3);
+  color: var(--primary-700);
 }
