@@ -8,7 +8,6 @@
 
 .date {
   font-size: var(--font-size-2);
-  color: var(--grey-800);
   margin-bottom: var(--spacing-6);
 }
 
@@ -17,6 +16,7 @@
   font-size: var(--font-size-6);
   max-width: var(--line-length-small);
   margin-bottom: var(--spacing-3);
+  color: var(--primary-600);
 }
 
 .text {
@@ -44,11 +44,20 @@
 .publish-button,
 .edit-link {
   composes: button from "@/styles/components/button.module.css";
-  background-color: var(--grey-100);
-  color: var(--grey-900);
+}
+
+.publish-status {
+  color: var(--primary-800);
+}
+
+.publish-button {
+  background-color: var(--primary-600);
+  color: var(--grey-100);
 }
 
 .edit-link {
+  background-color: var(--grey-100);
+  color: var(--primary-800);
   text-decoration: none;
 }
 

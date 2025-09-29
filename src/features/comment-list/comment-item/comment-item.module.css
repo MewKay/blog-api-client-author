@@ -16,15 +16,17 @@
 .comment-details {
   display: flex;
   gap: var(--spacing-1);
+  color: var(--grey-800);
 }
 
 .username {
   font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
 }
 
 .delete-button {
-  background-color: var(--grey-100);
-  color: var(--grey-800);
+  background-color: var(--accent-3-200);
+  color: var(--accent-3-800);
   padding: var(--spacing-1) var(--spacing-1);
   border: none;
   border-radius: var(--radius-small);
