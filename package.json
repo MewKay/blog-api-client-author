@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mdxeditor/editor": "^3.52.3",
     "date-fns": "^4.1.0",
     "jose": "^6.1.0",
     "lucide-react": "^0.471.1",
