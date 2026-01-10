@@ -10,6 +10,7 @@ const Input = forwardRef(function Input(
   const containerClassName = className
     ? `${styles.inputContainer} ${className}`
     : styles.inputContainer;
+  const isInputControlled = value !== null && setValue;
 
   return (
     <div className={containerClassName}>
@@ -17,8 +18,13 @@ const Input = forwardRef(function Input(
         {children}
         <input
           className={styles.inputText}
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
+          value={isInputControlled ? value : undefined}
+          onChange={
+            isInputControlled
+              ? (event) => setValue(event.target.value)
+              : undefined
+          }
+          defaultValue={!isInputControlled ? value : undefined}
           {...inputProps}
           ref={ref}
         />
