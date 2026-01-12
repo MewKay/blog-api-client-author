@@ -23,6 +23,7 @@ import {
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
 import "@mdxeditor/editor/style.css";
+import "./editor.css";
 
 const toolbarPluginConfig = () =>
   toolbarPlugin({

@@ -49,7 +49,11 @@ const PostForm = ({ postToEdit = null }) => {
 
       <div className={styles.textInput}>
         <label>Content</label>
-        <Editor ref={editorRef} initialContent={initialPostText} />
+        <Editor
+          ref={editorRef}
+          contentEditableClassName={styles.editorContent}
+          initialContent={initialPostText}
+        />
       </div>
 
       <Input

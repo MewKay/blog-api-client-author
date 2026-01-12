@@ -15,16 +15,28 @@
   color: var(--primary-600);
 }
 
-.text-input textarea {
-  background-color: var(--grey-100);
-  font-size: var(--font-size-3);
-  border: none;
-  border-radius: var(--radius-small);
-  width: 100%;
-  padding: var(--spacing-2) var(--spacing-3);
-  resize: none;
-  min-height: var(--spacing-12);
+.text-input {
   margin-bottom: var(--spacing-4);
+}
+
+.editor-content {
+  font-size: var(--font-size-3);
+}
+
+.editor-content p {
+  margin: var(--spacing-5) 0;
+}
+
+.editor-content blockquote {
+  margin: var(--spacing-5) 0;
+  padding-left: var(--spacing-6);
+  border-left: 2px solid var(--primary-300);
+}
+
+/* Omit the reset rules to the content */
+.editor-content * {
+  /* margin: revert; */
+  padding: revert;
 }
 
 .publish-input {

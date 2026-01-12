@@ -1,0 +1,52 @@
+.mdxeditor {
+  --baseBg: var(--grey-100);
+  --baseBase: var(--grey-200);
+  --baseBgActive: var(--grey-400);
+  --baseLine: var(--grey-900);
+  --baseText: var(--grey-900);
+  --baseTextContrast: var(--grey-900);
+  --radius-small: 2px;
+  --radius-medium: 6px;
+}
+
+.mdxeditor *:disabled {
+  opacity: 0.5;
+}
+
+.mdxeditor {
+  position: relative;
+}
+
+.mdxeditor-toolbar {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: sticky;
+  top: 3rem;
+  border-top-left-radius: var(--radius-medium);
+  border-top-right-radius: var(--radius-medium);
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom: solid 2px var(--grey-200);
+}
+
+.mdxeditor-toolbar .tools-container {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.mdxeditor-toolbar > :last-child {
+  margin-left: 0;
+}
+
+.mdxeditor-root-contenteditable,
+.mdxeditor-diff-source-wrapper {
+  min-height: 16rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom-left-radius: var(--radius-medium);
+  border-bottom-right-radius: var(--radius-medium);
+  background-color: var(--baseBg);
+}
+
+button.cm-merge-revert {
+  display: none;
+}
