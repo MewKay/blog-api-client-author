@@ -8,7 +8,7 @@ describe("ScrollButton component", () => {
     window.scroll = vi.fn();
     const user = userEvent.setup();
 
-    render(<ScrollButton visibility={true} />);
+    render(<ScrollButton isVisible={true} />);
     await user.click(screen.getByRole("button"));
 
     expect(window.scroll).toHaveBeenNthCalledWith(
