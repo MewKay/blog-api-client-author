@@ -13,6 +13,7 @@ import BadRequestError from "@/lib/errors/bad-request.error";
 import commentService from "@/services/comment.service";
 import mockComments from "@/testing/mocks/comments";
 
+vi.mock("@/components/editor/editor");
 vi.mock("@/services/post.service", () => ({
   default: {
     createPost: vi.fn(),
@@ -56,7 +57,9 @@ const setup = async () => {
   setupPageRender(routes, [paths.newBlogPost.path]);
 
   const titleInput = await screen.findByLabelText(/title/i);
-  const postTextInput = await screen.findByPlaceholderText(/write your post/i);
+  const postTextInput = await screen.findByRole("textbox", {
+    name: "editable markdown",
+  });
   const publicationCheckbox = await screen.findByLabelText(/Publish/i);
   const submitButton = await screen.findByRole("button", { name: /create/i });
 

@@ -10,6 +10,7 @@ import mockAuthor from "@/testing/mocks/author";
 import postService from "@/services/post.service";
 import sqids from "@/lib/sqids";
 
+vi.mock("@/components/editor/editor");
 vi.mock("@/lib/sqids.js", () => ({
   default: {
     encode: vi.fn(),
@@ -44,7 +45,9 @@ const setup = async ({ clearInputs }) => {
   ]);
 
   const titleInput = await screen.findByLabelText(/title/i);
-  const postTextInput = await screen.findByPlaceholderText(/write your post/i);
+  const postTextInput = await screen.findByRole("textbox", {
+    name: "editable markdown",
+  });
   const publicationCheckbox = await screen.findByLabelText(/Publish/i);
   const submitButton = await screen.findByRole("button", { name: /update/i });
   const deleteButton = await screen.findByRole("button", { name: /delete/i });
