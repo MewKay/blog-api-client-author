@@ -3,7 +3,7 @@ import Input from "@/components/input/input";
 import ranges from "@/lib/validation/ranges";
 import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
-import { Form, useNavigate } from "react-router-dom";
+import { Form, useNavigate, useSubmit } from "react-router-dom";
 import { NotebookPen, PencilLine, Trash } from "lucide-react";
 import styles from "./post-form.module.css";
 import Editor from "@/components/editor/editor";
@@ -12,6 +12,7 @@ const PostForm = ({ postToEdit = null }) => {
   const editorRef = useRef(null);
   const checkBoxRef = useRef(null);
   const navigate = useNavigate();
+  const submit = useSubmit();
   const initialPostTitle = postToEdit?.title || "";
   const initialPostText = postToEdit?.text || "";
 
@@ -21,20 +22,33 @@ const PostForm = ({ postToEdit = null }) => {
     }
   }, [postToEdit]);
 
-  const handleCancelClick = () => {
-    return navigate(-1);
-  };
-
   const confirmMessage =
     "Are you sure to delete this post and all of its comments ? This action is irreversible.";
+  const formMethod = postToEdit ? "put" : "post";
+
   const handleConfirmDelete = (event) => {
     if (!window.confirm(confirmMessage)) {
       event.preventDefault();
     }
   };
 
+  const handleCancelClick = () => {
+    return navigate(-1);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+    const editorText = editorRef.current?.getMarkdown();
+
+    formData.append("text", editorText);
+    submit(formData, { method: formMethod });
+  };
+
   return (
-    <Form className={styles.form} method={postToEdit ? "PUT" : "POST"}>
+    <Form className={styles.form} method={formMethod} onSubmit={handleSubmit}>
       <Input
         className={styles.titleInput}
         type="text"
