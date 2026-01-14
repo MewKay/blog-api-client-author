@@ -53,6 +53,29 @@ describe("validateSchema", () => {
     expect(result.errors.email).toBeFalsy();
   });
 
+  it("returns array of invalid inputs'errors messages equivalent without empty messages", () => {
+    const testSchema = validateSchema(schema);
+
+    const result1 = testSchema.validateInputs({
+      username: "smol",
+      email: "wrong email",
+    });
+
+    const usernameMessage = result1.errors.username;
+    const emailMessage = result1.errors.email;
+
+    expect(result1.errorMessages).toContain(usernameMessage);
+    expect(result1.errorMessages).toContain(emailMessage);
+
+    const result2 = testSchema.validateInputs({
+      username: "Correct",
+      email: "still wrong email",
+    });
+
+    expect(result2.errorMessages).not.toContain(null);
+    expect(result2.errorMessages).toStrictEqual([emailMessage]);
+  });
+
   it("returns boolean depend if inputs are all valid or at least one is invalid", () => {
     const testSchema = validateSchema(schema);
 

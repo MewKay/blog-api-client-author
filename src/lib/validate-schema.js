@@ -53,9 +53,11 @@ const validateSchema = (schema) => {
       );
     }
 
-    const isFormValid = Object.values(errors).every((error) => !error);
+    const errorsArray = Object.values(errors);
+    const errorMessages = errorsArray.filter((error) => error !== null);
+    const isFormValid = errorsArray.every((error) => !error);
 
-    return { errors, isFormValid };
+    return { errors, errorMessages, isFormValid };
   };
 
   return {
