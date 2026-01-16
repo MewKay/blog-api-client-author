@@ -1,7 +1,3 @@
-export const invalidLengthMessage = (fieldname, range) => {
-  return `${fieldname} is required to be between ${range.min} and ${range.max} characters.`;
-};
-
 const validateSchema = (schema) => {
   const isSchemaValidType = schema && typeof schema === "object";
 

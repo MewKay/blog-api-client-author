@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import validateSchema, { invalidLengthMessage } from "../validate-schema";
+import validateSchema from "../validate-schema";
+import { invalidLengthMessage } from "../invalid-length-message";
 import validator from "validator";
 
 const usernameRange = { min: 5, max: 10 };
