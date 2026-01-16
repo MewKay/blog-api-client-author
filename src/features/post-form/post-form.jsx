@@ -11,6 +11,7 @@ import Editor from "@/components/editor/editor";
 const PostForm = ({ postToEdit = null }) => {
   const editorRef = useRef(null);
   const checkBoxRef = useRef(null);
+  const submitIntentRef = useRef(null);
   const navigate = useNavigate();
   const submit = useSubmit();
   const initialPostTitle = postToEdit?.title || "";
@@ -26,10 +27,15 @@ const PostForm = ({ postToEdit = null }) => {
     "Are you sure to delete this post and all of its comments ? This action is irreversible.";
   const formMethod = postToEdit ? "put" : "post";
 
-  const handleConfirmDelete = (event) => {
-    if (!window.confirm(confirmMessage)) {
+  const handleSubmitButton = (event) => {
+    const intent = event.target.value;
+
+    if (intent === "delete" && !window.confirm(confirmMessage)) {
       event.preventDefault();
+      return;
     }
+
+    submitIntentRef.current = intent;
   };
 
   const handleCancelClick = () => {
@@ -42,6 +48,10 @@ const PostForm = ({ postToEdit = null }) => {
     const form = event.target;
     const formData = new FormData(form);
     const editorText = editorRef.current?.getMarkdown();
+
+    if (submitIntentRef.current) {
+      formData.append("intent", submitIntentRef.current);
+    }
 
     formData.append("text", editorText);
     submit(formData, { method: formMethod });
@@ -95,8 +105,8 @@ const PostForm = ({ postToEdit = null }) => {
             <Button
               className={styles.submitButton}
               colorScheme={"dark"}
-              name="intent"
               value="update"
+              onClick={handleSubmitButton}
             >
               <NotebookPen />
               Update Post
@@ -104,9 +114,8 @@ const PostForm = ({ postToEdit = null }) => {
             <Button
               className={styles.deleteButton}
               colorScheme={"dark"}
-              name="intent"
               value="delete"
-              onClick={handleConfirmDelete}
+              onClick={handleSubmitButton}
             >
               <Trash />
               Delete Post
