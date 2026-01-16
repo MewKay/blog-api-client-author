@@ -29,7 +29,7 @@ const editPostAction = async ({ params, request }) => {
   const validator = postSchema.validateInputs(editPost);
 
   if (!validator.isFormValid) {
-    return { error: "Provided inputs are invalid" };
+    return { error: validator.errorMessages };
   }
 
   return actionServiceHandler(async () => {
