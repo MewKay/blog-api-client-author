@@ -2,11 +2,13 @@ import Button from "@/components/button/button";
 import Input from "@/components/input/input";
 import ranges from "@/lib/validation/ranges";
 import PropTypes from "prop-types";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form, useNavigate, useSubmit } from "react-router-dom";
 import { NotebookPen, PencilLine, Trash } from "lucide-react";
 import styles from "./post-form.module.css";
 import Editor from "@/components/editor/editor";
+import { invalidLengthWithCountMessage } from "@/lib/invalid-length-message";
+import InputErrorMessage from "@/components/input-error-message/input-error-message";
 
 const PostForm = ({ postToEdit = null }) => {
   const editorRef = useRef(null);
@@ -14,6 +16,8 @@ const PostForm = ({ postToEdit = null }) => {
   const submitIntentRef = useRef(null);
   const navigate = useNavigate();
   const submit = useSubmit();
+  const [titleErrorMessage, setTitleErrorMessage] = useState(null);
+  const [textErrorMessage, setTextErrorMessage] = useState(null);
   const initialPostTitle = postToEdit?.title || "";
   const initialPostText = postToEdit?.text || "";
 
@@ -27,6 +31,10 @@ const PostForm = ({ postToEdit = null }) => {
     "Are you sure to delete this post and all of its comments ? This action is irreversible.";
   const formMethod = postToEdit ? "put" : "post";
 
+  const handleCancelClick = () => {
+    return navigate(-1);
+  };
+
   const handleSubmitButton = (event) => {
     const intent = event.target.value;
 
@@ -38,16 +46,28 @@ const PostForm = ({ postToEdit = null }) => {
     submitIntentRef.current = intent;
   };
 
-  const handleCancelClick = () => {
-    return navigate(-1);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const form = event.target;
     const formData = new FormData(form);
     const editorText = editorRef.current?.getMarkdown();
+
+    const titleErrorMessage = invalidLengthWithCountMessage(
+      "postTitle",
+      formData.get("title"),
+    );
+    const textErrorMessage = invalidLengthWithCountMessage(
+      "postText",
+      editorText,
+    );
+
+    if (titleErrorMessage || textErrorMessage) {
+      setTitleErrorMessage(titleErrorMessage);
+      setTextErrorMessage(textErrorMessage);
+
+      return;
+    }
 
     if (submitIntentRef.current) {
       formData.append("intent", submitIntentRef.current);
@@ -66,6 +86,7 @@ const PostForm = ({ postToEdit = null }) => {
         value={initialPostTitle}
         minLength={ranges.postTitle.min}
         maxLength={ranges.postTitle.max}
+        errorMessage={titleErrorMessage}
         required
       >
         Title
@@ -73,6 +94,8 @@ const PostForm = ({ postToEdit = null }) => {
 
       <div className={styles.textInput}>
         <label>Content</label>
+        {/* value to "true" so that errorMessage is always shown as long as it is not null */}
+        <InputErrorMessage value="true" errorMessage={textErrorMessage} />
         <Editor
           ref={editorRef}
           contentEditableClassName={styles.editorContent}
