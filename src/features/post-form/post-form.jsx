@@ -1,14 +1,14 @@
-import Button from "@/components/button/button";
-import Input from "@/components/input/input";
-import ranges from "@/lib/validation/ranges";
 import PropTypes from "prop-types";
+import Button from "@/components/button/button";
+import Editor from "@/components/editor/editor";
+import Input from "@/components/input/input";
+import InputErrorMessage from "@/components/input-error-message/input-error-message";
+import { NotebookPen, PencilLine, Trash } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Form, useNavigate, useSubmit } from "react-router-dom";
-import { NotebookPen, PencilLine, Trash } from "lucide-react";
-import styles from "./post-form.module.css";
-import Editor from "@/components/editor/editor";
 import { invalidLengthWithCountMessage } from "@/lib/invalid-length-message";
-import InputErrorMessage from "@/components/input-error-message/input-error-message";
+import ranges from "@/lib/validation/ranges";
+import styles from "./post-form.module.css";
 
 const PostForm = ({ postToEdit = null }) => {
   const editorRef = useRef(null);
@@ -63,6 +63,12 @@ const PostForm = ({ postToEdit = null }) => {
     );
 
     if (titleErrorMessage || textErrorMessage) {
+      // Scroll to the top to see error messages
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
       setTitleErrorMessage(titleErrorMessage);
       setTextErrorMessage(textErrorMessage);
 
