@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import { formatPostDate } from "./post.util";
-import { isSameDay } from "date-fns";
-import { Link } from "react-router-dom";
 import PublishButton from "@/components/publish-button/publish-button";
-import styles from "./post.module.css";
+import { Link } from "react-router-dom";
 import { BookCheck, NotebookPen } from "lucide-react";
+import { isSameDay } from "date-fns";
+import { formatPostDate } from "./post.util";
+import styles from "./post.module.css";
+import Markdown from "@/components/markdown/markdown";
 
 const Post = ({ post, editPostLink }) => {
   const { title, text, created_at, edited_at, is_published } = post;
@@ -20,7 +21,13 @@ const Post = ({ post, editPostLink }) => {
         {formattedCreateDate}
         {isPostEdited && ` ( Last edited ${formattedEditDate} )`}
       </p>
-      <p className={styles.text}>{text}</p>
+      <Markdown
+        classNames={{
+          container: styles.text,
+        }}
+      >
+        {text}
+      </Markdown>
       <div className={styles.buttonContainer}>
         {is_published ? (
           <p className={styles.publishStatus}>
