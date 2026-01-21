@@ -15,11 +15,13 @@ exports[`Post component > renders correctly 1`] = `
     >
       MAY 16, 2025
     </p>
-    <p
-      class="_text_c511ce"
+    <div
+      class="_text_eccd40"
     >
-      This is the body of my post
-    </p>
+      <p>
+        This is the body of my post
+      </p>
+    </div>
     <div
       class="_buttonContainer_c511ce"
     >

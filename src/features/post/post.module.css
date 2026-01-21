@@ -19,12 +19,6 @@
   color: var(--primary-600);
 }
 
-.text {
-  font-size: var(--font-size-4);
-  max-width: var(--line-length-medium);
-  margin-bottom: var(--spacing-6);
-}
-
 .button-container {
   align-self: flex-start;
   display: flex;

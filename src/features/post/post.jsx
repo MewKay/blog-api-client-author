@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import PublishButton from "@/components/publish-button/publish-button";
+import Markdown from "@/components/markdown/markdown";
 import { Link } from "react-router-dom";
 import { BookCheck, NotebookPen } from "lucide-react";
 import { isSameDay } from "date-fns";
 import { formatPostDate } from "./post.util";
 import styles from "./post.module.css";
-import Markdown from "@/components/markdown/markdown";
+import postStyles from "./post-text.module.css";
 
 const Post = ({ post, editPostLink }) => {
   const { title, text, created_at, edited_at, is_published } = post;
@@ -23,7 +24,8 @@ const Post = ({ post, editPostLink }) => {
       </p>
       <Markdown
         classNames={{
-          container: styles.text,
+          container: postStyles.text,
+          tableWrapper: postStyles.tableContainer,
         }}
       >
         {text}
