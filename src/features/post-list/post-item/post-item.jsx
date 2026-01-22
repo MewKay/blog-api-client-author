@@ -5,6 +5,7 @@ import sqids from "@/lib/sqids";
 import styles from "./post-item.module.css";
 import paths from "@/app/routes/paths";
 import { BookCheck, BookDashed } from "lucide-react";
+import Markdown from "@/components/markdown/markdown";
 
 const PostItem = ({ post }) => {
   const { id, title, preview, created_at, edited_at, is_published, slug } =
@@ -32,7 +33,9 @@ const PostItem = ({ post }) => {
               </>
             )}
           </div>
-          <p className={styles.preview}>{preview}</p>
+          <Markdown classNames={{ container: styles.preview }}>
+            {preview}
+          </Markdown>
           <div className={styles.publicationContainer}>
             {is_published ? (
               <p className={styles.publicationStatus}>

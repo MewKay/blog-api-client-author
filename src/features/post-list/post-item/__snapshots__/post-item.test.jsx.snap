@@ -28,11 +28,13 @@ exports[`Post Item component > renders correctly 1`] = `
             on January 10, 2024
           </p>
         </div>
-        <p
+        <div
           class="_preview_ee3eb9"
         >
-          Concise is nice
-        </p>
+          <p>
+            Concise is nice
+          </p>
+        </div>
         <div
           class="_publicationContainer_ee3eb9"
         >
