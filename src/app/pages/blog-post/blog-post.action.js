@@ -7,12 +7,12 @@ import postService from "@/services/post.service";
 import { redirect } from "react-router-dom";
 
 const blogPostAction = async ({ request, params }) => {
+  const { token } = authService.getAuthData();
   const formData = await request.formData();
-  const intent = formData.get("intent");
-
   const { encodedId, slug } = params;
   const postId = sqids.decode(encodedId);
-  const { token } = authService.getAuthData();
+
+  const intent = formData.get("intent");
 
   switch (intent) {
     case "publish":

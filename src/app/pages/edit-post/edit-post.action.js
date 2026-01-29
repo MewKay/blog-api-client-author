@@ -13,31 +13,38 @@ const editPostAction = async ({ params, request }) => {
 
   const intent = formData.get("intent");
 
-  if (intent === "delete") {
-    return actionServiceHandler(async () => {
-      await postService.deletePost(postId, token);
-      return redirect(paths.home.path);
-    });
+  switch (intent) {
+    case "delete":
+      return actionServiceHandler(async () => {
+        await postService.deletePost(postId, token);
+        return redirect(paths.home.path);
+      });
+    case "update":
+      return actionServiceHandler(async () => {
+        const editPost = {
+          title: formData.get("title"),
+          text: formData.get("text"),
+          is_published: formData.get("is_published") === "true",
+        };
+
+        const validator = postSchema.validateInputs(editPost);
+
+        if (!validator.isFormValid) {
+          return { error: validator.errorMessages };
+        }
+
+        const { id, slug } = await postService.updatePost(
+          postId,
+          editPost,
+          token,
+        );
+        const encodedId = sqids.encode(id);
+
+        return redirect(paths.blogPost.getHref(encodedId, slug));
+      });
+    default:
+      throw new Error("Unexpected intent");
   }
-
-  const editPost = {
-    title: formData.get("title"),
-    text: formData.get("text"),
-    is_published: formData.get("is_published") === "true",
-  };
-
-  const validator = postSchema.validateInputs(editPost);
-
-  if (!validator.isFormValid) {
-    return { error: validator.errorMessages };
-  }
-
-  return actionServiceHandler(async () => {
-    const { id, slug } = await postService.updatePost(postId, editPost, token);
-    const encodedId = sqids.encode(id);
-
-    return redirect(paths.blogPost.getHref(encodedId, slug));
-  });
 };
 
 export default editPostAction;
