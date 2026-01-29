@@ -1,10 +1,8 @@
 import authService from "@/services/auth.service";
 import signUpSchema from "@/lib/validation/schema/signup-schema";
-import AuthError from "@/lib/errors/auth.error";
-import BadRequestError from "@/lib/errors/bad-request.error";
 import { redirect } from "react-router-dom";
 import paths from "@/app/routes/paths";
-import ForbiddenError from "@/lib/errors/forbidden.error";
+import actionServiceHandler from "@/lib/actionServiceHandler";
 
 const signUpAction = async ({ request }) => {
   const formData = await request.formData();
@@ -22,20 +20,10 @@ const signUpAction = async ({ request }) => {
     return { error: "Provided inputs are invalid" };
   }
 
-  try {
+  return actionServiceHandler(async () => {
     await authService.signup(signUpData);
     return redirect(paths.login.path);
-  } catch (error) {
-    if (
-      error instanceof BadRequestError ||
-      error instanceof AuthError ||
-      error instanceof ForbiddenError
-    ) {
-      return error.response;
-    }
-
-    throw error;
-  }
+  });
 };
 
 export default signUpAction;

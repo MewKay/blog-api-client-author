@@ -1,12 +1,12 @@
-import loginSchema from "@/lib/validation/schema/login-schema";
 import authService from "@/services/auth.service";
-import BadRequestError from "@/lib/errors/bad-request.error";
+import loginSchema from "@/lib/validation/schema/login-schema";
 import { redirect } from "react-router-dom";
-import AuthError from "@/lib/errors/auth.error";
 import paths from "@/app/routes/paths";
+import actionServiceHandler from "@/lib/actionServiceHandler";
 
 const loginAction = async ({ request }) => {
   const formData = await request.formData();
+
   const credentials = {
     username: formData.get("username"),
     password: formData.get("password"),
@@ -17,7 +17,7 @@ const loginAction = async ({ request }) => {
     return { error: "Provided credentials are invalid" };
   }
 
-  try {
+  return actionServiceHandler(async () => {
     const response = await authService.login(credentials);
 
     if (!response.user.is_author) {
@@ -26,13 +26,7 @@ const loginAction = async ({ request }) => {
     }
 
     return redirect(paths.home.path);
-  } catch (error) {
-    if (error instanceof BadRequestError || error instanceof AuthError) {
-      return error.response;
-    }
-
-    throw error;
-  }
+  });
 };
 
 export default loginAction;
