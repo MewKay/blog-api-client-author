@@ -33,8 +33,8 @@
   --font-weight-normal: 400;
   --font-weight-bold: 700;
   --line-length-small: 15em;
-  --line-length-medium: 20em;
-  --line-length-large: 30em;
+  --line-length-medium: 30em;
+  --line-length-large: 40em;
 
   /* Color Shades */
   --grey-100: hsl(37, 45%, 95%);
