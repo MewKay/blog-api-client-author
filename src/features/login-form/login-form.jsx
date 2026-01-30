@@ -40,7 +40,12 @@ const LoginForm = () => {
         Password
       </Input>
 
-      <Button colorScheme={"dark"} disabled={!isFormValid}>
+      <Button
+        colorScheme={"dark"}
+        disabled={!isFormValid}
+        name="intent"
+        value="login"
+      >
         Log in
       </Button>
     </Form>
