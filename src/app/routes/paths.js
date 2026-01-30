@@ -8,6 +8,9 @@ const paths = {
   signup: {
     path: "/sign-up",
   },
+  signGuest: {
+    path: "/sign-guest",
+  },
   blogPost: {
     path: "/posts/:encodedId/:slug",
     getHref: (encodedId, slug) => `/posts/${encodedId}/${slug}`,
