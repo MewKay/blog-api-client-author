@@ -21,6 +21,7 @@ vi.mock("@/services/auth.service", () => ({
       user: mockAuthor,
       token: "sometoken",
     })),
+    signGuest: vi.fn(),
   },
 }));
 vi.mock("@/services/post.service", () => ({
@@ -35,6 +36,12 @@ const mockInputValue = {
 };
 const routesEntries = [paths.login.path];
 
+const mockAuthDataSuccessRedirect = () =>
+  authService.getAuthData
+    .mockReturnValueOnce(false) // Log in loader call
+    .mockReturnValueOnce({ user: mockAuthor }) // Layout loader call
+    .mockReturnValueOnce({ user: mockAuthor }); // Home loader call;
+
 const setup = async () => {
   const user = userEvent.setup();
   setupPageRender(routes, routesEntries);
@@ -42,6 +49,7 @@ const setup = async () => {
   const usernameInput = await screen.findByLabelText(/username/i);
   const passwordInput = await screen.findByLabelText(/password/i);
   const submitButton = await screen.findByRole("button", { name: /log in/i });
+  const signGuestButton = await screen.findByRole("button", { name: /guest/i });
   const signUpLink = await screen.findByRole("link", { name: /sign up/i });
 
   return {
@@ -49,6 +57,7 @@ const setup = async () => {
     usernameInput,
     passwordInput,
     submitButton,
+    signGuestButton,
     signUpLink,
   };
 };
@@ -76,10 +85,7 @@ describe("Log in page", () => {
     );
 
     it("should call auth service login and redirect to Home page on submit", async () => {
-      authService.getAuthData
-        .mockReturnValueOnce(false) // Log in loader call
-        .mockReturnValueOnce({ user: mockAuthor }) // Layout loader call
-        .mockReturnValueOnce({ user: mockAuthor }); // Home loader call
+      mockAuthDataSuccessRedirect();
       const { user, usernameInput, passwordInput, submitButton } =
         await setup();
 
@@ -88,6 +94,19 @@ describe("Log in page", () => {
       await user.click(submitButton);
 
       expect(authService.login).toHaveBeenCalledWith(mockInputValue);
+
+      const homeText = await screen.findByText(/This is home/);
+
+      expect(homeText).toBeInTheDocument();
+    });
+
+    it("should call auth service signGuest and redirect to Home page on 'guest' submit", async () => {
+      mockAuthDataSuccessRedirect();
+      const { user, signGuestButton } = await setup();
+
+      await user.click(signGuestButton);
+
+      expect(authService.signGuest).toHaveBeenCalled();
 
       const homeText = await screen.findByText(/This is home/);
 
