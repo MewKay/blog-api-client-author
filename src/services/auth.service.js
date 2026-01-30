@@ -17,6 +17,14 @@ const authService = {
   },
   logout: removeAuth,
   signup: (body) => api.post("/signup-author", body),
+  signGuest: async () => {
+    const response = await api.post("/guest-author");
+
+    localStorage.setItem("token", response.token);
+    window.dispatchEvent(new Event("storage"));
+
+    return response;
+  },
   getAuthData: () => {
     const token = localStorage.getItem("token");
     const user = decodeTokenToUser(token);

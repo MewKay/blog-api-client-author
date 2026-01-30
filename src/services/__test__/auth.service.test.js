@@ -60,6 +60,16 @@ describe("Auth service", () => {
     expect(tokenResult).toBe(mockToken);
   });
 
+  it("stores token to localStorage on login", async () => {
+    api.post = vi
+      .fn()
+      .mockResolvedValue({ user: mockAuthor, token: mockToken });
+
+    await authService.signGuest();
+    const tokenResult = localStorage.getItem("token");
+    expect(tokenResult).toBe(mockToken);
+  });
+
   it("removes token from localStorage on logout", () => {
     localStorage.setItem("token", mockToken);
 
@@ -90,7 +100,7 @@ describe("Auth service", () => {
     expect(tokenResult).toBeNull();
   });
 
-  it("triggers a storage event on login and logout", async () => {
+  it("triggers a storage event on login, logout and signGuest", async () => {
     const eventListener = vi.fn();
     window.addEventListener("storage", eventListener);
 
@@ -101,6 +111,10 @@ describe("Auth service", () => {
     authService.logout();
 
     expect(eventListener).toHaveBeenCalledTimes(2);
+
+    await authService.signGuest();
+
+    expect(eventListener).toHaveBeenCalledTimes(3);
 
     window.removeEventListener("storage", eventListener);
   });
