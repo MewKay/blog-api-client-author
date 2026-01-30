@@ -3,6 +3,7 @@ import ActionErrorMessages from "@/components/action-error-messages/action-error
 import LoginForm from "@/features/login-form/login-form";
 import { Link, useActionData } from "react-router-dom";
 import styles from "@/styles/components/auth-form.module.css";
+import GuestForm from "@/features/guest-form/guest-form";
 
 const Login = () => {
   const actionData = useActionData();
@@ -14,6 +15,7 @@ const Login = () => {
 
         <ActionErrorMessages actionData={actionData} />
         <LoginForm />
+        <GuestForm />
       </div>
       <div className={styles.prompt}>
         Don&apos;t have an account yet ?
