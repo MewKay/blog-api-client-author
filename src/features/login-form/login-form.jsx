@@ -43,6 +43,7 @@ const LoginForm = () => {
       <Button
         colorScheme={"dark"}
         disabled={!isFormValid}
+        type="submit"
         name="intent"
         value="login"
       >

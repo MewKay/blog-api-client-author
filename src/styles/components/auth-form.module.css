@@ -23,13 +23,16 @@
   margin-bottom: var(--spacing-3);
 }
 
-.form-container form button {
-  padding: var(--spacing-4) 0;
-  font-size: var(--font-size-6);
+.form-container button {
   font-weight: var(--font-weight-bold);
-  background-color: var(--primary-600);
   box-shadow: none;
   width: 100%;
+}
+
+.form-container button[type="submit"] {
+  padding: var(--spacing-4) 0;
+  background-color: var(--primary-600);
+  font-size: var(--font-size-6);
 }
 
 .prompt {

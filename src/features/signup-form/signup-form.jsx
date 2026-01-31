@@ -74,6 +74,9 @@ const SignUpForm = () => {
       <Button
         colorScheme={"dark"}
         disabled={!isFormValid || navigation.state === "submitting"}
+        type="submit"
+        name="intent"
+        value="login"
       >
         Sign Up
       </Button>
