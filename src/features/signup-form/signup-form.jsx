@@ -19,6 +19,9 @@ const SignUpForm = () => {
     author_password: authorPassword,
   });
 
+  const isSubmitting = navigation.state !== "idle";
+  const isButtonDisabled = !isFormValid || isSubmitting;
+
   return (
     <Form method="post">
       <Input
@@ -71,11 +74,8 @@ const SignUpForm = () => {
         Authorization Pass
       </Input>
 
-      <Button
-        colorScheme={"dark"}
-        disabled={!isFormValid || navigation.state === "submitting"}
-      >
-        Sign Up
+      <Button colorScheme={"dark"} disabled={isButtonDisabled}>
+        {!isSubmitting ? "Sign Up" : "Signing Up..."}
       </Button>
     </Form>
   );

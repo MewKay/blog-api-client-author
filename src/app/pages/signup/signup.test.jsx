@@ -7,8 +7,17 @@ import paths from "@/app/routes/paths";
 import routes from "@/app/routes/routes";
 import authService from "@/services/auth.service";
 import AuthError from "@/lib/errors/auth.error";
+import { useNavigation } from "react-router-dom";
 
 vi.mock("../login/login.jsx");
+vi.mock("react-router-dom", async (importOriginal) => {
+  const reactRouterDom = await importOriginal();
+
+  return {
+    ...reactRouterDom,
+    useNavigation: vi.fn(),
+  };
+});
 vi.mock("@/services/auth.service", () => ({
   default: {
     getAuthData: vi.fn(() => null),
@@ -26,7 +35,7 @@ const routeEntries = [paths.signup.path];
 
 const setup = async () => {
   const user = userEvent.setup();
-  setupPageRender(routes, routeEntries);
+  const component = setupPageRender(routes, routeEntries);
 
   const usernameInput = await screen.findByLabelText(/username/i);
   const passwordInput = await screen.findByLabelText(/^password$/i);
@@ -38,6 +47,7 @@ const setup = async () => {
   const loginLink = await screen.findByRole("link", { name: /log in/i });
 
   return {
+    component,
     user,
     usernameInput,
     passwordInput,
@@ -50,7 +60,10 @@ const setup = async () => {
 
 describe("Sign up page", () => {
   describe("Sign up form", () => {
-    beforeEach(() => vi.clearAllMocks());
+    beforeEach(() => {
+      useNavigation.mockReturnValue({ state: "idle" });
+      vi.clearAllMocks();
+    });
 
     testInputTyping(
       [
@@ -167,5 +180,18 @@ describe("Sign up page", () => {
     const loginText = await screen.findByText("This is login page");
 
     expect(loginText).toBeInTheDocument();
+  });
+
+  it("should display a different label on button while submitting", async () => {
+    const { component, submitButton } = await setup();
+    expect(submitButton).toHaveTextContent(/sign up/i);
+
+    useNavigation.mockReturnValue({ state: "submitting" });
+    component.rerender();
+
+    const submittedButton = await screen.findByRole("button", {
+      name: /signing/i,
+    });
+    expect(submittedButton).toBeInTheDocument();
   });
 });
