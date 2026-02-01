@@ -8,11 +8,20 @@ import setupPageRender from "@/testing/utils/setupPageRender";
 import BadRequestError from "@/lib/errors/bad-request.error";
 import mockAuthor from "@/testing/mocks/author";
 import testInputTyping from "@/testing/utils/testInputTyping";
+import { useNavigation } from "react-router-dom";
 
 vi.mock("../home/home.jsx");
 vi.mock("../user-redirect/user-redirect.jsx", () => ({
   default: () => <>This is user redirect</>,
 }));
+vi.mock("react-router-dom", async (importOriginal) => {
+  const reactRouterDom = await importOriginal();
+
+  return {
+    ...reactRouterDom,
+    useNavigation: vi.fn(),
+  };
+});
 vi.mock("@/services/auth.service", () => ({
   default: {
     getAuthData: vi.fn(() => null),
@@ -37,7 +46,7 @@ const routesEntries = [paths.login.path];
 
 const setup = async () => {
   const user = userEvent.setup();
-  setupPageRender(routes, routesEntries);
+  const component = setupPageRender(routes, routesEntries);
 
   const usernameInput = await screen.findByLabelText(/username/i);
   const passwordInput = await screen.findByLabelText(/password/i);
@@ -45,6 +54,7 @@ const setup = async () => {
   const signUpLink = await screen.findByRole("link", { name: /sign up/i });
 
   return {
+    component,
     user,
     usernameInput,
     passwordInput,
@@ -56,6 +66,7 @@ const setup = async () => {
 describe("Log in page", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    useNavigation.mockReturnValue({ state: "idle" });
   });
 
   describe("Log in form", () => {
@@ -149,6 +160,19 @@ describe("Log in page", () => {
       const homeText = screen.queryByText(/This is home/);
 
       expect(homeText).not.toBeInTheDocument();
+    });
+
+    it("should display a different label on button while submitting", async () => {
+      const { component, submitButton } = await setup();
+      expect(submitButton).toHaveTextContent(/log in/i);
+
+      useNavigation.mockReturnValue({ state: "submitting" });
+      component.rerender();
+
+      const submittedButton = await screen.findByRole("button", {
+        name: /logging in/i,
+      });
+      expect(submittedButton).toBeInTheDocument();
     });
   });
 });

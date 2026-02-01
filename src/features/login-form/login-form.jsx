@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, useNavigation } from "react-router-dom";
 import Input from "@/components/input/input";
 import loginSchema from "@/lib/validation/schema/login-schema";
 import ranges from "@/lib/validation/ranges";
 import Button from "@/components/button/button";
 
 const LoginForm = () => {
+  const navigation = useNavigation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,6 +14,9 @@ const LoginForm = () => {
     username,
     password,
   });
+
+  const isSubmitting = navigation.state !== "idle";
+  const isButtonDisabled = !isFormValid || isSubmitting;
 
   return (
     <Form method="post">
@@ -40,8 +44,8 @@ const LoginForm = () => {
         Password
       </Input>
 
-      <Button colorScheme={"dark"} disabled={!isFormValid}>
-        Log in
+      <Button colorScheme={"dark"} disabled={isButtonDisabled}>
+        {!isSubmitting ? "Log in" : "Logging in"}
       </Button>
     </Form>
   );
