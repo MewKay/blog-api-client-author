@@ -15,7 +15,9 @@ const decodeTokenToUser = (token) => {
       id: payload.id,
       username: payload.username,
       is_author: payload.is_author,
+      is_guest: payload.is_guest,
     };
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
     return null;
   }
