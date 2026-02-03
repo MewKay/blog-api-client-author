@@ -6,7 +6,7 @@ const Layout = () => {
 
   return (
     <>
-      <Header />
+      <Header isUserGuest={loaderData.user.is_guest} />
       <Outlet context={{ ...loaderData }} />
     </>
   );

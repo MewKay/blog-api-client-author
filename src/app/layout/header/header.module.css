@@ -13,6 +13,8 @@ header {
   z-index: 10;
   display: flex;
   justify-content: right;
+  align-items: center;
+  gap: var(--spacing-5);
   padding: var(--spacing-3) var(--spacing-5);
   box-shadow: var(--shadow-1);
   background-color: var(--grey-100);
@@ -22,4 +24,12 @@ header {
   background-color: transparent;
   color: var(--primary-600);
   border: none;
+}
+
+.guest-button {
+  border: none;
+  background-color: transparent;
+  color: var(--primary-600);
+  font-size: var(--font-size-4);
+  font-weight: var(--font-weight-bold);
 }

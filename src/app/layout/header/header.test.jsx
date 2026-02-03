@@ -42,6 +42,23 @@ describe("Header component", () => {
     expect(container).toMatchSnapshot();
   });
 
+  it("displays 'Guest mode' if author is a guest, nothing otherwise", () => {
+    const component = render(<Header isUserGuest={true} />, {
+      wrapper: MemoryRouter,
+    });
+
+    const guestButton = () => screen.queryByRole("button", { name: /guest/i });
+    expect(guestButton()).toBeInTheDocument();
+
+    component.rerender(<Header isUserGuest={false} />, {
+      wrapper: MemoryRouter,
+    });
+    expect(guestButton()).not.toBeInTheDocument();
+
+    component.rerender(<Header />, { wrapper: MemoryRouter });
+    expect(guestButton()).not.toBeInTheDocument();
+  });
+
   it("calls authService log out on button click and redirect to log in page", async () => {
     authService.logout = vi.fn();
     const user = userEvent.setup();
