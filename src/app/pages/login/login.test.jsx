@@ -3,10 +3,12 @@ import userEvent from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 import paths from "@/app/routes/paths";
 import routes from "@/app/routes/routes";
+import authorService from "@/services/author.service";
 import authService from "@/services/auth.service";
 import setupPageRender from "@/testing/utils/setupPageRender";
 import BadRequestError from "@/lib/errors/bad-request.error";
 import mockAuthor from "@/testing/mocks/author";
+import mockLimitStatus from "@/testing/mocks/limit-status";
 import testInputTyping from "@/testing/utils/testInputTyping";
 
 vi.mock("../home/home.jsx");
@@ -27,6 +29,11 @@ vi.mock("@/services/auth.service", () => ({
 vi.mock("@/services/post.service", () => ({
   default: {
     getAuthorPosts: vi.fn(),
+  },
+}));
+vi.mock("@/services/author.service.js", () => ({
+  default: {
+    getLimitStatus: vi.fn(),
   },
 }));
 
@@ -65,6 +72,7 @@ const setup = async () => {
 describe("Log in page", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    authorService.getLimitStatus.mockReturnValue(mockLimitStatus);
   });
 
   describe("Log in form", () => {

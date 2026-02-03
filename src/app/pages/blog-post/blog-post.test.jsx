@@ -7,10 +7,12 @@ import paths from "@/app/routes/paths";
 
 import postService from "@/services/post.service";
 import commentService from "@/services/comment.service";
+import authorService from "@/services/author.service";
 import authService from "@/services/auth.service";
 import mockAuthor from "@/testing/mocks/author";
 import mockPosts from "@/testing/mocks/posts";
 import mockComments from "@/testing/mocks/comments";
+import mockLimitStatus from "@/testing/mocks/limit-status";
 import sqids from "@/lib/sqids";
 
 vi.mock("../home/home.jsx");
@@ -22,6 +24,11 @@ vi.mock("@/lib/sqids.js", () => ({
 vi.mock("@/services/auth.service", () => ({
   default: {
     getAuthData: vi.fn(),
+  },
+}));
+vi.mock("@/services/author.service.js", () => ({
+  default: {
+    getLimitStatus: vi.fn(),
   },
 }));
 vi.mock("@/services/post.service", () => ({
@@ -82,6 +89,7 @@ describe("Blog Post page", () => {
     });
     postService.getAuthorPost.mockResolvedValue(mockPost);
     commentService.getAllByPostId.mockResolvedValue(mockComments);
+    authorService.getLimitStatus.mockReturnValue(mockLimitStatus);
   });
 
   it("successfully fetched and display author's post with comments", async () => {

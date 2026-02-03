@@ -5,8 +5,10 @@ import paths from "@/app/routes/paths";
 import routes from "@/app/routes/routes";
 import setupPageRender from "@/testing/utils/setupPageRender";
 import mockPosts from "@/testing/mocks/posts";
-import authService from "@/services/auth.service";
+import mockLimitStatus from "@/testing/mocks/limit-status";
 import mockAuthor from "@/testing/mocks/author";
+import authService from "@/services/auth.service";
+import authorService from "@/services/author.service";
 import postService from "@/services/post.service";
 import sqids from "@/lib/sqids";
 
@@ -28,6 +30,11 @@ vi.mock("@/services/post.service", () => ({
     getAuthorPosts: vi.fn(),
     updatePost: vi.fn(),
     deletePost: vi.fn(),
+  },
+}));
+vi.mock("@/services/author.service.js", () => ({
+  default: {
+    getLimitStatus: vi.fn(),
   },
 }));
 
@@ -78,6 +85,7 @@ describe("Edit Post page", () => {
     postService.getAuthorPosts.mockResolvedValue(mockPosts);
     postService.updatePost.mockReturnValue(mockPost);
     postService.deletePost.mockReturnValue();
+    authorService.getLimitStatus.mockReturnValue(mockLimitStatus);
   });
 
   it("should be able to type on title input", async () => {

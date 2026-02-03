@@ -12,12 +12,19 @@ import mockAuthor from "@/testing/mocks/author";
 import BadRequestError from "@/lib/errors/bad-request.error";
 import commentService from "@/services/comment.service";
 import mockComments from "@/testing/mocks/comments";
+import authorService from "@/services/author.service";
+import mockLimitStatus from "@/testing/mocks/limit-status";
 
 vi.mock("@/components/editor/editor");
 vi.mock("@/services/post.service", () => ({
   default: {
     createPost: vi.fn(),
     getAuthorPost: vi.fn(),
+  },
+}));
+vi.mock("@/services/author.service.js", () => ({
+  default: {
+    getLimitStatus: vi.fn(),
   },
 }));
 vi.mock("@/services/comment.service", () => ({
@@ -78,6 +85,7 @@ describe("New Post page", () => {
     postService.createPost.mockReturnValue(mockPost);
     postService.getAuthorPost.mockReturnValue(mockPost);
     commentService.getAllByPostId.mockReturnValue(mockComments);
+    authorService.getLimitStatus.mockReturnValue(mockLimitStatus);
     authService.getAuthData.mockReturnValue({
       user: mockAuthor,
       token: mockToken,
