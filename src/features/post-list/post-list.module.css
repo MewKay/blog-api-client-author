@@ -1,3 +1,7 @@
+.container {
+  width: 100%;
+}
+
 .post-preview-list {
   display: grid;
   list-style: none;
