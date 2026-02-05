@@ -14,6 +14,7 @@ import loginAction from "../pages/login/login.action";
 import loginLoader from "../pages/login/login.loader";
 import NewPost from "../pages/new-post/new-post";
 import newPostAction from "../pages/new-post/new-post.action";
+import newPostLoader from "../pages/new-post/new-post.loader";
 import NotFound from "../pages/not-found/not-found";
 import SignUp from "../pages/signup/signup";
 import signUpAction from "../pages/signup/signup.action";
@@ -41,6 +42,7 @@ const routes = [
       {
         path: paths.newBlogPost.path,
         element: <NewPost />,
+        loader: newPostLoader,
         action: newPostAction,
       },
       {

@@ -16,10 +16,12 @@ import authorService from "@/services/author.service";
 import mockLimitStatus from "@/testing/mocks/limit-status";
 
 vi.mock("@/components/editor/editor");
+vi.mock("@/app/pages/home/home");
 vi.mock("@/services/post.service", () => ({
   default: {
     createPost: vi.fn(),
     getAuthorPost: vi.fn(),
+    getAuthorPosts: vi.fn(),
   },
 }));
 vi.mock("@/services/author.service.js", () => ({
@@ -85,7 +87,7 @@ describe("New Post page", () => {
     postService.createPost.mockReturnValue(mockPost);
     postService.getAuthorPost.mockReturnValue(mockPost);
     commentService.getAllByPostId.mockReturnValue(mockComments);
-    authorService.getLimitStatus.mockReturnValue(mockLimitStatus);
+    authorService.getLimitStatus.mockResolvedValue(mockLimitStatus);
     authService.getAuthData.mockReturnValue({
       user: mockAuthor,
       token: mockToken,
@@ -195,5 +197,17 @@ describe("New Post page", () => {
     await user.click(submitButton);
 
     expect(postService.createPost).not.toHaveBeenCalled();
+  });
+
+  it("should redirect user to home page if they reached ther post limit", async () => {
+    authorService.getLimitStatus.mockResolvedValue({
+      ...mockLimitStatus,
+      isLimitReached: true,
+    });
+    postService.getAuthorPosts.mockReturnValue(mockPosts);
+    setupPageRender(routes, [paths.newBlogPost.path]);
+
+    const homeText = await screen.findByText("This is home");
+    expect(homeText).toBeInTheDocument();
   });
 });
