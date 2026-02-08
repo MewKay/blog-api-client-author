@@ -60,14 +60,16 @@ describe("Auth service", () => {
     expect(tokenResult).toBe(mockToken);
   });
 
-  it("stores token to localStorage on login", async () => {
+  it("stores token and first time signing guest flag to localStorage on guest sign", async () => {
     api.post = vi
       .fn()
       .mockResolvedValue({ user: mockAuthor, token: mockToken });
 
     await authService.signGuest();
     const tokenResult = localStorage.getItem("token");
+    const signingGuestFlag = localStorage.getItem("guest_sign_before");
     expect(tokenResult).toBe(mockToken);
+    expect(signingGuestFlag).toBe("false");
   });
 
   it("removes token from localStorage on logout", () => {
@@ -80,13 +82,24 @@ describe("Auth service", () => {
     expect(tokenResult).toBeNull();
   });
 
+  it("marks first time guest flag as true on markGuestSigned", () => {
+    authService.markGuestSigned();
+
+    const firstTimeGuestFlag = localStorage.getItem("guest_sign_before");
+    expect(firstTimeGuestFlag).toBe("true");
+  });
+
   it("returns user data and token from localstorage on getAuthData", () => {
     decodeTokenToUser.mockReturnValue(mockAuthor);
     localStorage.setItem("token", mockToken);
+    localStorage.setItem("guest_sign_before", "true");
 
     const result = authService.getAuthData();
 
-    expect(result).toEqual({ user: mockAuthor, token: mockToken });
+    expect(result).toEqual({
+      user: { ...mockAuthor, hasGuestSignedBefore: expect.any(Boolean) },
+      token: mockToken,
+    });
   });
 
   it("returns falsy and remove token from localStorage on invalid token on getAuthData", () => {
