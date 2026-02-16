@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { useEffect, useRef } from "react";
 import dialogPolyfill from "dialog-polyfill";
 import styles from "./modal.module.css";
+import Button from "../button/button";
 
 const Modal = ({ title, children, onClose, onConfirm, isOpen = false }) => {
   const container = useRef(null);
@@ -62,7 +63,12 @@ const Modal = ({ title, children, onClose, onConfirm, isOpen = false }) => {
   };
 
   return createPortal(
-    <dialog ref={modalRef} aria-labelledby="modal-title" onClick={handleClose}>
+    <dialog
+      className={styles.modal}
+      ref={modalRef}
+      aria-labelledby="modal-title"
+      onClick={handleClose}
+    >
       <div
         className={styles.modalContainer}
         data-testid="modal-container"
@@ -70,15 +76,32 @@ const Modal = ({ title, children, onClose, onConfirm, isOpen = false }) => {
       >
         <div className={styles.header}>
           <h3 id="modal-title">{title}</h3>
-          <button type="button" onClick={handleClose} aria-label="Close">
+          <button
+            type="button"
+            className={styles.closeButton}
+            onClick={handleClose}
+            aria-label="Close"
+          >
             <X />
           </button>
         </div>
-        <section>{children}</section>
+        <section className={styles.content}>{children}</section>
         {!onConfirm ? null : (
           <div className={styles.buttonContainer}>
-            <button onClick={handleConfirm}>Confirm</button>
-            <button onClick={handleClose}>Cancel</button>
+            <Button
+              className={styles.confirmButton}
+              colorScheme={"dark"}
+              onClick={handleConfirm}
+            >
+              Confirm
+            </Button>
+            <Button
+              className={styles.cancelButton}
+              colorScheme={"light"}
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
           </div>
         )}
       </div>
@@ -90,7 +113,7 @@ const Modal = ({ title, children, onClose, onConfirm, isOpen = false }) => {
 Modal.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func,
   isOpen: PropTypes.bool,
 };
