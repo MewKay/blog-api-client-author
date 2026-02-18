@@ -3,14 +3,17 @@ import userEvent from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 import paths from "@/app/routes/paths";
 import routes from "@/app/routes/routes";
+import authorService from "@/services/author.service";
 import authService from "@/services/auth.service";
 import setupPageRender from "@/testing/utils/setupPageRender";
 import BadRequestError from "@/lib/errors/bad-request.error";
 import mockAuthor from "@/testing/mocks/author";
+import mockLimitStatus from "@/testing/mocks/limit-status";
 import testInputTyping from "@/testing/utils/testInputTyping";
 import { useNavigation } from "react-router-dom";
 
 vi.mock("../home/home.jsx");
+vi.mock("@/app/layout/header/header.jsx");
 vi.mock("../user-redirect/user-redirect.jsx", () => ({
   default: () => <>This is user redirect</>,
 }));
@@ -30,11 +33,17 @@ vi.mock("@/services/auth.service", () => ({
       user: mockAuthor,
       token: "sometoken",
     })),
+    signGuest: vi.fn(),
   },
 }));
 vi.mock("@/services/post.service", () => ({
   default: {
     getAuthorPosts: vi.fn(),
+  },
+}));
+vi.mock("@/services/author.service.js", () => ({
+  default: {
+    getLimitStatus: vi.fn(),
   },
 }));
 
@@ -44,6 +53,12 @@ const mockInputValue = {
 };
 const routesEntries = [paths.login.path];
 
+const mockAuthDataSuccessRedirect = () =>
+  authService.getAuthData
+    .mockReturnValueOnce(false) // Log in loader call
+    .mockReturnValueOnce({ user: mockAuthor }) // Layout loader call
+    .mockReturnValueOnce({ user: mockAuthor }); // Home loader call;
+
 const setup = async () => {
   const user = userEvent.setup();
   const component = setupPageRender(routes, routesEntries);
@@ -51,6 +66,7 @@ const setup = async () => {
   const usernameInput = await screen.findByLabelText(/username/i);
   const passwordInput = await screen.findByLabelText(/password/i);
   const submitButton = await screen.findByRole("button", { name: /log in/i });
+  const signGuestButton = await screen.findByRole("button", { name: /guest/i });
   const signUpLink = await screen.findByRole("link", { name: /sign up/i });
 
   return {
@@ -59,6 +75,7 @@ const setup = async () => {
     usernameInput,
     passwordInput,
     submitButton,
+    signGuestButton,
     signUpLink,
   };
 };
@@ -67,6 +84,7 @@ describe("Log in page", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     useNavigation.mockReturnValue({ state: "idle" });
+    authorService.getLimitStatus.mockReturnValue(mockLimitStatus);
   });
 
   describe("Log in form", () => {
@@ -87,10 +105,7 @@ describe("Log in page", () => {
     );
 
     it("should call auth service login and redirect to Home page on submit", async () => {
-      authService.getAuthData
-        .mockReturnValueOnce(false) // Log in loader call
-        .mockReturnValueOnce({ user: mockAuthor }) // Layout loader call
-        .mockReturnValueOnce({ user: mockAuthor }); // Home loader call
+      mockAuthDataSuccessRedirect();
       const { user, usernameInput, passwordInput, submitButton } =
         await setup();
 
@@ -99,6 +114,19 @@ describe("Log in page", () => {
       await user.click(submitButton);
 
       expect(authService.login).toHaveBeenCalledWith(mockInputValue);
+
+      const homeText = await screen.findByText(/This is home/);
+
+      expect(homeText).toBeInTheDocument();
+    });
+
+    it("should call auth service signGuest and redirect to Home page on 'guest' submit", async () => {
+      mockAuthDataSuccessRedirect();
+      const { user, signGuestButton } = await setup();
+
+      await user.click(signGuestButton);
+
+      expect(authService.signGuest).toHaveBeenCalled();
 
       const homeText = await screen.findByText(/This is home/);
 

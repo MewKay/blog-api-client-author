@@ -44,7 +44,13 @@ const LoginForm = () => {
         Password
       </Input>
 
-      <Button colorScheme={"dark"} disabled={isButtonDisabled}>
+      <Button
+        colorScheme={"dark"}
+        disabled={isButtonDisabled}
+        type="submit"
+        name="intent"
+        value="login"
+      >
         {!isSubmitting ? "Log in" : "Logging in"}
       </Button>
     </Form>

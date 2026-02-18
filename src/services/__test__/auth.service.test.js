@@ -60,6 +60,18 @@ describe("Auth service", () => {
     expect(tokenResult).toBe(mockToken);
   });
 
+  it("stores token and first time signing guest flag to localStorage on guest sign", async () => {
+    api.post = vi
+      .fn()
+      .mockResolvedValue({ user: mockAuthor, token: mockToken });
+
+    await authService.signGuest();
+    const tokenResult = localStorage.getItem("token");
+    const signingGuestFlag = localStorage.getItem("guest_sign_before");
+    expect(tokenResult).toBe(mockToken);
+    expect(signingGuestFlag).toBe("false");
+  });
+
   it("removes token from localStorage on logout", () => {
     localStorage.setItem("token", mockToken);
 
@@ -70,13 +82,24 @@ describe("Auth service", () => {
     expect(tokenResult).toBeNull();
   });
 
+  it("marks first time guest flag as true on markGuestSigned", () => {
+    authService.markGuestSigned();
+
+    const firstTimeGuestFlag = localStorage.getItem("guest_sign_before");
+    expect(firstTimeGuestFlag).toBe("true");
+  });
+
   it("returns user data and token from localstorage on getAuthData", () => {
     decodeTokenToUser.mockReturnValue(mockAuthor);
     localStorage.setItem("token", mockToken);
+    localStorage.setItem("guest_sign_before", "true");
 
     const result = authService.getAuthData();
 
-    expect(result).toEqual({ user: mockAuthor, token: mockToken });
+    expect(result).toEqual({
+      user: { ...mockAuthor, hasGuestSignedBefore: expect.any(Boolean) },
+      token: mockToken,
+    });
   });
 
   it("returns falsy and remove token from localStorage on invalid token on getAuthData", () => {
@@ -90,7 +113,7 @@ describe("Auth service", () => {
     expect(tokenResult).toBeNull();
   });
 
-  it("triggers a storage event on login and logout", async () => {
+  it("triggers a storage event on login, logout and signGuest", async () => {
     const eventListener = vi.fn();
     window.addEventListener("storage", eventListener);
 
@@ -101,6 +124,10 @@ describe("Auth service", () => {
     authService.logout();
 
     expect(eventListener).toHaveBeenCalledTimes(2);
+
+    await authService.signGuest();
+
+    expect(eventListener).toHaveBeenCalledTimes(3);
 
     window.removeEventListener("storage", eventListener);
   });

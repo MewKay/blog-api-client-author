@@ -6,27 +6,38 @@ import actionServiceHandler from "@/lib/actionServiceHandler";
 
 const loginAction = async ({ request }) => {
   const formData = await request.formData();
+  const intent = formData.get("intent");
 
-  const credentials = {
-    username: formData.get("username"),
-    password: formData.get("password"),
-  };
+  switch (intent) {
+    case "login":
+      return actionServiceHandler(async () => {
+        const credentials = {
+          username: formData.get("username"),
+          password: formData.get("password"),
+        };
 
-  const validator = loginSchema.validateInputs(credentials);
-  if (!validator.isFormValid) {
-    return { error: "Provided credentials are invalid" };
+        const validator = loginSchema.validateInputs(credentials);
+        if (!validator.isFormValid) {
+          return { error: "Provided credentials are invalid" };
+        }
+
+        const response = await authService.login(credentials);
+
+        if (!response.user.is_author) {
+          authService.logout();
+          return redirect(paths.userRedirect.path);
+        }
+
+        return redirect(paths.home.path);
+      });
+    case "guest":
+      return actionServiceHandler(async () => {
+        await authService.signGuest();
+        return redirect(paths.home.path);
+      });
+    default:
+      throw new Error("Unexpected intent");
   }
-
-  return actionServiceHandler(async () => {
-    const response = await authService.login(credentials);
-
-    if (!response.user.is_author) {
-      authService.logout();
-      return redirect(paths.userRedirect.path);
-    }
-
-    return redirect(paths.home.path);
-  });
 };
 
 export default loginAction;

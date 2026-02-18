@@ -1,11 +1,13 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import Header from "./header/header";
 
 const Layout = () => {
+  const loaderData = useLoaderData();
+
   return (
     <>
       <Header />
-      <Outlet />
+      <Outlet context={{ ...loaderData }} />
     </>
   );
 };

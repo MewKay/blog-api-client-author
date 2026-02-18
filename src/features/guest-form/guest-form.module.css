@@ -1,0 +1,13 @@
+.button {
+  margin-top: var(--spacing-5);
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  font-size: var(--font-size-3);
+  color: var(--primary-500);
+}
+
+.button:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
