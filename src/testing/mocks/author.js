@@ -3,7 +3,7 @@ const mockAuthor = {
   username: "John Wright",
   is_author: true,
   is_guest: false,
-  hasGuestSignedBefore: false,
+  hasGuestSignedBefore: true, // prevents modal rendering on tests
 };
 
 export default mockAuthor;

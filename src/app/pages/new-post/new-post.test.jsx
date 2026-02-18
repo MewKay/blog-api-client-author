@@ -17,6 +17,7 @@ import mockLimitStatus from "@/testing/mocks/limit-status";
 
 vi.mock("@/components/editor/editor");
 vi.mock("@/app/pages/home/home");
+vi.mock("@/app/layout/header/header");
 vi.mock("@/services/post.service", () => ({
   default: {
     createPost: vi.fn(),

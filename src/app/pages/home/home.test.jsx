@@ -12,6 +12,7 @@ import paths from "@/app/routes/paths";
 import userEvent from "@testing-library/user-event";
 
 vi.mock("../new-post/new-post.jsx");
+vi.mock("@/app/layout/header/header");
 vi.mock("@/services/auth.service.js", () => ({
   default: {
     getAuthData: vi.fn(),

@@ -12,6 +12,7 @@ import mockLimitStatus from "@/testing/mocks/limit-status";
 import testInputTyping from "@/testing/utils/testInputTyping";
 
 vi.mock("../home/home.jsx");
+vi.mock("@/app/layout/header/header.jsx");
 vi.mock("../user-redirect/user-redirect.jsx", () => ({
   default: () => <>This is user redirect</>,
 }));

@@ -16,6 +16,7 @@ import mockLimitStatus from "@/testing/mocks/limit-status";
 import sqids from "@/lib/sqids";
 
 vi.mock("../home/home.jsx");
+vi.mock("@/app/layout/header/header.jsx");
 vi.mock("@/lib/sqids.js", () => ({
   default: {
     decode: vi.fn(),

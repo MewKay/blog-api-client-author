@@ -7,6 +7,7 @@ import mockAuthor from "@/testing/mocks/author";
 import decodeTokenToUser from "../decodeTokenToUser";
 
 const secret = new TextEncoder().encode("thisissecret");
+const { hasGuestSignedBefore, ...userPayload } = mockAuthor; // eslint-disable-line no-unused-vars
 
 const createToken = async (payload, expirationTime) => {
   const jwt = new SignJWT(payload);
@@ -25,7 +26,7 @@ describe("decodeTokenToUser utility", () => {
   });
 
   it("returns null if token expired", async () => {
-    const token = await createToken(mockAuthor, new Date(2015, 4, 1));
+    const token = await createToken(userPayload, new Date(2015, 4, 1));
 
     expect(decodeTokenToUser(token)).toBeNull();
   });
@@ -37,9 +38,9 @@ describe("decodeTokenToUser utility", () => {
   });
 
   it("returns valid user data", async () => {
-    const token = await createToken(mockAuthor, new Date(2015, 5, 10));
+    const token = await createToken(userPayload, new Date(2015, 5, 10));
     const result = decodeTokenToUser(token);
 
-    expect(result).toEqual(mockAuthor);
+    expect(result).toEqual(userPayload);
   });
 });

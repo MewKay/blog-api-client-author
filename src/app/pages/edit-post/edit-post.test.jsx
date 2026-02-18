@@ -13,6 +13,7 @@ import postService from "@/services/post.service";
 import sqids from "@/lib/sqids";
 
 vi.mock("@/components/editor/editor");
+vi.mock("@/app/layout/header/header");
 vi.mock("@/lib/sqids.js", () => ({
   default: {
     encode: vi.fn(),

@@ -12,6 +12,7 @@ import layoutLoader from "./layout.loader";
 import mockLimitStatus from "@/testing/mocks/limit-status";
 
 vi.mock("@/app/pages/login/login.jsx");
+vi.mock("@/app/layout/header/header.jsx");
 vi.mock("@/app/pages/home/home.jsx");
 vi.mock("@/services/auth.service.js", () => ({
   default: {
@@ -71,17 +72,6 @@ describe("Layout component", () => {
 
     const loginText = await screen.findByText("This is login page");
     expect(loginText).toBeInTheDocument();
-  });
-
-  it("passes correctly author guest status to Header component", async () => {
-    authService.getAuthData.mockReturnValue({
-      user: { ...mockAuthor, is_guest: true },
-    });
-    setupPageRender(routes, [paths.home.path]);
-
-    expect(
-      await screen.findByRole("button", { name: /guest/i }),
-    ).toBeInTheDocument();
   });
 
   it("provides user data to outlets", async () => {
