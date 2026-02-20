@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import routes from "../routes/routes";
 import authService from "@/services/auth.service";
 import mockAuthor from "@/testing/mocks/author";
@@ -7,9 +7,10 @@ import paths from "../routes/paths";
 import setupPageRender from "@/testing/utils/setupPageRender";
 import authorService from "@/services/author.service";
 import Layout from "./layout";
-import { useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import layoutLoader from "./layout.loader";
 import mockLimitStatus from "@/testing/mocks/limit-status";
+import userEvent from "@testing-library/user-event";
 
 vi.mock("@/app/pages/login/login.jsx");
 vi.mock("@/app/layout/header/header.jsx");
@@ -37,6 +38,7 @@ const MockOutletConsumer = () => {
 
   return (
     <>
+      <Link to="/my-post">Link to my post</Link>
       <p>{user.username}</p>
       <div>
         {limitStatus.isLimitReached && <p>{limitReachedMessage}</p>}
@@ -55,7 +57,15 @@ const mockRoute = [
         index: true,
         element: <MockOutletConsumer />,
       },
+      {
+        path: "/my-post",
+        element: <>This is my post</>,
+      },
     ],
+  },
+  {
+    path: paths.login.path,
+    element: <>This is login page</>,
   },
 ];
 
@@ -72,6 +82,25 @@ describe("Layout component", () => {
 
     const loginText = await screen.findByText("This is login page");
     expect(loginText).toBeInTheDocument();
+  });
+
+  it("redirects to log in page if user's session expired", async () => {
+    authService.getAuthData
+      .mockReturnValueOnce({ user: mockAuthor })
+      .mockReturnValueOnce({ user: mockAuthor })
+      .mockReturnValueOnce(false);
+    const user = userEvent.setup();
+    setupPageRender(mockRoute, ["/"]);
+
+    const postLink = await screen.findByRole("link", {
+      name: /link to my post/i,
+    });
+    await user.click(postLink);
+
+    await waitFor(() => {
+      expect(screen.queryByText("This is my post")).not.toBeInTheDocument();
+      expect(screen.getByText("This is login page")).toBeInTheDocument();
+    });
   });
 
   it("provides user data to outlets", async () => {
