@@ -5,6 +5,8 @@ import signUpSchema from "@/lib/validation/schema/signup-schema";
 import { useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 
+const WRITER_PASS_LINK = import.meta.env.VITE_AUTHOR_PASS_LINK;
+
 const SignUpForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -72,6 +74,13 @@ const SignUpForm = () => {
         required
       >
         Authorization Pass
+        <p className="author-password-link">
+          This field requires the writer password. Retrieve it{" "}
+          <a href={WRITER_PASS_LINK} target="_blank" rel="noopener noreferrer">
+            here
+          </a>
+          .
+        </p>
       </Input>
 
       <Button
