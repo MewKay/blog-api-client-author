@@ -12,6 +12,7 @@ const SignUpForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [authorPassword, setAuthorPassword] = useState("");
+  const [isAuthPassFocused, setIsAuthPassFocused] = useState(false);
   const navigation = useNavigation();
 
   const { errors, isFormValid } = signUpSchema.validateInputs({
@@ -23,6 +24,18 @@ const SignUpForm = () => {
 
   const isSubmitting = navigation.state !== "idle";
   const isButtonDisabled = !isFormValid || isSubmitting;
+
+  const handleAuthPassFocus = () => {
+    setIsAuthPassFocused(true);
+  };
+
+  const handleAuthPassBlur = () => {
+    setIsAuthPassFocused(false);
+  };
+
+  const authorPassordLinkClassName = isAuthPassFocused
+    ? "author-password-link"
+    : "author-password-link hidden";
 
   return (
     <Form method="post">
@@ -71,10 +84,12 @@ const SignUpForm = () => {
         value={authorPassword}
         setValue={setAuthorPassword}
         errorMessage={errors.author_password}
+        onFocus={handleAuthPassFocus}
+        onBlur={handleAuthPassBlur}
         required
       >
         Authorization Pass
-        <p className="author-password-link">
+        <p className={authorPassordLinkClassName}>
           This field requires the writer password. Retrieve it{" "}
           <a href={WRITER_PASS_LINK} target="_blank" rel="noopener noreferrer">
             here
