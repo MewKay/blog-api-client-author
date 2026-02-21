@@ -33,6 +33,9 @@ const SignUpForm = () => {
     setIsAuthPassFocused(false);
   };
 
+  const authorPasswordLabelClassName = isAuthPassFocused
+    ? "author-password-label focused"
+    : "author-password-label";
   const authorPassordLinkClassName = isAuthPassFocused
     ? "author-password-link"
     : "author-password-link hidden";
@@ -88,7 +91,7 @@ const SignUpForm = () => {
         onBlur={handleAuthPassBlur}
         required
       >
-        Authorization Pass
+        <p className={authorPasswordLabelClassName}>Authorization Pass</p>
         <p className={authorPassordLinkClassName}>
           This field requires the writer password. Retrieve it{" "}
           <a href={WRITER_PASS_LINK} target="_blank" rel="noopener noreferrer">
