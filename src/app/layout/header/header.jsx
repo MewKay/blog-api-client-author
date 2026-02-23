@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import NavigationStatus from "@/components/navigation-status/navigation-status";
 import GuestLimitModal from "@/features/guest-limit-modal/guest-limit-modal";
 import { LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import authService from "@/services/auth.service";
 import paths from "@/app/routes/paths";
@@ -10,8 +10,12 @@ import styles from "./header.module.css";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user } = authService.getAuthData();
+  const authData = authService.getAuthData();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (!authData) {
+    return <Navigate to={paths.login.path} />;
+  }
 
   const logout = () => {
     authService.logout();
@@ -23,7 +27,7 @@ const Header = () => {
       <header>
         <div className={styles.headerContainer}>
           <div className={styles.contentContainer}>
-            {user.is_guest && (
+            {authData.user.is_guest && (
               <button
                 className={styles.guestButton}
                 onClick={() => setIsModalOpen(true)}
@@ -43,7 +47,7 @@ const Header = () => {
         </div>
       </header>
       <GuestLimitModal
-        user={user}
+        user={authData.user}
         isOpen={isModalOpen}
         onVisibilityChange={setIsModalOpen}
       />
