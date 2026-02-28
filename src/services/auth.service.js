@@ -26,6 +26,14 @@ const authService = {
 
     return response;
   },
+  upgradeUser: async (authorPassword, token) => {
+    const response = await api.post("/upgrade-user", authorPassword, token);
+
+    localStorage.setItem("token", response.token);
+    window.dispatchEvent(new Event("storage"));
+
+    return response;
+  },
   markGuestSigned: () => {
     localStorage.setItem("guest_sign_before", "true");
     window.dispatchEvent(new Event("storage"));

@@ -82,6 +82,18 @@ describe("Auth service", () => {
     expect(tokenResult).toBeNull();
   });
 
+  it("stores token to localStorage after upgrade", async () => {
+    api.post = vi
+      .fn()
+      .mockResolvedValue({ user: mockAuthor, token: mockToken });
+
+    const mockPassword = { author_password: "ShouldBeTheAuthorPassword" };
+    await authService.upgradeUser(mockPassword);
+
+    const tokenResult = localStorage.getItem("token");
+    expect(tokenResult).toBe(mockToken);
+  });
+
   it("marks first time guest flag as true on markGuestSigned", () => {
     authService.markGuestSigned();
 
