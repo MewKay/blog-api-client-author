@@ -1,6 +1,32 @@
-.action-link {
-  composes: button from "@/styles/components/button.module.css";
+.main {
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
   background-color: var(--grey-100);
-  color: var(--grey-900);
-  text-decoration: none;
+  padding: var(--spacing-6) var(--spacing-4);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-4);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-7);
+  color: var(--primary-700);
+}
+
+.text {
+  font-size: var(--font-size-4);
+  margin-bottom: var(--spacing-5);
+}
+
+.action-container {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
 }

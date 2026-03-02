@@ -27,7 +27,7 @@
 }
 
 *.light {
-  background-color: var(--grey-200);
+  background-color: var(--primary-100);
 }
 *.dark {
   background-color: var(--primary-700);
