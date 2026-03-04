@@ -25,7 +25,7 @@ const UserRedirect = () => {
           <RedirectLink isRouterLink={false} path={BASIC_LOGIN_SITE_URL}>
             <p>Log in to public blog site</p>
           </RedirectLink>
-          <RedirectLink colorscheme="dark" path={""}>
+          <RedirectLink colorscheme="dark" path={paths.userUpgrade.path}>
             <p>Upgrade your account to a Writer</p>
           </RedirectLink>
         </ul>

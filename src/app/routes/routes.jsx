@@ -19,6 +19,7 @@ import NotFound from "../pages/not-found/not-found";
 import SignUp from "../pages/signup/signup";
 import signUpAction from "../pages/signup/signup.action";
 import UserRedirect from "../pages/user-redirect/user-redirect";
+import UserUpgrade from "../pages/user-upgrade/user-upgrade";
 import paths from "./paths";
 
 const routes = [
@@ -71,6 +72,10 @@ const routes = [
     path: paths.userRedirect.path,
     element: <UserRedirect />,
     errorElement: <ErrorBoundary />,
+  },
+  {
+    path: paths.userUpgrade.path,
+    element: <UserUpgrade />,
   },
   {
     path: paths.notFound.path,

@@ -82,7 +82,7 @@ exports[`UserRedirect component > renders correctly 1`] = `
         >
           <a
             class="_link_55a573"
-            href="/"
+            href="/user-upgrade"
           >
             <p>
               Upgrade your account to a Writer

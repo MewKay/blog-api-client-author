@@ -30,6 +30,9 @@ const paths = {
   userRedirect: {
     path: "/user-redirect",
   },
+  userUpgrade: {
+    path: "/user-upgrade",
+  },
   notFound: {
     path: "*",
   },
