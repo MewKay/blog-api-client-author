@@ -2,15 +2,16 @@ import AuthorPasswordInput from "@/components/author-password-input/author-passw
 import Button from "@/components/button/button";
 import { useState } from "react";
 import { Form } from "react-router-dom";
+import styles from "./user-upgrade.module.css";
 
 const UserUpgrade = () => {
   const [authorPassword, setAuthorPassword] = useState("");
 
   return (
-    <main>
-      <div>
+    <main className={styles.main}>
+      <div className={styles.container}>
         <Form method="post">
-          <p>
+          <p className={styles.prompt}>
             Please enter the author password to confirm and upgrade your account
             to a Writer.
           </p>
@@ -20,7 +21,11 @@ const UserUpgrade = () => {
             setValue={setAuthorPassword}
           />
 
-          <Button colorScheme={"dark"}>Confirm</Button>
+          <div className={styles.buttonContainer}>
+            <Button colorScheme={"dark"} className={styles.submit}>
+              Confirm
+            </Button>
+          </div>
         </Form>
       </div>
     </main>
