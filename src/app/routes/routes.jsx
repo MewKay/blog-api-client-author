@@ -19,7 +19,9 @@ import NotFound from "../pages/not-found/not-found";
 import SignUp from "../pages/signup/signup";
 import signUpAction from "../pages/signup/signup.action";
 import UserRedirect from "../pages/user-redirect/user-redirect";
+import userRedirectLoader from "../pages/user-redirect/user-redirect.loader";
 import UserUpgrade from "../pages/user-upgrade/user-upgrade";
+import userUpgradeLoader from "../pages/user-upgrade/user-upgrade.loader";
 import paths from "./paths";
 
 const routes = [
@@ -71,11 +73,14 @@ const routes = [
   {
     path: paths.userRedirect.path,
     element: <UserRedirect />,
+    loader: userRedirectLoader,
     errorElement: <ErrorBoundary />,
   },
   {
     path: paths.userUpgrade.path,
     element: <UserUpgrade />,
+    loader: userUpgradeLoader,
+    errorElement: <ErrorBoundary />,
   },
   {
     path: paths.notFound.path,

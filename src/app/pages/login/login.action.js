@@ -24,7 +24,6 @@ const loginAction = async ({ request }) => {
         const response = await authService.login(credentials);
 
         if (!response.user.is_author) {
-          authService.logout();
           return redirect(paths.userRedirect.path);
         }
 

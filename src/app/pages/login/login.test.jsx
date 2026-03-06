@@ -155,7 +155,8 @@ describe("Log in page", () => {
       }
     });
 
-    it("should redirect to user-redirect page if user is not an author and call logout auth service", async () => {
+    it("should redirect to user-redirect page if user is not an author", async () => {
+      mockAuthDataSuccessRedirect();
       authService.login.mockReturnValueOnce({
         user: {
           ...mockAuthor,
@@ -172,10 +173,11 @@ describe("Log in page", () => {
       await user.click(submitButton);
 
       expect(authService.login).toHaveBeenCalledWith(mockInputValue);
-      expect(authService.logout).toHaveBeenCalled();
 
       const userRedirectText = await screen.findByText("This is user redirect");
       expect(userRedirectText).toBeInTheDocument();
+
+      vi.resetAllMocks();
     });
 
     it("should not let user submit form if it is invalid", async () => {
