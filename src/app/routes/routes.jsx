@@ -21,6 +21,7 @@ import signUpAction from "../pages/signup/signup.action";
 import UserRedirect from "../pages/user-redirect/user-redirect";
 import userRedirectLoader from "../pages/user-redirect/user-redirect.loader";
 import UserUpgrade from "../pages/user-upgrade/user-upgrade";
+import userUpgradeAction from "../pages/user-upgrade/user-upgrade.action";
 import userUpgradeLoader from "../pages/user-upgrade/user-upgrade.loader";
 import paths from "./paths";
 
@@ -80,6 +81,7 @@ const routes = [
     path: paths.userUpgrade.path,
     element: <UserUpgrade />,
     loader: userUpgradeLoader,
+    action: userUpgradeAction,
     errorElement: <ErrorBoundary />,
   },
   {
