@@ -13,6 +13,7 @@ import postService from "@/services/post.service";
 vi.mock("@/app/pages/home/home");
 vi.mock("@/services/auth.service", () => ({
   default: {
+    logout: vi.fn(),
     getAuthData: vi.fn(),
     upgradeUser: vi.fn(),
   },
@@ -31,11 +32,13 @@ const setup = async () => {
 
   const authPassInput = await screen.findByLabelText(/authorization pass/i);
   const submitButton = await screen.findByRole("button", { name: /confirm/i });
+  const backLink = await screen.findByRole("link", { name: /back/i });
 
   return {
     user,
     authPassInput,
     submitButton,
+    backLink,
   };
 };
 
@@ -75,5 +78,12 @@ describe("UserUpgrade page", () => {
 
     const homeText = await screen.findByText("This is home");
     expect(homeText).toBeInTheDocument();
+  });
+
+  it("calls auth service log out on back to log in link", async () => {
+    const { user, backLink } = await setup();
+    await user.click(backLink);
+
+    expect(authService.logout).toHaveBeenCalledOnce();
   });
 });
