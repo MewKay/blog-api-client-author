@@ -1,12 +1,4 @@
-import {
-  afterAll,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Modal from "./modal";
 import userEvent from "@testing-library/user-event";
@@ -58,23 +50,6 @@ const setup = (props = {}) => {
 describe("Modal component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-  });
-
-  // Remove dialog-polyfill warnings
-  const realWarn = console.warn;
-  beforeAll(() => {
-    console.warn = (...args) => {
-      if (
-        (typeof args[0] === "string" &&
-          args[0].includes("This browser already supports <dialog>")) ||
-        args[0].includes("A dialog is being shown inside a stacking context.")
-      )
-        return;
-      realWarn(...args);
-    };
-  });
-  afterAll(() => {
-    console.warn = realWarn;
   });
 
   it("renders correctly", () => {
