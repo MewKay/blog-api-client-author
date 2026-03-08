@@ -77,6 +77,7 @@ const setup = async ({ clearInputs }) => {
 
 describe("Edit Post page", () => {
   beforeEach(() => {
+    window.scrollTo = vi.fn();
     sqids.decode.mockReturnValue(mockPost.id);
     authService.getAuthData.mockReturnValue({
       user: mockAuthor,

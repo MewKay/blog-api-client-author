@@ -65,7 +65,6 @@ describe("Header component", () => {
     });
 
     const guestButton = () => screen.queryByRole("button", { name: /guest/i });
-    screen.debug();
     expect(guestButton()).toBeInTheDocument();
 
     component.rerender(<Header />, {

@@ -85,6 +85,7 @@ const setup = async () => {
 describe("New Post page", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    window.scrollTo = vi.fn();
     postService.createPost.mockReturnValue(mockPost);
     postService.getAuthorPost.mockReturnValue(mockPost);
     commentService.getAllByPostId.mockReturnValue(mockComments);
