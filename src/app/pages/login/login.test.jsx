@@ -57,7 +57,6 @@ const mockAuthDataSuccessRedirect = () =>
   authService.getAuthData
     .mockReturnValueOnce(false) // Log in loader call
     .mockReturnValueOnce({ user: mockAuthor }) // Layout loader call
-    .mockReturnValueOnce({ user: mockAuthor }) // Layout component call
     .mockReturnValueOnce({ user: mockAuthor }); // Home loader call
 
 const setup = async () => {

@@ -20,10 +20,6 @@ vi.mock("@/services/auth.service", () => ({
 }));
 
 const mockInputValue = "letmeiiin";
-const mockUser = {
-  ...mockAuthor,
-  is_author: false,
-};
 const mockToken = "thisistoken";
 
 const setup = async () => {
@@ -45,7 +41,7 @@ const setup = async () => {
 describe("UserUpgrade page", () => {
   beforeEach(() => {
     authService.getAuthData.mockReturnValue({
-      user: mockUser,
+      user: mockAuthor,
       token: mockToken,
     });
     authService.upgradeUser.mockResolvedValue({

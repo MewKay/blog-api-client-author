@@ -31,6 +31,7 @@ const routes = [
     element: <Layout />,
     errorElement: <ErrorBoundary />,
     loader: layoutLoader,
+    shouldRevalidate: () => true,
     children: [
       {
         index: true,

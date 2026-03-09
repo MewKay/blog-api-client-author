@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { screen, waitFor } from "@testing-library/react";
-import routes from "../routes/routes";
 import authService from "@/services/auth.service";
 import mockAuthor from "@/testing/mocks/author";
 import paths from "../routes/paths";
@@ -18,6 +17,7 @@ vi.mock("@/app/pages/home/home.jsx");
 vi.mock("@/services/auth.service.js", () => ({
   default: {
     getAuthData: vi.fn(),
+    logout: vi.fn(),
   },
 }));
 vi.mock("@/services/author.service.js", () => ({
@@ -52,6 +52,7 @@ const mockRoute = [
     path: "/",
     element: <Layout />,
     loader: layoutLoader,
+    shouldRevalidate: () => true,
     children: [
       {
         index: true,
@@ -78,7 +79,17 @@ describe("Layout component", () => {
 
   it("redirects user to log in page if they are not authenticated", async () => {
     authService.getAuthData.mockReturnValue(false);
-    setupPageRender(routes, [paths.home.path]);
+    setupPageRender(mockRoute, [paths.home.path]);
+
+    const loginText = await screen.findByText("This is login page");
+    expect(loginText).toBeInTheDocument();
+  });
+
+  it("redirects user to log in page if they do not have required permission", async () => {
+    authService.getAuthData.mockReturnValue({
+      user: { ...mockAuthor, is_author: false },
+    });
+    setupPageRender(mockRoute, [paths.home.path]);
 
     const loginText = await screen.findByText("This is login page");
     expect(loginText).toBeInTheDocument();
@@ -86,7 +97,6 @@ describe("Layout component", () => {
 
   it("redirects to log in page if user's session expired", async () => {
     authService.getAuthData
-      .mockReturnValueOnce({ user: mockAuthor })
       .mockReturnValueOnce({ user: mockAuthor })
       .mockReturnValueOnce(false);
     const user = userEvent.setup();
@@ -99,8 +109,8 @@ describe("Layout component", () => {
 
     await waitFor(() => {
       expect(screen.queryByText("This is my post")).not.toBeInTheDocument();
-      expect(screen.getByText("This is login page")).toBeInTheDocument();
     });
+    expect(screen.getByText("This is login page")).toBeInTheDocument();
   });
 
   it("provides user data to outlets", async () => {

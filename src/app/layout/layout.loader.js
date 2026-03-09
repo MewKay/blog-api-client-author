@@ -6,7 +6,8 @@ import authorService from "@/services/author.service";
 const layoutLoader = async () => {
   const authData = authService.getAuthData();
 
-  if (!authData) {
+  if (!authData || !authData.user.is_author) {
+    authService.logout();
     return redirect(paths.login.path);
   }
 
