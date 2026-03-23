@@ -10,6 +10,23 @@
   box-shadow: var(--shadow-4);
 }
 
+.back-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-500);
+  margin-bottom: var(--spacing-4);
+}
+
+.back-link svg {
+  translate: 0 0;
+  transition: all 0.2s;
+}
+
+.back-link:hover svg {
+  translate: -20% 0;
+}
+
 .prompt {
   font-size: var(--font-size-5);
   font-weight: var(--font-weight-bold);

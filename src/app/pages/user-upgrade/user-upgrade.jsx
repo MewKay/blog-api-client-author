@@ -17,7 +17,11 @@ const UserUpgrade = () => {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        <Link to={paths.login.path} onClick={handleBackToLogin}>
+        <Link
+          className={styles.backLink}
+          to={paths.login.path}
+          onClick={handleBackToLogin}
+        >
           <ChevronLeft />
           Go back to log in page
         </Link>
