@@ -1,6 +1,7 @@
 .button {
   position: fixed;
   bottom: var(--spacing-7);
+  right: var(--spacing-7);
   z-index: 10;
   border: none;
   border-radius: var(--radius-full);
@@ -19,4 +20,10 @@
 
 .hidden {
   translate: 0 200%;
+}
+
+@media (max-width: 760px) {
+  .button {
+    right: initial;
+  }
 }
