@@ -41,6 +41,10 @@
   padding-bottom: var(--spacing-4);
 }
 
+.preview a {
+  color: var(--primary-500);
+}
+
 .preview::after {
   content: "";
   position: absolute;

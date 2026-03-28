@@ -57,6 +57,10 @@
   margin: var(--spacing-3) 0;
 }
 
+.text a {
+  color: var(--primary-500);
+}
+
 @media (min-width: 760px) {
   .text {
     max-width: var(--line-length-large);

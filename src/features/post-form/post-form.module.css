@@ -27,6 +27,10 @@
   margin: var(--spacing-5) 0;
 }
 
+.editor-content a {
+  color: var(--primary-500);
+}
+
 .editor-content blockquote {
   margin: var(--spacing-5) 0;
   padding-left: var(--spacing-6);
